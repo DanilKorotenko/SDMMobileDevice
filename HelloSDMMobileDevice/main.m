@@ -6,11 +6,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SDMMobileDevice/SDMMobileDevice.h>
 
-int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        // insert code here...
+int main(int argc, const char * argv[])
+{
+    @autoreleasepool
+    {
         NSLog(@"Hello, World!");
+
+        InitializeSDMMobileDeviceClasses();
+
     }
     return 0;
 }
