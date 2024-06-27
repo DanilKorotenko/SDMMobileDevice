@@ -29,7 +29,7 @@
 #define _SDM_MD_AFCCONNECTION_CLASS_H_
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "SDMMD_Connection_Class.h"
+#include <SDMMobileDevice/SDMMD_Connection_Class.h>
 
 typedef struct sdmmd_AFCConnectionClass *SDMMD_AFCConnectionRef;
 

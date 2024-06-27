@@ -31,7 +31,7 @@
 #include "SDMMD_AFCOperation_Class.h"
 #include "SDMMD_AFC_Types.h"
 #include "SDMMD_AFCOperation_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 static Boolean SDMMD_AFCOperationRefEqual(CFTypeRef cf1, CFTypeRef cf2)
 {

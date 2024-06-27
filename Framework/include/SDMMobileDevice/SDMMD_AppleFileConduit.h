@@ -29,11 +29,11 @@
 #define SDMMobileDevice_Framework_SDMMD_AppleFileConduit_h
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "SDMMD_AFC_Types.h"
-#include "SDMMD_AFCConnection_Class.h"
-#include "SDMMD_AFCOperation_Class.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_Service.h"
+#include <SDMMobileDevice/SDMMD_AFC_Types.h>
+#include <SDMMobileDevice/SDMMD_AFCConnection_Class.h>
+#include <SDMMobileDevice/SDMMD_AFCOperation_Class.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_Service.h>
 
 #pragma mark -
 #pragma mark Functions
@@ -63,7 +63,7 @@ SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateCloseOperation(uint64_t fileR
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateSetFileSizeOperation(uint64_t fileRef, uint64_t file_size);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetConnectionInfo();
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateSetConnectionOptions(CFDictionaryRef options);
-SDMMD_AFCOperationRef SDMMD_AFCOperationCreateRenamePath(CFStringRef old, CFStringRef new);
+SDMMD_AFCOperationRef SDMMD_AFCOperationCreateRenamePath(CFStringRef anOld, CFStringRef aNew);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateSetFSBlockSize(uint64_t fs_block_size);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateSetSocketBlockSize(uint64_t socket_block_size);
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateLockOperation(uint64_t fileRef);

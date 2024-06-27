@@ -28,10 +28,10 @@
 #ifndef _SDM_MD_ADMDEVICE_H_
 #define _SDM_MD_ADMDEVICE_H_
 
-#include "SDMMD_AMDevice_Class.h"
+#include <SDMMobileDevice/SDMMD_AMDevice_Class.h>
 
-#include "SDMMD_Error.h"
-#include "SDMMD_Keys.h"
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_Keys.h>
 /* Private
 #include "SDMMD_MRecoveryModeDevice.h"
 #include "SDMMD_MRUSBDevice.h"
@@ -39,7 +39,7 @@
 #include "SDMMD_MRestoreModeDevice.h"
 #include "SDMMD_MRestorableDevice.h"
 */
-#include "SDMMD_Types.h"
+#include <SDMMobileDevice/SDMMD_Types.h>
 
 typedef enum _AMDInterfaceConnectionType {
 	kAMDInterfaceConnectionTypeInvalid = -1,

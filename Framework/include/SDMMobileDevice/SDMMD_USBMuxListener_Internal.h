@@ -49,11 +49,11 @@ struct USBMuxListenerClassBody {
 	callbackFunction listenerListCallback;
 	callbackFunction unknownCallback;
 	CFMutableArrayRef responses;
-} USBMuxListenerClassBody;
+};
 
 struct USBMuxListenerClass {
 	CFRuntimeBase base;
 	struct USBMuxListenerClassBody ivars;
-} USBMuxListenerClass;
+};
 
 #endif

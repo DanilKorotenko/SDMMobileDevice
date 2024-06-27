@@ -29,8 +29,8 @@
 #define _SDM_MD_SERVICE_H_
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "SDMMD_Error.h"
-#include "SDMMD_Connection.h"
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_Connection.h>
 
 // clang-format off
 

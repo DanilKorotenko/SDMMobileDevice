@@ -28,9 +28,9 @@
 #ifndef _SDM_MD_MCP_H_
 #define _SDM_MD_MCP_H_
 
-#include "SDMMD_MCP_Class.h"
+#include <SDMMobileDevice/SDMMD_MCP_Class.h>
 
-SDMMobileDeviceRef InitializeSDMMobileDevice();
+SDMMobileDeviceRef InitializeSDMMobileDevice(void);
 
 #define SDMMobileDevice InitializeSDMMobileDevice()
 

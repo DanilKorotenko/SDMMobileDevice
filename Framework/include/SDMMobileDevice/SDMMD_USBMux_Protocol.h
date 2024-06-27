@@ -28,8 +28,8 @@
 #ifndef _SDM_MD_USBMUX_PROTOCOL_H_
 #define _SDM_MD_USBMUX_PROTOCOL_H_
 
-#include "SDMMD_USBMuxListener_Class.h"
-#include "SDMMD_USBMuxListener_Types.h"
+#include <SDMMobileDevice/SDMMD_USBMuxListener_Class.h>
+#include <SDMMobileDevice/SDMMD_USBMuxListener_Types.h>
 
 /*
  * Pass reference to packet to send. Upon return, *packet will either contain response

@@ -42,7 +42,7 @@ struct SDMMD_lockdown_conn_internal {
 
 struct AMDeviceClassHeader {
 	unsigned char header[16];				 // AMDeviceClass CF Header
-} __attribute((packed)) AMDeviceClassHeader; // size 0x10
+}; // size 0x10
 
 enum {
 	kAMDeviceConnectionTypeWiFi = 0,
@@ -69,12 +69,12 @@ struct AMDeviceClassBody {
 	int64_t unknown8;						 // 144
 	CFDataRef unknownData;					 // 152
 	CFDataRef network_address;				 // 160 stores a sockaddr_storage
-} __attribute__((packed)) AMDeviceClassBody; // size 0x98
+}; // size 0x98
 
 struct sdmmd_am_device {
 	CFRuntimeBase base;
 	struct AMDeviceClassBody ivars;
-} __attribute__((packed)) sdmmd_am_device;
+};
 
 // Everything below here you shouldn't be calling, this is internal for the library
 //=================================================================================

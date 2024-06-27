@@ -30,7 +30,7 @@
 
 #include "SDMMD_AMDevice_Class.h"
 #include "SDMMD_AMDevice_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
@@ -100,7 +100,7 @@ CFTypeID SDMMD_AMDeviceRefGetTypeID(void)
 
 SDMMD_AMDeviceRef SDMMD_AMDeviceCreateEmpty()
 {
-	uint32_t extra = sizeof(AMDeviceClassBody);
+	uint32_t extra = sizeof(struct AMDeviceClassBody);
 	SDMMD_AMDeviceRef device = (SDMMD_AMDeviceRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_AMDeviceRefID, extra, NULL);
 	return device;
 }

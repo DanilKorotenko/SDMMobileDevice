@@ -28,21 +28,21 @@
 #ifndef _SDM_MOBILE_DEVICE_H_
 #define _SDM_MOBILE_DEVICE_H_
 
-#include "SDMMD_Initialize.h"
+#include <SDMMobileDevice/SDMMD_Initialize.h>
 
-#include "SDMMD_Functions.h"
-#include "SDMMD_AMDevice.h"
-#include "SDMMD_AppleFileConduit.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_MCP.h"
-#include "SDMMD_USBMuxListener.h"
-#include "SDMMD_Applications.h"
-#include "SDMMD_Notification.h"
-#include "SDMMD_Debugger.h"
-#include "SDMMD_FileRelay.h"
-#include "SDMMD_MobileBackup2.h"
-#include "SDMMD_pcap.h"
-#include "SDMMD_MobileConfig.h"
-#include "SDMMD_USBMux_Protocol.h"
+#include <SDMMobileDevice/SDMMD_Functions.h>
+#include <SDMMobileDevice/SDMMD_AMDevice.h>
+#include <SDMMobileDevice/SDMMD_AppleFileConduit.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_MCP.h>
+#include <SDMMobileDevice/SDMMD_USBMuxListener.h>
+#include <SDMMobileDevice/SDMMD_Applications.h>
+#include <SDMMobileDevice/SDMMD_Notification.h>
+#include <SDMMobileDevice/SDMMD_Debugger.h>
+#include <SDMMobileDevice/SDMMD_FileRelay.h>
+#include <SDMMobileDevice/SDMMD_MobileBackup2.h>
+#include <SDMMobileDevice/SDMMD_pcap.h>
+#include <SDMMobileDevice/SDMMD_MobileConfig.h>
+#include <SDMMobileDevice/SDMMD_USBMux_Protocol.h>
 
 #endif

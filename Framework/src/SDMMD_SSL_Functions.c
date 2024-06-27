@@ -29,17 +29,15 @@
 #define _SDM_MD_SSL_FUNCTIONS_C_
 
 #include "SDMMD_SSL_Functions.h"
-#include "Core.h"
+#include <Core/Core.h>
 #include "SDMMD_Error.h"
-
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 typedef struct Hash_Type {
 	FunctionPointer hash_init;
 	FunctionPointer hash_update;
 	FunctionPointer hash_close;
 	int hash_length;
-} ATR_PACK SDM_Hash_Type;
+} SDM_Hash_Type;
 
 SDM_Hash_Type sha1_hash = {
 	(FunctionPointer)SHA1_Init,
@@ -53,7 +51,7 @@ SDM_Hash_Type sha256_hash = {
 	(FunctionPointer)SHA256_Final,
 	SHA256_DIGEST_LENGTH};
 
-CFStringRef SDMMD_CreateUUID()
+CFStringRef SDMMD_CreateUUID(void)
 {
 	CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
 	CFStringRef str = CFUUIDCreateString(kCFAllocatorDefault, uuid);
@@ -63,12 +61,14 @@ CFStringRef SDMMD_CreateUUID()
 
 void SDMMD_openSSLLockCallBack(int mode, int n, const char *file, int line)
 {
-	if (mode & CRYPTO_LOCK) {
-		//SDMMD__mutex_lock(SDMMobileDevice->sslLocks[n]);
-	}
-	else {
-		//SDMMD__mutex_unlock(SDMMobileDevice->sslLocks[n]);
-	}
+    if (mode & CRYPTO_LOCK)
+    {
+        //SDMMD__mutex_lock(SDMMobileDevice->sslLocks[n]);
+    }
+    else
+    {
+        //SDMMD__mutex_unlock(SDMMobileDevice->sslLocks[n]);
+    }
 }
 
 unsigned long SDMMD_openSSLThreadIDCallBack()

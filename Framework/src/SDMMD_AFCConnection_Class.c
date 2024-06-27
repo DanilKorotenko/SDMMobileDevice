@@ -32,7 +32,7 @@
 #include "SDMMD_Connection.h"
 #include "SDMMD_Connection_Internal.h"
 #include "SDMMD_AFCConnection_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 static Boolean SDMMD_AFCConnectionRefEqual(CFTypeRef cf1, CFTypeRef cf2)
 {
@@ -67,17 +67,18 @@ static CFRuntimeClass _kSDMMD_AFCConnectionRefClass = {0};
 
 void SDMMD_AFCConnectionRefClassInitialize(void)
 {
-	_kSDMMD_AFCConnectionRefClass.version = 0;
-	_kSDMMD_AFCConnectionRefClass.className = "SDMMD_AFCConnectionRef";
-	_kSDMMD_AFCConnectionRefClass.init = NULL;
-	_kSDMMD_AFCConnectionRefClass.copy = NULL;
-	_kSDMMD_AFCConnectionRefClass.finalize = SDMMD_AFCConnectionRefFinalize;
-	_kSDMMD_AFCConnectionRefClass.equal = SDMMD_AFCConnectionRefEqual;
-	_kSDMMD_AFCConnectionRefClass.hash = NULL;
-	_kSDMMD_AFCConnectionRefClass.copyFormattingDesc = SDMMD_AFCConnectionRefCopyFormattingDesc;
-	_kSDMMD_AFCConnectionRefClass.copyDebugDesc = SDMMD_AFCConnectionRefCopyDebugDesc;
-	_kSDMMD_AFCConnectionRefClass.reclaim = NULL;
-	_kSDMMD_AFCConnectionRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AFCConnectionRefClass);
+    _kSDMMD_AFCConnectionRefClass.version = 0;
+    _kSDMMD_AFCConnectionRefClass.className = "SDMMD_AFCConnectionRef";
+    _kSDMMD_AFCConnectionRefClass.init = NULL;
+    _kSDMMD_AFCConnectionRefClass.copy = NULL;
+    _kSDMMD_AFCConnectionRefClass.finalize = SDMMD_AFCConnectionRefFinalize;
+    _kSDMMD_AFCConnectionRefClass.equal = SDMMD_AFCConnectionRefEqual;
+    _kSDMMD_AFCConnectionRefClass.hash = NULL;
+    _kSDMMD_AFCConnectionRefClass.copyFormattingDesc = SDMMD_AFCConnectionRefCopyFormattingDesc;
+    _kSDMMD_AFCConnectionRefClass.copyDebugDesc = SDMMD_AFCConnectionRefCopyDebugDesc;
+    _kSDMMD_AFCConnectionRefClass.reclaim = NULL;
+    _kSDMMD_AFCConnectionRefID =
+        _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AFCConnectionRefClass);
 }
 
 CFTypeID SDMMD_AFCConnectionRefGetTypeID(void)

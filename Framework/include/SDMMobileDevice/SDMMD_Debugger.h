@@ -28,10 +28,10 @@
 #ifndef _SDM_MD_DEBUGGER_H_
 #define _SDM_MD_DEBUGGER_H_
 
-#include "SDMMD_AMDevice.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_Connection.h"
-#include "SDMMD_Service.h"
+#include <SDMMobileDevice/SDMMD_AMDevice.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_Connection.h>
+#include <SDMMobileDevice/SDMMD_Service.h>
 
 #pragma mark -
 #pragma mark TYPES

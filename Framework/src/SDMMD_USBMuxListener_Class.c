@@ -30,7 +30,7 @@
 
 #include "SDMMD_USBmuxListener_Class.h"
 #include "SDMMD_USBMuxListener_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 static Boolean SDMMD_USBMuxListenerRefEqual(CFTypeRef cf1, CFTypeRef cf2)
 {
@@ -97,7 +97,7 @@ CFTypeID SDMMD_USBMuxListenerRefGetTypeID(void)
 
 SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty()
 {
-	uint32_t extra = sizeof(USBMuxListenerClassBody);
+	uint32_t extra = sizeof(struct USBMuxListenerClassBody);
 	SDMMD_USBMuxListenerRef device = (SDMMD_USBMuxListenerRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_USBMuxListenerRefID, extra, NULL);
 	return device;
 }

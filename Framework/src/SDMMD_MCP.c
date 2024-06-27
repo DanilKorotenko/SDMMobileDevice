@@ -40,22 +40,25 @@
 static SDMMobileDeviceRef controller = NULL;
 static dispatch_once_t once;
 
-SDMMobileDeviceRef InitializeSDMMobileDevice()
+SDMMobileDeviceRef InitializeSDMMobileDevice(void)
 {
-	dispatch_once(&once, ^{
-		InitializeSDMMobileDeviceClasses();
-		if (controller == NULL) {
-			controller = SDMMobileDeviceRefCreateEmpty();
-			controller->ivars.deviceList = CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
-			controller->ivars.usbmuxd = SDMMD_USBMuxCreate();
-			SDMMD_USBMuxStartListener(&controller->ivars.usbmuxd);
-			SSL_library_init();
-			ERR_load_crypto_strings();
-			SSL_load_error_strings();
-			controller->ivars.peer_certificate_data_index = SDMMD_lockssl_init();
-		}
-	});
-	return controller;
+    dispatch_once(&once,
+    ^{
+        InitializeSDMMobileDeviceClasses();
+        if (controller == NULL)
+        {
+            controller = SDMMobileDeviceRefCreateEmpty();
+            controller->ivars.deviceList = CFArrayCreate(kCFAllocatorDefault, NULL, 0,
+                &kCFTypeArrayCallBacks);
+            controller->ivars.usbmuxd = SDMMD_USBMuxCreate();
+            SDMMD_USBMuxStartListener(&controller->ivars.usbmuxd);
+            SSL_library_init();
+            ERR_load_crypto_strings();
+            SSL_load_error_strings();
+            controller->ivars.peer_certificate_data_index = SDMMD_lockssl_init();
+        }
+    });
+    return controller;
 }
 
 #endif

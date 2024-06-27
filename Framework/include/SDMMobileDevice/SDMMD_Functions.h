@@ -32,19 +32,19 @@
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "SDMMD_Types.h"
+#include <SDMMobileDevice/SDMMD_Types.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <uuid/uuid.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include "SDMMD_Types.h"
-#include "SDMMD_MCP.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_AMDevice.h"
-#include "SDMMD_Applications.h"
-#include "CFTypeAddition.h"
+#include <SDMMobileDevice/SDMMD_Types.h>
+#include <SDMMobileDevice/SDMMD_MCP.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_AMDevice.h>
+#include <SDMMobileDevice/SDMMD_Applications.h>
+#include <Core/CFTypeAddition.h>
 
 // clang-format off
 #if WIN32

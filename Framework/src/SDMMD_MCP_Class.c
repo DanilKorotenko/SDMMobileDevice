@@ -30,7 +30,7 @@
 
 #include "SDMMD_MCP_Class.h"
 #include "SDMMD_MCP_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 static void SDMMD_SDMMobileDeviceRefFinalize(CFTypeRef cf)
 {
@@ -60,7 +60,7 @@ void SDMMD_SDMMobileDeviceRefClassInitialize()
 
 SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty()
 {
-	uint32_t extra = sizeof(sdm_mobiledevice_body);
+	uint32_t extra = sizeof(struct sdm_mobiledevice_body);
 	SDMMobileDeviceRef manager = (SDMMobileDeviceRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_SDMMobileDeviceRefID, extra, NULL);
 	return manager;
 }

@@ -28,10 +28,10 @@
 #ifndef _SDM_MD_USBMUXLISTENER_H_
 #define _SDM_MD_USBMUXLISTENER_H_
 
-#include "SDMMD_USBMuxListener_Class.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_AMDevice.h"
-#include "SDMMD_USBMuxListener_Types.h"
+#include <SDMMobileDevice/SDMMD_USBMuxListener_Class.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_AMDevice.h>
+#include <SDMMobileDevice/SDMMD_USBMuxListener_Types.h>
 
 #pragma mark -
 #pragma mark Functions

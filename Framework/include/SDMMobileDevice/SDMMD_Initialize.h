@@ -30,6 +30,6 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 
-void InitializeSDMMobileDeviceClasses();
+void InitializeSDMMobileDeviceClasses(void);
 
 #endif

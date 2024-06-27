@@ -31,7 +31,7 @@
 #include <sys/socket.h>
 #include "SDMMD_Connection_Class.h"
 #include "SDMMD_Connection_Internal.h"
-#include "Core.h"
+#include <Core/Core.h>
 #include "SDMMD_Error.h"
 
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -110,7 +110,7 @@ CFTypeID SDMMD_AMConnectionRefGetTypeID(void)
 
 SDMMD_AMConnectionRef SDMMD_AMConnectionCreateEmpty()
 {
-	uint32_t extra = sizeof(AMConnectionClassBody);
+	uint32_t extra = sizeof(struct AMConnectionClassBody);
 	SDMMD_AMConnectionRef device = (SDMMD_AMConnectionRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_AMConnectionRefID, extra, NULL);
 	return device;
 }

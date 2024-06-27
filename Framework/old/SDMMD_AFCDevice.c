@@ -68,7 +68,8 @@ SDMMD_AFCConnectionRef SDMMD_AFCConnectionCreate(void*a, uint32_t sock,void*c,vo
 	return connection;
 }
 
-void SDMMD_AFCConnectionRefClassInitialize(void) {
+void SDMMD_AFCConnectionRefClassInitialize(void)
+{
     _kSDMMD_AFCConnectionRefClass.version = 0;
     _kSDMMD_AFCConnectionRefClass.className = "SDMMD_AFCConnectionRef";
     _kSDMMD_AFCConnectionRefClass.init = SDMMD_AFCConnectionCreate;
@@ -78,7 +79,7 @@ void SDMMD_AFCConnectionRefClassInitialize(void) {
     _kSDMMD_AFCConnectionRefClass.hash = NULL;
     _kSDMMD_AFCConnectionRefClass.copyFormattingDesc = NULL;
     _kSDMMD_AFCConnectionRefClass.copyDebugDesc = NULL;
-	_kSDMMD_AFCConnectionRefClass.reclaim = NULL;
+    _kSDMMD_AFCConnectionRefClass.reclaim = NULL;
     _kSDMMD_AFCConnectionRefID = _CFRuntimeRegisterClass((const CFRuntimeClass * const)&_kSDMMD_AFCConnectionRefClass);
 }
 

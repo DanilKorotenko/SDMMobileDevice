@@ -32,10 +32,10 @@
 
 typedef struct sdm_mobiledevice *SDMMobileDeviceRef;
 
-void SDMMD_SDMMobileDeviceRefClassInitialize();
+void SDMMD_SDMMobileDeviceRefClassInitialize(void);
 
-CFTypeID SDMMobileDeviceRefGetTypeID();
+CFTypeID SDMMobileDeviceRefGetTypeID(void);
 
-SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty();
+SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty(void);
 
 #endif

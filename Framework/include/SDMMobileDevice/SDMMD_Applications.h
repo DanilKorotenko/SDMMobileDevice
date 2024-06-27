@@ -28,9 +28,9 @@
 #ifndef _SDM_MD_APPLICATIONS_H_
 #define _SDM_MD_APPLICATIONS_H_
 
-#include "SDMMD_Types.h"
-#include "SDMMD_Error.h"
-#include "SDMMD_AMDevice.h"
+#include <SDMMobileDevice/SDMMD_Types.h>
+#include <SDMMobileDevice/SDMMD_Error.h>
+#include <SDMMobileDevice/SDMMD_AMDevice.h>
 
 #pragma mark -
 #pragma mark TYPES

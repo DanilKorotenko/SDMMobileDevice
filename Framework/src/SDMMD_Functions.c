@@ -34,7 +34,7 @@
 #include "SDMMD_Functions.h"
 #include "SDMMD_AMDevice_Internal.h"
 #include "SDMMD_SSL_Functions.h"
-#include "Core.h"
+#include <Core/Core.h>
 
 // clang-format off
 #if WIN32

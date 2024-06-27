@@ -36,7 +36,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/select.h>
-#include "Core.h"
+#include <Core/Core.h>
 #include "SDMMD_SSL_Functions.h"
 
 #define kMilliseconds 1000

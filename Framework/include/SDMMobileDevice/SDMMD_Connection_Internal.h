@@ -57,11 +57,11 @@ struct AMConnectionClassBody {
 	unsigned char unknown2[2];					 // 34
 	SDMMD_AMDeviceRef device;					 // 36
 	char service[128];							 // 40
-} __attribute__((packed)) AMConnectionClassBody; // size 0x98
+}; // size 0x98
 
 struct am_connection {
 	CFRuntimeBase base;
 	struct AMConnectionClassBody ivars;
-} __attribute__((packed)) am_connection;
+};
 
 #endif
