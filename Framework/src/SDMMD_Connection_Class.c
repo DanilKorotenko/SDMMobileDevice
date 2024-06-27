@@ -90,29 +90,30 @@ static CFRuntimeClass _kSDMMD_AMConnectionRefClass = {0};
 
 void SDMMD_AMConnectionRefClassInitialize(void)
 {
-	_kSDMMD_AMConnectionRefClass.version = 0;
-	_kSDMMD_AMConnectionRefClass.className = "SDMMD_AMConnectionRef";
-	_kSDMMD_AMConnectionRefClass.init = NULL;
-	_kSDMMD_AMConnectionRefClass.copy = NULL;
-	_kSDMMD_AMConnectionRefClass.finalize = SDMMD_AMConnectionRefFinalize;
-	_kSDMMD_AMConnectionRefClass.equal = SDMMD_AMConnectionRefEqual;
-	_kSDMMD_AMConnectionRefClass.hash = NULL;
-	_kSDMMD_AMConnectionRefClass.copyFormattingDesc = SDMMD_AMConnectionRefCopyFormattingDesc;
-	_kSDMMD_AMConnectionRefClass.copyDebugDesc = SDMMD_AMConnectionRefCopyDebugDesc;
-	_kSDMMD_AMConnectionRefClass.reclaim = NULL;
-	_kSDMMD_AMConnectionRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AMConnectionRefClass);
+    _kSDMMD_AMConnectionRefClass.version = 0;
+    _kSDMMD_AMConnectionRefClass.className = "SDMMD_AMConnectionRef";
+    _kSDMMD_AMConnectionRefClass.init = NULL;
+    _kSDMMD_AMConnectionRefClass.copy = NULL;
+    _kSDMMD_AMConnectionRefClass.finalize = SDMMD_AMConnectionRefFinalize;
+    _kSDMMD_AMConnectionRefClass.equal = SDMMD_AMConnectionRefEqual;
+    _kSDMMD_AMConnectionRefClass.hash = NULL;
+    _kSDMMD_AMConnectionRefClass.copyFormattingDesc = SDMMD_AMConnectionRefCopyFormattingDesc;
+    _kSDMMD_AMConnectionRefClass.copyDebugDesc = SDMMD_AMConnectionRefCopyDebugDesc;
+    _kSDMMD_AMConnectionRefClass.reclaim = NULL;
+    _kSDMMD_AMConnectionRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AMConnectionRefClass);
 }
 
 CFTypeID SDMMD_AMConnectionRefGetTypeID(void)
 {
-	return _kSDMMD_AMConnectionRefID;
+    return _kSDMMD_AMConnectionRefID;
 }
 
 SDMMD_AMConnectionRef SDMMD_AMConnectionCreateEmpty()
 {
-	uint32_t extra = sizeof(struct AMConnectionClassBody);
-	SDMMD_AMConnectionRef device = (SDMMD_AMConnectionRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_AMConnectionRefID, extra, NULL);
-	return device;
+    uint32_t extra = sizeof(struct AMConnectionClassBody);
+    SDMMD_AMConnectionRef device = (SDMMD_AMConnectionRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
+        _kSDMMD_AMConnectionRefID, extra, NULL);
+    return device;
 }
 
 #endif

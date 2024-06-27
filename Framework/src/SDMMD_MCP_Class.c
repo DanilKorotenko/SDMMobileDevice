@@ -43,26 +43,27 @@ static CFTypeID _kSDMMD_SDMMobileDeviceRefID = _kCFRuntimeNotATypeID;
 
 static CFRuntimeClass _kSDMMD_SDMMobileDeviceRefClass = {0};
 
-void SDMMD_SDMMobileDeviceRefClassInitialize()
+void SDMMD_SDMMobileDeviceRefClassInitialize(void)
 {
-	_kSDMMD_SDMMobileDeviceRefClass.version = 0;
-	_kSDMMD_SDMMobileDeviceRefClass.className = "SDMMobileDeviceRef";
-	_kSDMMD_SDMMobileDeviceRefClass.init = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.copy = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.finalize = SDMMD_SDMMobileDeviceRefFinalize;
-	_kSDMMD_SDMMobileDeviceRefClass.equal = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.hash = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.copyFormattingDesc = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.copyDebugDesc = NULL;
-	_kSDMMD_SDMMobileDeviceRefClass.reclaim = NULL;
-	_kSDMMD_SDMMobileDeviceRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_SDMMobileDeviceRefClass);
+    _kSDMMD_SDMMobileDeviceRefClass.version = 0;
+    _kSDMMD_SDMMobileDeviceRefClass.className = "SDMMobileDeviceRef";
+    _kSDMMD_SDMMobileDeviceRefClass.init = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.copy = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.finalize = SDMMD_SDMMobileDeviceRefFinalize;
+    _kSDMMD_SDMMobileDeviceRefClass.equal = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.hash = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.copyFormattingDesc = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.copyDebugDesc = NULL;
+    _kSDMMD_SDMMobileDeviceRefClass.reclaim = NULL;
+    _kSDMMD_SDMMobileDeviceRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_SDMMobileDeviceRefClass);
 }
 
-SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty()
+SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty(void)
 {
-	uint32_t extra = sizeof(struct sdm_mobiledevice_body);
-	SDMMobileDeviceRef manager = (SDMMobileDeviceRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_SDMMobileDeviceRefID, extra, NULL);
-	return manager;
+    uint32_t extra = sizeof(struct sdm_mobiledevice_body);
+    SDMMobileDeviceRef manager = (SDMMobileDeviceRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
+        _kSDMMD_SDMMobileDeviceRefID, extra, NULL);
+    return manager;
 }
 
 #endif

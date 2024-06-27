@@ -36,6 +36,6 @@ void SDMMD_USBMuxListenerRefClassInitialize(void);
 
 CFTypeID SDMMD_USBMuxListenerRefGetTypeID(void);
 
-SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty();
+SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty(void);
 
 #endif

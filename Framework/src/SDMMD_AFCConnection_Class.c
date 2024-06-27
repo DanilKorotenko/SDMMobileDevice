@@ -83,14 +83,15 @@ void SDMMD_AFCConnectionRefClassInitialize(void)
 
 CFTypeID SDMMD_AFCConnectionRefGetTypeID(void)
 {
-	return _kSDMMD_AFCConnectionRefID;
+    return _kSDMMD_AFCConnectionRefID;
 }
 
-SDMMD_AFCConnectionRef SDMMD_AFCConnectionCreateEmpty()
+SDMMD_AFCConnectionRef SDMMD_AFCConnectionCreateEmpty(void)
 {
-	uint32_t extra = sizeof(sdmmd_AFCConnectionClassBody);
-	SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_AFCConnectionRefID, extra, NULL);
-	return connection;
+    uint32_t extra = sizeof(sdmmd_AFCConnectionClassBody);
+    SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
+        _kSDMMD_AFCConnectionRefID, extra, NULL);
+    return connection;
 }
 
 #endif

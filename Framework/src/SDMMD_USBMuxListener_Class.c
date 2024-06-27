@@ -77,29 +77,30 @@ static CFRuntimeClass _kSDMMD_USBMuxListenerRefClass = {0};
 
 void SDMMD_USBMuxListenerRefClassInitialize(void)
 {
-	_kSDMMD_USBMuxListenerRefClass.version = 0;
-	_kSDMMD_USBMuxListenerRefClass.className = "SDMMD_USBMuxListenerRef";
-	_kSDMMD_USBMuxListenerRefClass.init = NULL;
-	_kSDMMD_USBMuxListenerRefClass.copy = NULL;
-	_kSDMMD_USBMuxListenerRefClass.finalize = SDMMD_USBMuxListenerRefFinalize;
-	_kSDMMD_USBMuxListenerRefClass.equal = SDMMD_USBMuxListenerRefEqual;
-	_kSDMMD_USBMuxListenerRefClass.hash = NULL;
-	_kSDMMD_USBMuxListenerRefClass.copyFormattingDesc = SDMMD_USBMuxListenerRefCopyFormattingDesc;
-	_kSDMMD_USBMuxListenerRefClass.copyDebugDesc = SDMMD_USBMuxListenerRefCopyDebugDesc;
-	_kSDMMD_USBMuxListenerRefClass.reclaim = NULL;
-	_kSDMMD_USBMuxListenerRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_USBMuxListenerRefClass);
+    _kSDMMD_USBMuxListenerRefClass.version = 0;
+    _kSDMMD_USBMuxListenerRefClass.className = "SDMMD_USBMuxListenerRef";
+    _kSDMMD_USBMuxListenerRefClass.init = NULL;
+    _kSDMMD_USBMuxListenerRefClass.copy = NULL;
+    _kSDMMD_USBMuxListenerRefClass.finalize = SDMMD_USBMuxListenerRefFinalize;
+    _kSDMMD_USBMuxListenerRefClass.equal = SDMMD_USBMuxListenerRefEqual;
+    _kSDMMD_USBMuxListenerRefClass.hash = NULL;
+    _kSDMMD_USBMuxListenerRefClass.copyFormattingDesc = SDMMD_USBMuxListenerRefCopyFormattingDesc;
+    _kSDMMD_USBMuxListenerRefClass.copyDebugDesc = SDMMD_USBMuxListenerRefCopyDebugDesc;
+    _kSDMMD_USBMuxListenerRefClass.reclaim = NULL;
+    _kSDMMD_USBMuxListenerRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_USBMuxListenerRefClass);
 }
 
 CFTypeID SDMMD_USBMuxListenerRefGetTypeID(void)
 {
-	return _kSDMMD_USBMuxListenerRefID;
+    return _kSDMMD_USBMuxListenerRefID;
 }
 
-SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty()
+SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty(void)
 {
-	uint32_t extra = sizeof(struct USBMuxListenerClassBody);
-	SDMMD_USBMuxListenerRef device = (SDMMD_USBMuxListenerRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, _kSDMMD_USBMuxListenerRefID, extra, NULL);
-	return device;
+    uint32_t extra = sizeof(struct USBMuxListenerClassBody);
+    SDMMD_USBMuxListenerRef device = (SDMMD_USBMuxListenerRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
+        _kSDMMD_USBMuxListenerRefID, extra, NULL);
+    return device;
 }
 
 #endif
