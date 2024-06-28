@@ -26,7 +26,7 @@
 		DA606D122C2EE51A002AB848 /* dev.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCF2C2DC943002AB848 /* dev.c */; };
 		DA606D132C2EE533002AB848 /* springboard.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDF2C2DC943002AB848 /* springboard.c */; };
 		DA606D142C2EE544002AB848 /* syslog.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE12C2DC943002AB848 /* syslog.c */; };
-		DA606D152C2EE555002AB848 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE32C2DC943002AB848 /* test.c */; };
+		DA606D152C2EE555002AB848 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE32C2DC943002AB848 /* test.m */; };
 		DAD9118E2C299F6C005EBB6E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911632C299EA2005EBB6E /* main.c */; };
 		DAD9123E2C29A0B7005EBB6E /* SDMMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD912072C29A0A1005EBB6E /* SDMMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912412C29A1AD005EBB6E /* SDMMD_Initialize.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -176,7 +176,7 @@
 		DA606CE02C2DC943002AB848 /* springboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = springboard.h; sourceTree = "<group>"; };
 		DA606CE12C2DC943002AB848 /* syslog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = syslog.c; sourceTree = "<group>"; };
 		DA606CE22C2DC943002AB848 /* syslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syslog.h; sourceTree = "<group>"; };
-		DA606CE32C2DC943002AB848 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		DA606CE32C2DC943002AB848 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		DA606CE42C2DC943002AB848 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		DA606CF72C2DC9AD002AB848 /* iOSConsole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iOSConsole; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SDMMobileDevice.xcconfig; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 				DA606CE02C2DC943002AB848 /* springboard.h */,
 				DA606CE12C2DC943002AB848 /* syslog.c */,
 				DA606CE22C2DC943002AB848 /* syslog.h */,
-				DA606CE32C2DC943002AB848 /* test.c */,
+				DA606CE32C2DC943002AB848 /* test.m */,
 				DA606CE42C2DC943002AB848 /* test.h */,
 			);
 			path = iOSConsole;
@@ -1226,7 +1226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA606D152C2EE555002AB848 /* test.c in Sources */,
+				DA606D152C2EE555002AB848 /* test.m in Sources */,
 				DA606D112C2EE47E002AB848 /* power.c in Sources */,
 				DA606D092C2ED476002AB848 /* query.c in Sources */,
 				DA606D082C2ED437002AB848 /* apps.c in Sources */,
