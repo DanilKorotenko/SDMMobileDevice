@@ -10,22 +10,22 @@
 		DA606CCA2C2D8CF2002AB848 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE3731B2C2D88F40014B498 /* Core.framework */; };
 		DA606CFE2C2DC9C6002AB848 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD62C2DC943002AB848 /* main.m */; };
 		DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */; };
-		DA606D022C2ED205002AB848 /* install.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD22C2DC943002AB848 /* install.c */; };
-		DA606D062C2ED378002AB848 /* attach.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCD2C2DC943002AB848 /* attach.c */; };
+		DA606D022C2ED205002AB848 /* install.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD22C2DC943002AB848 /* install.m */; };
+		DA606D062C2ED378002AB848 /* attach.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCD2C2DC943002AB848 /* attach.m */; };
 		DA606D072C2ED3C1002AB848 /* list.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD42C2DC943002AB848 /* list.m */; };
-		DA606D082C2ED437002AB848 /* apps.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCB2C2DC943002AB848 /* apps.c */; };
-		DA606D092C2ED476002AB848 /* query.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD92C2DC943002AB848 /* query.c */; };
-		DA606D0A2C2EDFD1002AB848 /* service.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDD2C2DC943002AB848 /* service.c */; };
-		DA606D0B2C2EE284002AB848 /* run.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDB2C2DC943002AB848 /* run.c */; };
+		DA606D082C2ED437002AB848 /* apps.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCB2C2DC943002AB848 /* apps.m */; };
+		DA606D092C2ED476002AB848 /* query.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD92C2DC943002AB848 /* query.m */; };
+		DA606D0A2C2EDFD1002AB848 /* service.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDD2C2DC943002AB848 /* service.m */; };
+		DA606D0B2C2EE284002AB848 /* run.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDB2C2DC943002AB848 /* run.m */; };
 		DA606D0C2C2EE2B0002AB848 /* SDMMD_Debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912262C29A0A1005EBB6E /* SDMMD_Debugger.c */; };
 		DA606D0D2C2EE2C7002AB848 /* File.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911A62C299FD2005EBB6E /* File.c */; };
 		DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912222C29A0A1005EBB6E /* SDMMD_AppleFileConduit.c */; };
 		DA606D0F2C2EE346002AB848 /* SDMMD_Connection.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912252C29A0A1005EBB6E /* SDMMD_Connection.c */; };
 		DA606D102C2EE44F002AB848 /* SDMMD_Applications.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912232C29A0A1005EBB6E /* SDMMD_Applications.c */; };
-		DA606D112C2EE47E002AB848 /* power.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD72C2DC943002AB848 /* power.c */; };
-		DA606D122C2EE51A002AB848 /* dev.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCF2C2DC943002AB848 /* dev.c */; };
-		DA606D132C2EE533002AB848 /* springboard.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDF2C2DC943002AB848 /* springboard.c */; };
-		DA606D142C2EE544002AB848 /* syslog.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE12C2DC943002AB848 /* syslog.c */; };
+		DA606D112C2EE47E002AB848 /* power.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD72C2DC943002AB848 /* power.m */; };
+		DA606D122C2EE51A002AB848 /* dev.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCF2C2DC943002AB848 /* dev.m */; };
+		DA606D132C2EE533002AB848 /* springboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDF2C2DC943002AB848 /* springboard.m */; };
+		DA606D142C2EE544002AB848 /* syslog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE12C2DC943002AB848 /* syslog.m */; };
 		DA606D152C2EE555002AB848 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE32C2DC943002AB848 /* test.m */; };
 		DAD9118E2C299F6C005EBB6E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911632C299EA2005EBB6E /* main.c */; };
 		DAD9123E2C29A0B7005EBB6E /* SDMMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD912072C29A0A1005EBB6E /* SDMMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -152,29 +152,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DA606CCB2C2DC943002AB848 /* apps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = apps.c; sourceTree = "<group>"; };
+		DA606CCB2C2DC943002AB848 /* apps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = apps.m; sourceTree = "<group>"; };
 		DA606CCC2C2DC943002AB848 /* apps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apps.h; sourceTree = "<group>"; };
-		DA606CCD2C2DC943002AB848 /* attach.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attach.c; sourceTree = "<group>"; };
+		DA606CCD2C2DC943002AB848 /* attach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attach.m; sourceTree = "<group>"; };
 		DA606CCE2C2DC943002AB848 /* attach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attach.h; sourceTree = "<group>"; };
-		DA606CCF2C2DC943002AB848 /* dev.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev.c; sourceTree = "<group>"; };
+		DA606CCF2C2DC943002AB848 /* dev.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dev.m; sourceTree = "<group>"; };
 		DA606CD02C2DC943002AB848 /* dev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dev.h; sourceTree = "<group>"; };
 		DA606CD12C2DC943002AB848 /* Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Features.h; sourceTree = "<group>"; };
-		DA606CD22C2DC943002AB848 /* install.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = install.c; sourceTree = "<group>"; };
+		DA606CD22C2DC943002AB848 /* install.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = install.m; sourceTree = "<group>"; };
 		DA606CD32C2DC943002AB848 /* install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install.h; sourceTree = "<group>"; };
 		DA606CD42C2DC943002AB848 /* list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = list.m; sourceTree = "<group>"; };
 		DA606CD52C2DC943002AB848 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		DA606CD62C2DC943002AB848 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DA606CD72C2DC943002AB848 /* power.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = power.c; sourceTree = "<group>"; };
+		DA606CD72C2DC943002AB848 /* power.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = power.m; sourceTree = "<group>"; };
 		DA606CD82C2DC943002AB848 /* power.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = power.h; sourceTree = "<group>"; };
-		DA606CD92C2DC943002AB848 /* query.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = query.c; sourceTree = "<group>"; };
+		DA606CD92C2DC943002AB848 /* query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = query.m; sourceTree = "<group>"; };
 		DA606CDA2C2DC943002AB848 /* query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = query.h; sourceTree = "<group>"; };
-		DA606CDB2C2DC943002AB848 /* run.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = run.c; sourceTree = "<group>"; };
+		DA606CDB2C2DC943002AB848 /* run.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = run.m; sourceTree = "<group>"; };
 		DA606CDC2C2DC943002AB848 /* run.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = run.h; sourceTree = "<group>"; };
-		DA606CDD2C2DC943002AB848 /* service.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = service.c; sourceTree = "<group>"; };
+		DA606CDD2C2DC943002AB848 /* service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = service.m; sourceTree = "<group>"; };
 		DA606CDE2C2DC943002AB848 /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = service.h; sourceTree = "<group>"; };
-		DA606CDF2C2DC943002AB848 /* springboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = springboard.c; sourceTree = "<group>"; };
+		DA606CDF2C2DC943002AB848 /* springboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = springboard.m; sourceTree = "<group>"; };
 		DA606CE02C2DC943002AB848 /* springboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = springboard.h; sourceTree = "<group>"; };
-		DA606CE12C2DC943002AB848 /* syslog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = syslog.c; sourceTree = "<group>"; };
+		DA606CE12C2DC943002AB848 /* syslog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = syslog.m; sourceTree = "<group>"; };
 		DA606CE22C2DC943002AB848 /* syslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syslog.h; sourceTree = "<group>"; };
 		DA606CE32C2DC943002AB848 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		DA606CE42C2DC943002AB848 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
@@ -516,29 +516,29 @@
 		DA606CE52C2DC943002AB848 /* iOSConsole */ = {
 			isa = PBXGroup;
 			children = (
-				DA606CCB2C2DC943002AB848 /* apps.c */,
+				DA606CCB2C2DC943002AB848 /* apps.m */,
 				DA606CCC2C2DC943002AB848 /* apps.h */,
-				DA606CCD2C2DC943002AB848 /* attach.c */,
+				DA606CCD2C2DC943002AB848 /* attach.m */,
 				DA606CCE2C2DC943002AB848 /* attach.h */,
-				DA606CCF2C2DC943002AB848 /* dev.c */,
+				DA606CCF2C2DC943002AB848 /* dev.m */,
 				DA606CD02C2DC943002AB848 /* dev.h */,
 				DA606CD12C2DC943002AB848 /* Features.h */,
-				DA606CD22C2DC943002AB848 /* install.c */,
+				DA606CD22C2DC943002AB848 /* install.m */,
 				DA606CD32C2DC943002AB848 /* install.h */,
 				DA606CD42C2DC943002AB848 /* list.m */,
 				DA606CD52C2DC943002AB848 /* list.h */,
 				DA606CD62C2DC943002AB848 /* main.m */,
-				DA606CD72C2DC943002AB848 /* power.c */,
+				DA606CD72C2DC943002AB848 /* power.m */,
 				DA606CD82C2DC943002AB848 /* power.h */,
-				DA606CD92C2DC943002AB848 /* query.c */,
+				DA606CD92C2DC943002AB848 /* query.m */,
 				DA606CDA2C2DC943002AB848 /* query.h */,
-				DA606CDB2C2DC943002AB848 /* run.c */,
+				DA606CDB2C2DC943002AB848 /* run.m */,
 				DA606CDC2C2DC943002AB848 /* run.h */,
-				DA606CDD2C2DC943002AB848 /* service.c */,
+				DA606CDD2C2DC943002AB848 /* service.m */,
 				DA606CDE2C2DC943002AB848 /* service.h */,
-				DA606CDF2C2DC943002AB848 /* springboard.c */,
+				DA606CDF2C2DC943002AB848 /* springboard.m */,
 				DA606CE02C2DC943002AB848 /* springboard.h */,
-				DA606CE12C2DC943002AB848 /* syslog.c */,
+				DA606CE12C2DC943002AB848 /* syslog.m */,
 				DA606CE22C2DC943002AB848 /* syslog.h */,
 				DA606CE32C2DC943002AB848 /* test.m */,
 				DA606CE42C2DC943002AB848 /* test.h */,
@@ -1227,18 +1227,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA606D152C2EE555002AB848 /* test.m in Sources */,
-				DA606D112C2EE47E002AB848 /* power.c in Sources */,
-				DA606D092C2ED476002AB848 /* query.c in Sources */,
-				DA606D082C2ED437002AB848 /* apps.c in Sources */,
-				DA606D122C2EE51A002AB848 /* dev.c in Sources */,
-				DA606D062C2ED378002AB848 /* attach.c in Sources */,
-				DA606D0B2C2EE284002AB848 /* run.c in Sources */,
-				DA606D0A2C2EDFD1002AB848 /* service.c in Sources */,
+				DA606D112C2EE47E002AB848 /* power.m in Sources */,
+				DA606D092C2ED476002AB848 /* query.m in Sources */,
+				DA606D082C2ED437002AB848 /* apps.m in Sources */,
+				DA606D122C2EE51A002AB848 /* dev.m in Sources */,
+				DA606D062C2ED378002AB848 /* attach.m in Sources */,
+				DA606D0B2C2EE284002AB848 /* run.m in Sources */,
+				DA606D0A2C2EDFD1002AB848 /* service.m in Sources */,
 				DA606CFE2C2DC9C6002AB848 /* main.m in Sources */,
-				DA606D022C2ED205002AB848 /* install.c in Sources */,
+				DA606D022C2ED205002AB848 /* install.m in Sources */,
 				DA606D072C2ED3C1002AB848 /* list.m in Sources */,
-				DA606D142C2EE544002AB848 /* syslog.c in Sources */,
-				DA606D132C2EE533002AB848 /* springboard.c in Sources */,
+				DA606D142C2EE544002AB848 /* syslog.m in Sources */,
+				DA606D132C2EE533002AB848 /* springboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
