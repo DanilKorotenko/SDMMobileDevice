@@ -9,6 +9,6 @@
 #ifndef iOSConsole_list_h
 #define iOSConsole_list_h
 
-void ListConnectedDevices();
+void ListConnectedDevices(void);
 
 #endif
