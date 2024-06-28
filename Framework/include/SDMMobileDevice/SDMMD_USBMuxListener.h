@@ -28,7 +28,8 @@
 #ifndef _SDM_MD_USBMUXLISTENER_H_
 #define _SDM_MD_USBMUXLISTENER_H_
 
-#include <SDMMobileDevice/SDMMD_USBMuxListener_Class.h>
+#import <Foundation/Foundation.h>
+
 #include <SDMMobileDevice/SDMMD_Error.h>
 #include <SDMMobileDevice/SDMMD_AMDevice.h>
 #include <SDMMobileDevice/SDMMD_USBMuxListener_Types.h>
@@ -39,11 +40,26 @@
 
 sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDeviceRef device, uint32_t port, uint32_t *socketConn);
 
-SDMMD_USBMuxListenerRef SDMMD_USBMuxCreate(void);
-void SDMMD_USBMuxStartListener(SDMMD_USBMuxListenerRef *listener);
-
 struct USBMuxPacket *SDMMD_USBMuxCreatePacketEmpty(void);
 struct USBMuxPacket *SDMMD_USBMuxCreatePacketType(SDMMD_USBMuxPacketMessageType type, CFDictionaryRef payload);
 void USBMuxPacketRelease(struct USBMuxPacket *packet);
+
+@interface SDMMD_USBMuxListener : NSObject
+
++ (SDMMD_USBMuxListener *)sharedInstance;
+
+/*
+ * Pass reference to packet to send. Upon return, *packet will either contain response
+ * packet or empty packet structure.
+ */
+- (void)send:(struct USBMuxPacket **)packet;
+/*
+ * Pass packet structure to store result in.
+ */
+- (void)receive:(struct USBMuxPacket *)packet;
+
+- (void)start;
+
+@end
 
 #endif

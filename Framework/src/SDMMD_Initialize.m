@@ -1,5 +1,5 @@
 /*
- *  SDMMD_MCP_Class.c
+ *  SDMMD_Initialize.c
  *  SDMMobileDevice
  *
  * Copyright (c) 2014, Samantha Marshall
@@ -25,45 +25,27 @@
  *
  */
 
-#ifndef _SDM_MD_MCP_CLASS_C_
-#define _SDM_MD_MCP_CLASS_C_
+#ifndef _SDM_MD_INITIALIZE_C_
+#define _SDM_MD_INITIALIZE_C_
 
-#include "SDMMD_MCP_Class.h"
-#include "SDMMD_MCP_Internal.h"
-#include <Core/Core.h>
+#include "SDMMD_Initialize.h"
+#include "SDMMD_Classes.h"
 
-static void SDMMD_SDMMobileDeviceRefFinalize(CFTypeRef cf)
+#include "SDMMD_USBMuxListener_Types.h"
+#include "SDMMD_AFC_Types.h"
+
+void InitializeSDMMobileDeviceClasses(void)
 {
-	SDMMobileDeviceRef manager = (SDMMobileDeviceRef)cf;
-	CFSafeRelease(manager->ivars.usbmuxd);
-	CFSafeRelease(manager->ivars.deviceList);
-}
+    // Initialize static CFStringRef keys
+    SDMMD_USBMuxListener_Types_Initialize();
+    SDMMD_AFC_Types_Initialize();
 
-static CFTypeID _kSDMMD_SDMMobileDeviceRefID = _kCFRuntimeNotATypeID;
-
-static CFRuntimeClass _kSDMMD_SDMMobileDeviceRefClass = {0};
-
-void SDMMD_SDMMobileDeviceRefClassInitialize(void)
-{
-    _kSDMMD_SDMMobileDeviceRefClass.version = 0;
-    _kSDMMD_SDMMobileDeviceRefClass.className = "SDMMobileDeviceRef";
-    _kSDMMD_SDMMobileDeviceRefClass.init = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.copy = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.finalize = SDMMD_SDMMobileDeviceRefFinalize;
-    _kSDMMD_SDMMobileDeviceRefClass.equal = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.hash = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.copyFormattingDesc = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.copyDebugDesc = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.reclaim = NULL;
-    _kSDMMD_SDMMobileDeviceRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_SDMMobileDeviceRefClass);
-}
-
-SDMMobileDeviceRef SDMMobileDeviceRefCreateEmpty(void)
-{
-    uint32_t extra = sizeof(struct sdm_mobiledevice_body);
-    SDMMobileDeviceRef manager = (SDMMobileDeviceRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
-        _kSDMMD_SDMMobileDeviceRefID, extra, NULL);
-    return manager;
+    // Initialize CFType classes
+    SDMMD_AMDeviceRefClassInitialize();
+    SDMMD_AMConnectionRefClassInitialize();
+    SDMMD_AFCConnectionRefClassInitialize();
+    SDMMD_AFCOperationRefClassInitialize();
+    SDMMD_SDMMobileDeviceRefClassInitialize();
 }
 
 #endif

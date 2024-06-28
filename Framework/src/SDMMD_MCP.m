@@ -50,8 +50,8 @@ SDMMobileDeviceRef InitializeSDMMobileDevice(void)
             controller = SDMMobileDeviceRefCreateEmpty();
             controller->ivars.deviceList = CFArrayCreate(kCFAllocatorDefault, NULL, 0,
                 &kCFTypeArrayCallBacks);
-            controller->ivars.usbmuxd = SDMMD_USBMuxCreate();
-            SDMMD_USBMuxStartListener(&controller->ivars.usbmuxd);
+
+            [[SDMMD_USBMuxListener sharedInstance] start];
             SSL_library_init();
             ERR_load_crypto_strings();
             SSL_load_error_strings();

@@ -37,7 +37,6 @@
 #include "SDMMD_Functions.h"
 #include "SDMMD_Service.h"
 #include "SDMMD_USBMuxListener.h"
-#include "SDMMD_USBMux_Protocol.h"
 #include <string.h>
 #include <errno.h>
 #include <openssl/bio.h>
@@ -1733,10 +1732,12 @@ bool SDMMD_AMDeviceIsAttached(SDMMD_AMDeviceRef device)
 {
     bool result = false;
     struct USBMuxPacket *devicesPacket = SDMMD_USBMuxCreatePacketType(kSDMMD_USBMuxPacketListDevicesType, NULL);
-    SDMMD_USBMuxListenerSend(SDMMobileDevice->ivars.usbmuxd, &devicesPacket);
-    for (uint32_t i = 0; i < CFArrayGetCount(SDMMobileDevice->ivars.deviceList); i++) {
+    [[SDMMD_USBMuxListener sharedInstance] send:&devicesPacket];
+    for (uint32_t i = 0; i < CFArrayGetCount(SDMMobileDevice->ivars.deviceList); i++)
+    {
         SDMMD_AMDeviceRef deviceCheck = (SDMMD_AMDeviceRef)CFArrayGetValueAtIndex(SDMMobileDevice->ivars.deviceList, i);
-        if (SDMMD_AMDeviceGetConnectionID(device) == SDMMD_AMDeviceGetConnectionID(deviceCheck)) {
+        if (SDMMD_AMDeviceGetConnectionID(device) == SDMMD_AMDeviceGetConnectionID(deviceCheck))
+        {
             result = true;
             break;
         }
@@ -1749,7 +1750,7 @@ CFArrayRef SDMMD_AMDCreateDeviceList(void)
 {
     struct USBMuxPacket *devicesPacket =
     SDMMD_USBMuxCreatePacketType(kSDMMD_USBMuxPacketListDevicesType, NULL);
-    SDMMD_USBMuxListenerSend(SDMMobileDevice->ivars.usbmuxd, &devicesPacket);
+    [[SDMMD_USBMuxListener sharedInstance] send:&devicesPacket];
     USBMuxPacketRelease(devicesPacket);
     CFArrayRef deviceArray = CFArrayCreateCopy(kCFAllocatorDefault, SDMMobileDevice->ivars.deviceList);
     return deviceArray;

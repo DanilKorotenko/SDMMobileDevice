@@ -43,6 +43,5 @@
 #include <SDMMobileDevice/SDMMD_MobileBackup2.h>
 #include <SDMMobileDevice/SDMMD_pcap.h>
 #include <SDMMobileDevice/SDMMD_MobileConfig.h>
-#include <SDMMobileDevice/SDMMD_USBMux_Protocol.h>
 
 #endif

@@ -32,15 +32,17 @@
 #include <SDMMobileDevice/CFRuntime.h>
 #include <SDMMobileDevice/SDMMD_USBMuxListener.h>
 
-struct sdm_mobiledevice_body {
-	SDMMD_USBMuxListenerRef usbmuxd;
-	CFArrayRef deviceList;
-	uint64_t peer_certificate_data_index;
+struct sdm_mobiledevice_body
+{
+//    SDMMD_USBMuxListenerRef usbmuxd;
+    CFArrayRef deviceList;
+    uint64_t peer_certificate_data_index;
 };
 
-struct sdm_mobiledevice{
-	CFRuntimeBase base;
-	struct sdm_mobiledevice_body ivars;
-} ;
+struct sdm_mobiledevice
+{
+    CFRuntimeBase base;
+    struct sdm_mobiledevice_body ivars;
+};
 
 #endif
