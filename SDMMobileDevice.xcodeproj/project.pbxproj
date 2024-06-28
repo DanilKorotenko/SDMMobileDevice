@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		DA606CCA2C2D8CF2002AB848 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE3731B2C2D88F40014B498 /* Core.framework */; };
+		DA606CFE2C2DC9C6002AB848 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD62C2DC943002AB848 /* main.c */; };
+		DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */; };
+		DA606D022C2ED205002AB848 /* install.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD22C2DC943002AB848 /* install.c */; };
+		DA606D062C2ED378002AB848 /* attach.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCD2C2DC943002AB848 /* attach.c */; };
+		DA606D072C2ED3C1002AB848 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD42C2DC943002AB848 /* list.c */; };
+		DA606D082C2ED437002AB848 /* apps.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCB2C2DC943002AB848 /* apps.c */; };
+		DA606D092C2ED476002AB848 /* query.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD92C2DC943002AB848 /* query.c */; };
 		DAD9118E2C299F6C005EBB6E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911632C299EA2005EBB6E /* main.c */; };
 		DAD9123E2C29A0B7005EBB6E /* SDMMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD912072C29A0A1005EBB6E /* SDMMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912412C29A1AD005EBB6E /* SDMMD_Initialize.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,6 +140,35 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA606CCB2C2DC943002AB848 /* apps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = apps.c; sourceTree = "<group>"; };
+		DA606CCC2C2DC943002AB848 /* apps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apps.h; sourceTree = "<group>"; };
+		DA606CCD2C2DC943002AB848 /* attach.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attach.c; sourceTree = "<group>"; };
+		DA606CCE2C2DC943002AB848 /* attach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attach.h; sourceTree = "<group>"; };
+		DA606CCF2C2DC943002AB848 /* dev.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev.c; sourceTree = "<group>"; };
+		DA606CD02C2DC943002AB848 /* dev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dev.h; sourceTree = "<group>"; };
+		DA606CD12C2DC943002AB848 /* Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Features.h; sourceTree = "<group>"; };
+		DA606CD22C2DC943002AB848 /* install.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = install.c; sourceTree = "<group>"; };
+		DA606CD32C2DC943002AB848 /* install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install.h; sourceTree = "<group>"; };
+		DA606CD42C2DC943002AB848 /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		DA606CD52C2DC943002AB848 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		DA606CD62C2DC943002AB848 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		DA606CD72C2DC943002AB848 /* power.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = power.c; sourceTree = "<group>"; };
+		DA606CD82C2DC943002AB848 /* power.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = power.h; sourceTree = "<group>"; };
+		DA606CD92C2DC943002AB848 /* query.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = query.c; sourceTree = "<group>"; };
+		DA606CDA2C2DC943002AB848 /* query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = query.h; sourceTree = "<group>"; };
+		DA606CDB2C2DC943002AB848 /* run.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = run.c; sourceTree = "<group>"; };
+		DA606CDC2C2DC943002AB848 /* run.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = run.h; sourceTree = "<group>"; };
+		DA606CDD2C2DC943002AB848 /* service.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = service.c; sourceTree = "<group>"; };
+		DA606CDE2C2DC943002AB848 /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = service.h; sourceTree = "<group>"; };
+		DA606CDF2C2DC943002AB848 /* springboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = springboard.c; sourceTree = "<group>"; };
+		DA606CE02C2DC943002AB848 /* springboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = springboard.h; sourceTree = "<group>"; };
+		DA606CE12C2DC943002AB848 /* syslog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = syslog.c; sourceTree = "<group>"; };
+		DA606CE22C2DC943002AB848 /* syslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syslog.h; sourceTree = "<group>"; };
+		DA606CE32C2DC943002AB848 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		DA606CE42C2DC943002AB848 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		DA606CF72C2DC9AD002AB848 /* iOSConsole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iOSConsole; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SDMMobileDevice.xcconfig; sourceTree = "<group>"; };
+		DA606D052C2ED2FD002AB848 /* iOSConsole.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = iOSConsole.xcconfig; sourceTree = "<group>"; };
 		DAD911612C299EA2005EBB6E /* listener.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = listener.c; sourceTree = "<group>"; };
 		DAD911622C299EA2005EBB6E /* listener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = listener.h; sourceTree = "<group>"; };
 		DAD911632C299EA2005EBB6E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -498,9 +534,19 @@
 			path = iOSConsole;
 			sourceTree = "<group>";
 		};
+		DA606D032C2ED269002AB848 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */,
+				DA606D052C2ED2FD002AB848 /* iOSConsole.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		DAD906FE2C297F05005EBB6E = {
 			isa = PBXGroup;
 			children = (
+				DA606D032C2ED269002AB848 /* Config */,
 				DA606CE52C2DC943002AB848 /* iOSConsole */,
 				DAE373132C2D88750014B498 /* openssl-1.1.1k_macosx */,
 				DAE372692C2AFD950014B498 /* Frameworks */,
@@ -1502,6 +1548,7 @@
 		};
 		DAD911BD2C29A08D005EBB6E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1560,7 +1607,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/openssl-1.1.1k_macosx/include";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1568,7 +1614,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/openssl-1.1.1k_macosx/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
@@ -1577,10 +1622,6 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lssl.1.1",
-					"-lcrypto.1.1",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.danilkorotenko.SDMMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
@@ -1593,6 +1634,7 @@
 		};
 		DAD911BE2C29A08D005EBB6E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1645,7 +1687,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/openssl-1.1.1k_macosx/include";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1653,7 +1694,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/openssl-1.1.1k_macosx/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
@@ -1661,10 +1701,6 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-lssl.1.1",
-					"-lcrypto.1.1",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.danilkorotenko.SDMMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;

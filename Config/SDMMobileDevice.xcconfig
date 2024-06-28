@@ -1,0 +1,15 @@
+//
+//  SDMMobileDevice.xcconfig
+//  SDMMobileDevice
+//
+//  Created by Danil Korotenko on 6/28/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+OTHER_LDFLAGS = -lssl.1.1 -lcrypto.1.1
+
+HEADER_SEARCH_PATHS = $(SRCROOT)/openssl-1.1.1k_macosx/include
+
+LIBRARY_SEARCH_PATHS = $(SRCROOT)/openssl-1.1.1k_macosx/lib
