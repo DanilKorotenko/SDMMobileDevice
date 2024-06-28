@@ -1654,13 +1654,14 @@ bool SDMMD_AMDeviceIsAttached(SDMMD_AMDeviceRef device)
 	return result;
 }
 
-CFArrayRef SDMMD_AMDCreateDeviceList()
+CFArrayRef SDMMD_AMDCreateDeviceList(void)
 {
-	struct USBMuxPacket *devicesPacket = SDMMD_USBMuxCreatePacketType(kSDMMD_USBMuxPacketListDevicesType, NULL);
-	SDMMD_USBMuxListenerSend(SDMMobileDevice->ivars.usbmuxd, &devicesPacket);
-	USBMuxPacketRelease(devicesPacket);
-	CFArrayRef deviceArray = CFArrayCreateCopy(kCFAllocatorDefault, SDMMobileDevice->ivars.deviceList);
-	return deviceArray;
+    struct USBMuxPacket *devicesPacket =
+        SDMMD_USBMuxCreatePacketType(kSDMMD_USBMuxPacketListDevicesType, NULL);
+    SDMMD_USBMuxListenerSend(SDMMobileDevice->ivars.usbmuxd, &devicesPacket);
+    USBMuxPacketRelease(devicesPacket);
+    CFArrayRef deviceArray = CFArrayCreateCopy(kCFAllocatorDefault, SDMMobileDevice->ivars.deviceList);
+    return deviceArray;
 }
 
 SDMMD_AMDeviceRef SDMMD_AMDeviceCreateCopy(SDMMD_AMDeviceRef device)

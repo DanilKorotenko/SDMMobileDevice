@@ -16,7 +16,7 @@
 
 #include "list.h"
 
-void ListConnectedDevices()
+void ListConnectedDevices(void)
 {
     CFArrayRef devices = SDMMD_AMDCreateDeviceList();
     CFIndex numberOfDevices = CFArrayGetCount(devices);

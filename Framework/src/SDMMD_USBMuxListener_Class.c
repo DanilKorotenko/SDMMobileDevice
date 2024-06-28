@@ -34,41 +34,43 @@
 
 static Boolean SDMMD_USBMuxListenerRefEqual(CFTypeRef cf1, CFTypeRef cf2)
 {
-	SDMMD_USBMuxListenerRef listener1 = (SDMMD_USBMuxListenerRef)cf1;
-	SDMMD_USBMuxListenerRef listener2 = (SDMMD_USBMuxListenerRef)cf2;
+    SDMMD_USBMuxListenerRef listener1 = (SDMMD_USBMuxListenerRef)cf1;
+    SDMMD_USBMuxListenerRef listener2 = (SDMMD_USBMuxListenerRef)cf2;
 
-	return (listener1->ivars.socket == listener2->ivars.socket);
+    return (listener1->ivars.socket == listener2->ivars.socket);
 }
 
 static CFStringRef SDMMD_USBMuxListenerRefCopyFormattingDesc(CFTypeRef cf, CFDictionaryRef formatOpts)
 {
-	SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
-	return CFStringCreateWithFormat(CFGetAllocator(listener), NULL, CFSTR("<SDMMD_USBMuxListenerRef %p>{socket = %d}"), listener, listener->ivars.socket);
+    SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
+    return CFStringCreateWithFormat(CFGetAllocator(listener), NULL, CFSTR("<SDMMD_USBMuxListenerRef %p>{socket = %d}"), listener, listener->ivars.socket);
 }
 
 static CFStringRef SDMMD_USBMuxListenerRefCopyDebugDesc(CFTypeRef cf)
 {
-	SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
-	return CFStringCreateWithFormat(CFGetAllocator(listener), NULL, CFSTR("<SDMMD_USBMuxListenerRef %p>{socket = %d}"), listener, listener->ivars.socket);
+    SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
+    return CFStringCreateWithFormat(CFGetAllocator(listener), NULL, CFSTR("<SDMMD_USBMuxListenerRef %p>{socket = %d}"), listener, listener->ivars.socket);
 }
 
 static void SDMMD_USBMuxListenerRefFinalize(CFTypeRef cf)
 {
-	SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
-	listener->ivars.isActive = false;
-	CFSafeRelease(listener->ivars.responses);
-	Safe(close, listener->ivars.socket);
-	Safe(dispatch_release, listener->ivars.socketQueue);
-	listener->ivars.responseCallback = NULL;
-	listener->ivars.attachedCallback = NULL;
-	listener->ivars.detachedCallback = NULL;
-	listener->ivars.logsCallback = NULL;
-	listener->ivars.deviceListCallback = NULL;
-	listener->ivars.listenerListCallback = NULL;
-	listener->ivars.unknownCallback = NULL;
-	dispatch_async(dispatch_get_main_queue(), ^{
-		CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(), kSDMMD_USBMuxListenerStoppedListenerNotification, NULL, NULL, true);
-	});
+    SDMMD_USBMuxListenerRef listener = (SDMMD_USBMuxListenerRef)cf;
+    listener->ivars.isActive = false;
+    CFSafeRelease(listener->ivars.responses);
+    Safe(close, listener->ivars.socket);
+    Safe(dispatch_release, listener->ivars.socketQueue);
+    listener->ivars.responseCallback = NULL;
+    listener->ivars.attachedCallback = NULL;
+    listener->ivars.detachedCallback = NULL;
+    listener->ivars.logsCallback = NULL;
+    listener->ivars.deviceListCallback = NULL;
+    listener->ivars.listenerListCallback = NULL;
+    listener->ivars.unknownCallback = NULL;
+    dispatch_async(dispatch_get_main_queue(),
+    ^{
+        CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
+            kSDMMD_USBMuxListenerStoppedListenerNotification, NULL, NULL, true);
+    });
 }
 
 static CFTypeID _kSDMMD_USBMuxListenerRefID = _kCFRuntimeNotATypeID;
@@ -87,7 +89,8 @@ void SDMMD_USBMuxListenerRefClassInitialize(void)
     _kSDMMD_USBMuxListenerRefClass.copyFormattingDesc = SDMMD_USBMuxListenerRefCopyFormattingDesc;
     _kSDMMD_USBMuxListenerRefClass.copyDebugDesc = SDMMD_USBMuxListenerRefCopyDebugDesc;
     _kSDMMD_USBMuxListenerRefClass.reclaim = NULL;
-    _kSDMMD_USBMuxListenerRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_USBMuxListenerRefClass);
+    _kSDMMD_USBMuxListenerRefID = _CFRuntimeRegisterClass((const CFRuntimeClass *const) &
+        _kSDMMD_USBMuxListenerRefClass);
 }
 
 CFTypeID SDMMD_USBMuxListenerRefGetTypeID(void)
@@ -98,7 +101,8 @@ CFTypeID SDMMD_USBMuxListenerRefGetTypeID(void)
 SDMMD_USBMuxListenerRef SDMMD_USBMuxListenerCreateEmpty(void)
 {
     uint32_t extra = sizeof(struct USBMuxListenerClassBody);
-    SDMMD_USBMuxListenerRef device = (SDMMD_USBMuxListenerRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
+    SDMMD_USBMuxListenerRef device =
+        (SDMMD_USBMuxListenerRef)_CFRuntimeCreateInstance(kCFAllocatorDefault,
         _kSDMMD_USBMuxListenerRefID, extra, NULL);
     return device;
 }

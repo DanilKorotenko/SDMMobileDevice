@@ -12,7 +12,7 @@
 		DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */; };
 		DA606D022C2ED205002AB848 /* install.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD22C2DC943002AB848 /* install.c */; };
 		DA606D062C2ED378002AB848 /* attach.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCD2C2DC943002AB848 /* attach.c */; };
-		DA606D072C2ED3C1002AB848 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD42C2DC943002AB848 /* list.c */; };
+		DA606D072C2ED3C1002AB848 /* list.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD42C2DC943002AB848 /* list.m */; };
 		DA606D082C2ED437002AB848 /* apps.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCB2C2DC943002AB848 /* apps.c */; };
 		DA606D092C2ED476002AB848 /* query.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD92C2DC943002AB848 /* query.c */; };
 		DA606D0A2C2EDFD1002AB848 /* service.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDD2C2DC943002AB848 /* service.c */; };
@@ -161,7 +161,7 @@
 		DA606CD12C2DC943002AB848 /* Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Features.h; sourceTree = "<group>"; };
 		DA606CD22C2DC943002AB848 /* install.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = install.c; sourceTree = "<group>"; };
 		DA606CD32C2DC943002AB848 /* install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install.h; sourceTree = "<group>"; };
-		DA606CD42C2DC943002AB848 /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		DA606CD42C2DC943002AB848 /* list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = list.m; sourceTree = "<group>"; };
 		DA606CD52C2DC943002AB848 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		DA606CD62C2DC943002AB848 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DA606CD72C2DC943002AB848 /* power.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = power.c; sourceTree = "<group>"; };
@@ -525,7 +525,7 @@
 				DA606CD12C2DC943002AB848 /* Features.h */,
 				DA606CD22C2DC943002AB848 /* install.c */,
 				DA606CD32C2DC943002AB848 /* install.h */,
-				DA606CD42C2DC943002AB848 /* list.c */,
+				DA606CD42C2DC943002AB848 /* list.m */,
 				DA606CD52C2DC943002AB848 /* list.h */,
 				DA606CD62C2DC943002AB848 /* main.m */,
 				DA606CD72C2DC943002AB848 /* power.c */,
@@ -1236,7 +1236,7 @@
 				DA606D0A2C2EDFD1002AB848 /* service.c in Sources */,
 				DA606CFE2C2DC9C6002AB848 /* main.m in Sources */,
 				DA606D022C2ED205002AB848 /* install.c in Sources */,
-				DA606D072C2ED3C1002AB848 /* list.c in Sources */,
+				DA606D072C2ED3C1002AB848 /* list.m in Sources */,
 				DA606D142C2EE544002AB848 /* syslog.c in Sources */,
 				DA606D132C2EE533002AB848 /* springboard.c in Sources */,
 			);
