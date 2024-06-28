@@ -36,7 +36,7 @@ void SDMMD_AFCOperationRefClassInitialize(void);
 
 CFTypeID SDMMD_AFCOperationRefGetTypeID(void);
 
-SDMMD_AFCOperationRef SDMMD_AFCOperationCreateEmpty();
+SDMMD_AFCOperationRef SDMMD_AFCOperationCreateEmpty(void);
 
 CFTypeRef SDMMD_AFCOperationGetPacketResponse(SDMMD_AFCOperationRef operation);
 

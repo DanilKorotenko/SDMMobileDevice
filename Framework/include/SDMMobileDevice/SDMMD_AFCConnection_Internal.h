@@ -37,11 +37,11 @@ struct sdmmd_AFCConnectionClassBody {
 	__unsafe_unretained dispatch_queue_t operationQueue;
 	__unsafe_unretained dispatch_semaphore_t semaphore;
 	uint64_t operationCount;
-} sdmmd_AFCConnectionClassBody;
+};
 
 struct sdmmd_AFCConnectionClass {
 	CFRuntimeBase base;
 	struct sdmmd_AFCConnectionClassBody ivars;
-} __attribute__((packed)) sdmmd_AFCConnectionClass;
+};
 
 #endif

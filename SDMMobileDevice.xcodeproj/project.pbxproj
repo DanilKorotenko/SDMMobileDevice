@@ -15,6 +15,18 @@
 		DA606D072C2ED3C1002AB848 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD42C2DC943002AB848 /* list.c */; };
 		DA606D082C2ED437002AB848 /* apps.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCB2C2DC943002AB848 /* apps.c */; };
 		DA606D092C2ED476002AB848 /* query.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD92C2DC943002AB848 /* query.c */; };
+		DA606D0A2C2EDFD1002AB848 /* service.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDD2C2DC943002AB848 /* service.c */; };
+		DA606D0B2C2EE284002AB848 /* run.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDB2C2DC943002AB848 /* run.c */; };
+		DA606D0C2C2EE2B0002AB848 /* SDMMD_Debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912262C29A0A1005EBB6E /* SDMMD_Debugger.c */; };
+		DA606D0D2C2EE2C7002AB848 /* File.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911A62C299FD2005EBB6E /* File.c */; };
+		DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912222C29A0A1005EBB6E /* SDMMD_AppleFileConduit.c */; };
+		DA606D0F2C2EE346002AB848 /* SDMMD_Connection.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912252C29A0A1005EBB6E /* SDMMD_Connection.c */; };
+		DA606D102C2EE44F002AB848 /* SDMMD_Applications.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912232C29A0A1005EBB6E /* SDMMD_Applications.c */; };
+		DA606D112C2EE47E002AB848 /* power.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD72C2DC943002AB848 /* power.c */; };
+		DA606D122C2EE51A002AB848 /* dev.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCF2C2DC943002AB848 /* dev.c */; };
+		DA606D132C2EE533002AB848 /* springboard.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDF2C2DC943002AB848 /* springboard.c */; };
+		DA606D142C2EE544002AB848 /* syslog.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE12C2DC943002AB848 /* syslog.c */; };
+		DA606D152C2EE555002AB848 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE32C2DC943002AB848 /* test.c */; };
 		DAD9118E2C299F6C005EBB6E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911632C299EA2005EBB6E /* main.c */; };
 		DAD9123E2C29A0B7005EBB6E /* SDMMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD912072C29A0A1005EBB6E /* SDMMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912412C29A1AD005EBB6E /* SDMMD_Initialize.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1214,12 +1226,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA606D152C2EE555002AB848 /* test.c in Sources */,
+				DA606D112C2EE47E002AB848 /* power.c in Sources */,
 				DA606D092C2ED476002AB848 /* query.c in Sources */,
 				DA606D082C2ED437002AB848 /* apps.c in Sources */,
+				DA606D122C2EE51A002AB848 /* dev.c in Sources */,
 				DA606D062C2ED378002AB848 /* attach.c in Sources */,
+				DA606D0B2C2EE284002AB848 /* run.c in Sources */,
+				DA606D0A2C2EDFD1002AB848 /* service.c in Sources */,
 				DA606CFE2C2DC9C6002AB848 /* main.c in Sources */,
 				DA606D022C2ED205002AB848 /* install.c in Sources */,
 				DA606D072C2ED3C1002AB848 /* list.c in Sources */,
+				DA606D142C2EE544002AB848 /* syslog.c in Sources */,
+				DA606D132C2EE533002AB848 /* springboard.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,6 +1260,7 @@
 				DAE372762C2B00E70014B498 /* SDMMD_USBMuxListener.c in Sources */,
 				DAE372702C2AFEE80014B498 /* SDMMD_AFCOperation_Class.c in Sources */,
 				DAE3727A2C2B01B70014B498 /* SDMMD_Error.c in Sources */,
+				DA606D0F2C2EE346002AB848 /* SDMMD_Connection.c in Sources */,
 				DAE3726D2C2AFE040014B498 /* SDMMD_SSL_Functions.c in Sources */,
 				DAE372622C2AFC880014B498 /* SDMMD_MCP.c in Sources */,
 				DAE372772C2B01200014B498 /* SDMMD_USBMuxListener_Class.c in Sources */,
@@ -1250,11 +1270,14 @@
 				DAE372712C2AFF2B0014B498 /* SDMMD_AFC_Types.c in Sources */,
 				DAE372742C2B007E0014B498 /* SDMMD_MCP_Class.c in Sources */,
 				DAE372782C2B01640014B498 /* SDMMD_USBMux_Protocol.c in Sources */,
+				DA606D0C2C2EE2B0002AB848 /* SDMMD_Debugger.c in Sources */,
 				DAE3726F2C2AFE820014B498 /* SDMMD_AFCConnection_Class.c in Sources */,
+				DA606D102C2EE44F002AB848 /* SDMMD_Applications.c in Sources */,
 				DAE372632C2AFCD30014B498 /* SDMMD_Initialize.c in Sources */,
 				DAE372732C2AFFA20014B498 /* SDMMD_AMDevice_Class.c in Sources */,
 				DAE372642C2AFD1C0014B498 /* SDMMD_Functions.c in Sources */,
 				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.c in Sources */,
+				DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1273,6 +1296,7 @@
 				DAE373302C2D8B070014B498 /* CFTypeAddition.c in Sources */,
 				DAE373262C2D89D70014B498 /* CFDataAddition.c in Sources */,
 				DAE373362C2D8C090014B498 /* CFDictionaryAddition.c in Sources */,
+				DA606D0D2C2EE2C7002AB848 /* File.c in Sources */,
 				DAE373342C2D8BF70014B498 /* Buffer.c in Sources */,
 				DAE373352C2D8BFF0014B498 /* CFStringAddition.c in Sources */,
 			);
