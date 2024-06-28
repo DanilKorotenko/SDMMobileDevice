@@ -7,6 +7,7 @@
 //
 
 #include <getopt.h>
+#import <Foundation/Foundation.h>
 #include <CoreFoundation/CoreFoundation.h>
 
 #include "SDMMobileDevice.h"
@@ -68,22 +69,20 @@ int main(int argc, const char *argv[])
 {
     SDMMobileDevice;
 
-    char *udid = NULL;
+    NSString *udid = nil;
+    NSString *service = nil;
+    NSString *help = nil;
 
-    char *service = NULL;
+    NSString *domain = nil;
+    NSString *key = nil;
 
-    char *help = NULL;
+    NSString *bundle = nil;
 
-    char *domain = NULL;
-    char *key = NULL;
-
-    char *bundle = NULL;
-
-    char *diagArg = NULL;
+    NSString *diagArg = nil;
 
     bool searchArgs = true;
 
-    char *installPath = NULL;
+    NSString *installPath = nil;
 
     int c;
     while (searchArgs)
@@ -101,7 +100,7 @@ int main(int argc, const char *argv[])
             {
                 if (optarg)
                 {
-                    help = optarg;
+                    help = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
                 }
                 optionsEnable[OptionsHelp] = true;
                 searchArgs = false;
@@ -118,7 +117,7 @@ int main(int argc, const char *argv[])
                 if (optarg && !optionsEnable[OptionsDevice])
                 {
                     optionsEnable[OptionsDevice] = true;
-                    udid = optarg;
+                    udid = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
                 }
                 break;
             }
@@ -126,7 +125,8 @@ int main(int argc, const char *argv[])
             {
                 if (optarg && !optionsEnable[OptionsAttach])
                 {
-                    service = optarg;
+                    service = [NSString stringWithCString:optarg
+                        encoding:NSUTF8StringEncoding];
                     optionsEnable[OptionsAttach] = true;
                 }
                 else
@@ -139,33 +139,27 @@ int main(int argc, const char *argv[])
             {
                 if (optarg && !optionsEnable[OptionsQuery])
                 {
-                    CFStringRef argValue = CFStringCreateWithCString(kCFAllocatorDefault, optarg,
-                        kCFStringEncodingUTF8);
-                    CFArrayRef argsArray = CFStringCreateArrayBySeparatingStrings(kCFAllocatorDefault,
-                        argValue, CFSTR("="));
-                    CFIndex argsCounter = CFArrayGetCount(argsArray);
-                    if (argsCounter >= 0x1)
+                    NSString *argValue = [NSString stringWithCString:optarg
+                        encoding:NSUTF8StringEncoding];
+                    NSArray *argsArray = [argValue componentsSeparatedByString:@"="];
+                    if (argsArray.count >= 1)
                     {
-                        domain = (char *)SDMCFStringGetString(CFArrayGetValueAtIndex(argsArray, 0x0));
-                        if (strncmp(domain, "all", sizeof(char) * 0x3) == 0x0)
+                        domain = [argsArray objectAtIndex:0];
+                        if ([domain isEqualToString:@"all"])
                         {
-                            Safe(free, domain);
-                            domain = calloc(0x1, sizeof(char) * (strlen(kAllDomains) + 0x1));
-                            memcpy(domain, kAllDomains, strlen(kAllDomains));
+                            domain = [NSString stringWithCString:kAllDomains
+                                encoding:NSUTF8StringEncoding];
                         }
                         optionsEnable[OptionsQuery] = true;
                     }
-                    if (argsCounter == 0x2)
+                    if (argsArray.count == 2)
                     {
-                        key = (char *)SDMCFStringGetString(CFArrayGetValueAtIndex(argsArray, 0x1));
+                        key = [argsArray objectAtIndex:1];
                     }
                     else
                     {
-                        key = calloc(0x1, sizeof(char) * (strlen(kAllKeys) + 0x1));
-                        memcpy(key, kAllKeys, strlen(kAllKeys));
+                        key = [NSString stringWithCString:kAllKeys encoding:NSUTF8StringEncoding];
                     }
-                    CFSafeRelease(argsArray);
-                    CFSafeRelease(argValue);
                 }
                 break;
             };
@@ -183,7 +177,7 @@ int main(int argc, const char *argv[])
             {
                 if (optarg && !optionsEnable[OptionsRun])
                 {
-                    bundle = optarg;
+                    bundle = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
                     optionsEnable[OptionsRun] = true;
                 }
                 break;
@@ -192,7 +186,7 @@ int main(int argc, const char *argv[])
             {
                 if (optarg && !optionsEnable[OptionsDiag])
                 {
-                    diagArg = optarg;
+                    diagArg = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
                     optionsEnable[OptionsDiag] = true;
                 }
                 break;
@@ -207,7 +201,8 @@ int main(int argc, const char *argv[])
                 if (optarg)
                 {
                     optionsEnable[OptionsInstall] = true;
-                    installPath = optarg;
+                    installPath = [NSString stringWithCString:optarg
+                        encoding:NSUTF8StringEncoding];
                 }
                 break;
             }
@@ -216,7 +211,8 @@ int main(int argc, const char *argv[])
                 if (optarg)
                 {
                     optionsEnable[OptionsConfig] = true;
-                    installPath = optarg;
+                    installPath = [NSString stringWithCString:optarg
+                        encoding:NSUTF8StringEncoding];
                 }
                 break;
             }
@@ -251,7 +247,7 @@ int main(int argc, const char *argv[])
         }
         else
         {
-            if (strncmp(help, "service", strlen("service")) == 0x0)
+            if ([help isEqualToString:@"service"])
             {
                 printf(" shorthand : service identifier\n--------------------------------\n");
                 for (uint32_t i = 0x0; i < SDM_MD_Service_Count; i++)
@@ -260,7 +256,8 @@ int main(int argc, const char *argv[])
                         SDMMDServiceIdentifiers[i].identifier);
                 }
             }
-            if (strncmp(help, "query", strlen("query")) == 0x0)
+
+            if ([help isEqualToString:@"query"])
             {
                 for (uint32_t i = 0x0; i < SDM_MD_Domain_Count; i++)
                 {
@@ -285,57 +282,55 @@ int main(int argc, const char *argv[])
         }
         else if (optionsEnable[OptionsApps])
         {
-            LookupAppsOnDevice(udid);
+            LookupAppsOnDevice([udid UTF8String]);
         }
         else if (optionsEnable[OptionsAttach])
         {
-            PerformService(udid, service);
+            PerformService([udid UTF8String], [service UTF8String]);
         }
         else if (optionsEnable[OptionsQuery])
         {
-            PerformQuery(udid, domain, key);
+            PerformQuery([udid UTF8String], [domain UTF8String], [key UTF8String]);
         }
         else if (optionsEnable[OptionsRun])
         {
-            RunAppOnDeviceWithIdentifier(udid, bundle, false);
+            RunAppOnDeviceWithIdentifier([udid UTF8String], [bundle UTF8String], false);
         }
         else if (optionsEnable[OptionsDiag])
         {
             if (diagArg)
             {
-                if (strncmp(diagArg, "sleep", strlen("sleep")) == 0x0)
+                if ([diagArg isEqualToString:@"sleep"])
                 {
-                    SendSleepToDevice(udid);
+                    SendSleepToDevice([udid UTF8String]);
                 }
-                else if (strncmp(diagArg, "reboot", strlen("reboot")) == 0x0)
+                else if ([diagArg isEqualToString:@"reboot"])
                 {
-                    SendRebootToDevice(udid);
+                    SendRebootToDevice([udid UTF8String]);
                 }
-                else if (strncmp(diagArg, "shutdown", strlen("shutdown")) == 0x0)
+                else if ([diagArg isEqualToString:@"shutdown"])
                 {
-                    SendShutdownToDevice(udid);
+                    SendShutdownToDevice([udid UTF8String]);
                 }
             }
         }
         else if (optionsEnable[OptionsDev])
         {
-            SetupDeviceForDevelopment(udid);
+            SetupDeviceForDevelopment([udid UTF8String]);
         }
         else if (optionsEnable[OptionsInstall])
         {
-            InstallAppToDevice(udid, installPath);
+            InstallAppToDevice([udid UTF8String], [installPath UTF8String]);
         }
         else if (optionsEnable[OptionsConfig])
         {
-            InstallProfileToDevice(udid, installPath);
+            InstallProfileToDevice([udid UTF8String], [installPath UTF8String]);
         }
         else if (optionsEnable[OptionsTest])
         {
-            WhatDoesThisDo(udid);
+            WhatDoesThisDo([udid UTF8String]);
         }
     }
-    Safe(free, domain);
-    Safe(free, key);
 
     return 0;
 }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA606CCA2C2D8CF2002AB848 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE3731B2C2D88F40014B498 /* Core.framework */; };
-		DA606CFE2C2DC9C6002AB848 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD62C2DC943002AB848 /* main.c */; };
+		DA606CFE2C2DC9C6002AB848 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD62C2DC943002AB848 /* main.m */; };
 		DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */; };
 		DA606D022C2ED205002AB848 /* install.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD22C2DC943002AB848 /* install.c */; };
 		DA606D062C2ED378002AB848 /* attach.c in Sources */ = {isa = PBXBuildFile; fileRef = DA606CCD2C2DC943002AB848 /* attach.c */; };
@@ -163,7 +163,7 @@
 		DA606CD32C2DC943002AB848 /* install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install.h; sourceTree = "<group>"; };
 		DA606CD42C2DC943002AB848 /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
 		DA606CD52C2DC943002AB848 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
-		DA606CD62C2DC943002AB848 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		DA606CD62C2DC943002AB848 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DA606CD72C2DC943002AB848 /* power.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = power.c; sourceTree = "<group>"; };
 		DA606CD82C2DC943002AB848 /* power.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = power.h; sourceTree = "<group>"; };
 		DA606CD92C2DC943002AB848 /* query.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = query.c; sourceTree = "<group>"; };
@@ -527,7 +527,7 @@
 				DA606CD32C2DC943002AB848 /* install.h */,
 				DA606CD42C2DC943002AB848 /* list.c */,
 				DA606CD52C2DC943002AB848 /* list.h */,
-				DA606CD62C2DC943002AB848 /* main.c */,
+				DA606CD62C2DC943002AB848 /* main.m */,
 				DA606CD72C2DC943002AB848 /* power.c */,
 				DA606CD82C2DC943002AB848 /* power.h */,
 				DA606CD92C2DC943002AB848 /* query.c */,
@@ -1234,7 +1234,7 @@
 				DA606D062C2ED378002AB848 /* attach.c in Sources */,
 				DA606D0B2C2EE284002AB848 /* run.c in Sources */,
 				DA606D0A2C2EDFD1002AB848 /* service.c in Sources */,
-				DA606CFE2C2DC9C6002AB848 /* main.c in Sources */,
+				DA606CFE2C2DC9C6002AB848 /* main.m in Sources */,
 				DA606D022C2ED205002AB848 /* install.c in Sources */,
 				DA606D072C2ED3C1002AB848 /* list.c in Sources */,
 				DA606D142C2EE544002AB848 /* syslog.c in Sources */,
