@@ -91,9 +91,25 @@
 			remoteGlobalIDString = DAE3731A2C2D88F40014B498;
 			remoteInfo = Core;
 		};
+		DA606CFF2C2ED1DA002AB848 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAD906FF2C297F05005EBB6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAD911B82C29A08D005EBB6E;
+			remoteInfo = SDMMobileDevice;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		DA606CF52C2DC9AD002AB848 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		DAD911842C299F5B005EBB6E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -408,6 +424,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DA606CF42C2DC9AD002AB848 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAD911832C299F5B005EBB6E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -441,9 +465,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA606CE52C2DC943002AB848 /* iOSConsole */ = {
+			isa = PBXGroup;
+			children = (
+				DA606CCB2C2DC943002AB848 /* apps.c */,
+				DA606CCC2C2DC943002AB848 /* apps.h */,
+				DA606CCD2C2DC943002AB848 /* attach.c */,
+				DA606CCE2C2DC943002AB848 /* attach.h */,
+				DA606CCF2C2DC943002AB848 /* dev.c */,
+				DA606CD02C2DC943002AB848 /* dev.h */,
+				DA606CD12C2DC943002AB848 /* Features.h */,
+				DA606CD22C2DC943002AB848 /* install.c */,
+				DA606CD32C2DC943002AB848 /* install.h */,
+				DA606CD42C2DC943002AB848 /* list.c */,
+				DA606CD52C2DC943002AB848 /* list.h */,
+				DA606CD62C2DC943002AB848 /* main.c */,
+				DA606CD72C2DC943002AB848 /* power.c */,
+				DA606CD82C2DC943002AB848 /* power.h */,
+				DA606CD92C2DC943002AB848 /* query.c */,
+				DA606CDA2C2DC943002AB848 /* query.h */,
+				DA606CDB2C2DC943002AB848 /* run.c */,
+				DA606CDC2C2DC943002AB848 /* run.h */,
+				DA606CDD2C2DC943002AB848 /* service.c */,
+				DA606CDE2C2DC943002AB848 /* service.h */,
+				DA606CDF2C2DC943002AB848 /* springboard.c */,
+				DA606CE02C2DC943002AB848 /* springboard.h */,
+				DA606CE12C2DC943002AB848 /* syslog.c */,
+				DA606CE22C2DC943002AB848 /* syslog.h */,
+				DA606CE32C2DC943002AB848 /* test.c */,
+				DA606CE42C2DC943002AB848 /* test.h */,
+			);
+			path = iOSConsole;
+			sourceTree = "<group>";
+		};
 		DAD906FE2C297F05005EBB6E = {
 			isa = PBXGroup;
 			children = (
+				DA606CE52C2DC943002AB848 /* iOSConsole */,
 				DAE373132C2D88750014B498 /* openssl-1.1.1k_macosx */,
 				DAE372692C2AFD950014B498 /* Frameworks */,
 				DAD911B32C299FD2005EBB6E /* Core */,
@@ -501,6 +559,7 @@
 				DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */,
 				DAE3729B2C2D84730014B498 /* HelloSDMMobileDevice */,
 				DAE3731B2C2D88F40014B498 /* Core.framework */,
+				DA606CF72C2DC9AD002AB848 /* iOSConsole */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -950,6 +1009,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		DA606CF62C2DC9AD002AB848 /* iOSConsole */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA606CFB2C2DC9AD002AB848 /* Build configuration list for PBXNativeTarget "iOSConsole" */;
+			buildPhases = (
+				DA606CF32C2DC9AD002AB848 /* Sources */,
+				DA606CF42C2DC9AD002AB848 /* Frameworks */,
+				DA606CF52C2DC9AD002AB848 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA606D002C2ED1DA002AB848 /* PBXTargetDependency */,
+			);
+			name = iOSConsole;
+			productName = iOSConsole;
+			productReference = DA606CF72C2DC9AD002AB848 /* iOSConsole */;
+			productType = "com.apple.product-type.tool";
+		};
 		DAD911852C299F5B005EBB6E /* SDM_MD_Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DAD9118D2C299F5B005EBB6E /* Build configuration list for PBXNativeTarget "SDM_MD_Tests" */;
@@ -1030,6 +1107,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					DA606CF62C2DC9AD002AB848 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					DAD911852C299F5B005EBB6E = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -1061,6 +1141,7 @@
 				DAD911B82C29A08D005EBB6E /* SDMMobileDevice */,
 				DAE3729A2C2D84730014B498 /* HelloSDMMobileDevice */,
 				DAE3731A2C2D88F40014B498 /* Core */,
+				DA606CF62C2DC9AD002AB848 /* iOSConsole */,
 			);
 		};
 /* End PBXProject section */
@@ -1083,6 +1164,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DA606CF32C2DC9AD002AB848 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA606D092C2ED476002AB848 /* query.c in Sources */,
+				DA606D082C2ED437002AB848 /* apps.c in Sources */,
+				DA606D062C2ED378002AB848 /* attach.c in Sources */,
+				DA606CFE2C2DC9C6002AB848 /* main.c in Sources */,
+				DA606D022C2ED205002AB848 /* install.c in Sources */,
+				DA606D072C2ED3C1002AB848 /* list.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAD911822C299F5B005EBB6E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1146,9 +1240,135 @@
 			target = DAE3731A2C2D88F40014B498 /* Core */;
 			targetProxy = DA606CC82C2D8CEC002AB848 /* PBXContainerItemProxy */;
 		};
+		DA606D002C2ED1DA002AB848 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAD911B82C29A08D005EBB6E /* SDMMobileDevice */;
+			targetProxy = DA606CFF2C2ED1DA002AB848 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		DA606CFC2C2DC9AD002AB848 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA606D052C2ED2FD002AB848 /* iOSConsole.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DA606CFD2C2DC9AD002AB848 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA606D052C2ED2FD002AB848 /* iOSConsole.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		DAD907032C297F05005EBB6E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1743,6 +1963,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DA606CFB2C2DC9AD002AB848 /* Build configuration list for PBXNativeTarget "iOSConsole" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA606CFC2C2DC9AD002AB848 /* Debug */,
+				DA606CFD2C2DC9AD002AB848 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DAD907022C297F05005EBB6E /* Build configuration list for PBXProject "SDMMobileDevice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
