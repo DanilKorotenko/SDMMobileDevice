@@ -1658,19 +1658,22 @@ CFTypeRef SDMMD_AMDeviceCopyValue(SDMMD_AMDeviceRef device, CFStringRef domain, 
 sdmmd_return_t SDMMD_AMDeviceSetValue(SDMMD_AMDeviceRef device, CFStringRef domain, CFStringRef key, CFTypeRef value)
 {
     sdmmd_return_t result = kAMDSuccess;
-    if (!device) {
+    if (!device)
+    {
         result = kAMDInvalidArgumentError;
     }
     CheckErrorAndReturn(result);
 
-    if (device->ivars.device_active == 0) {
+    if (device->ivars.device_active == 0)
+    {
         result = kAMDDeviceDisconnectedError;
     }
     CheckErrorAndReturn(result);
 
     SDMMD__mutex_lock(device->ivars.mutex_lock);
     result = SDMMD_send_set_value(device, domain, key, value);
-    if (result != kAMDSuccess) {
+    if (result != kAMDSuccess)
+    {
         printf("%s: Could not set value\n", __FUNCTION__);
     }
     SDMMD__mutex_unlock(device->ivars.mutex_lock);
@@ -1681,10 +1684,11 @@ sdmmd_return_t SDMMD_AMDeviceSetValue(SDMMD_AMDeviceRef device, CFStringRef doma
 SDMMD_AMDeviceRef SDMMD_AMDeviceCreateFromProperties(CFDictionaryRef dictionary)
 {
     SDMMD_AMDeviceRef device = NULL;
-    if (dictionary) {
+    if (dictionary)
+    {
         device = SDMMD_AMDeviceCreateEmpty();
-        if (device) {
-
+        if (device)
+        {
             CFDictionaryRef properties = (CFDictionaryContainsKey(dictionary, CFSTR("Properties")) ? CFDictionaryGetValue(dictionary, CFSTR("Properties")) : dictionary);
 
             CFNumberRef deviceId = CFDictionaryGetValue(properties, CFSTR("DeviceID"));
@@ -1694,7 +1698,8 @@ SDMMD_AMDeviceRef SDMMD_AMDeviceCreateFromProperties(CFDictionaryRef dictionary)
             device->ivars.unique_device_id = CFStringCreateCopy(kCFAllocatorDefault, serialNumber);
 
             CFStringRef linkType = CFDictionaryGetValue(properties, CFSTR("ConnectionType"));
-            if (CFStringCompare(linkType, CFSTR("USB"), 0) == 0) {
+            if (CFStringCompare(linkType, CFSTR("USB"), 0) == 0)
+            {
                 device->ivars.connection_type = kAMDeviceConnectionTypeUSB;
 
                 CFNumberRef productId = CFDictionaryGetValue(properties, CFSTR("ProductID"));
@@ -1703,12 +1708,14 @@ SDMMD_AMDeviceRef SDMMD_AMDeviceCreateFromProperties(CFDictionaryRef dictionary)
                 CFNumberRef locationId = CFDictionaryGetValue(properties, CFSTR("LocationID"));
                 CFNumberGetValue(locationId, kCFNumberSInt32Type, &device->ivars.location_id);
             }
-            else if (CFStringCompare(linkType, CFSTR("Network"), 0) == 0 || CFStringCompare(linkType, CFSTR("WiFi"), 0) == 0) {
+            else if (CFStringCompare(linkType, CFSTR("Network"), 0) == 0 || CFStringCompare(linkType, CFSTR("WiFi"), 0) == 0)
+            {
                 device->ivars.connection_type = kAMDeviceConnectionTypeWiFi;
                 CFDataRef netAddress = CFDataCreateCopy(kCFAllocatorDefault, CFDictionaryGetValue(properties, CFSTR("NetworkAddress")));
                 device->ivars.network_address = netAddress;
 
-                CFMutableStringRef serviceName = CFStringCreateMutableCopy(kCFAllocatorDefault, 0, CFDictionaryGetValue(properties, CFSTR("EscapedFullServiceName")));
+                CFMutableStringRef serviceName = CFStringCreateMutableCopy(kCFAllocatorDefault, 0,
+                    CFDictionaryGetValue(properties, CFSTR("EscapedFullServiceName")));
                 CFRange searchRange = CFRangeMake(0, CFStringGetLength(serviceName));
                 CFStringFindAndReplace(serviceName, CFSTR("\\"), CFSTR(""), searchRange, 0);
                 device->ivars.service_name = CFStringCreateCopy(kCFAllocatorDefault, serviceName);
@@ -1716,8 +1723,6 @@ SDMMD_AMDeviceRef SDMMD_AMDeviceCreateFromProperties(CFDictionaryRef dictionary)
 
                 CFNumberRef interfaceIndex = CFDictionaryGetValue(properties, CFSTR("InterfaceIndex"));
                 CFNumberGetValue(interfaceIndex, kCFNumberSInt32Type, &(device->ivars.interface_index));
-            }
-            else {
             }
 
             device->ivars.device_active = true;
@@ -1768,8 +1773,10 @@ sdmmd_sim_return_t SDMMD_GetSIMStatusCode(SDMMD_AMDeviceRef device)
     sdmmd_sim_return_t result = KnownSIMCodes[0];
     CFStringRef deviceSIMStatus = SDMMD_AMDeviceCopyValue(device, NULL, CFSTR(kSIMStatus));
     if (deviceSIMStatus) {
-        for (uint32_t i = 1; i < kKnownSIMCodesNum; i++) {
-            if (CFStringCompare(deviceSIMStatus, KnownSIMCodes[i].codeName, 0) == kCFCompareEqualTo) {
+        for (uint32_t i = 1; i < kKnownSIMCodesNum; i++)
+        {
+            if (CFStringCompare(deviceSIMStatus, KnownSIMCodes[i].codeName, 0) == kCFCompareEqualTo)
+            {
                 result = KnownSIMCodes[i];
                 break;
             }
@@ -1783,9 +1790,12 @@ sdmmd_activation_return_t SDMMD_GetActivationStatus(SDMMD_AMDeviceRef device)
 {
     sdmmd_activation_return_t result = KnownActivationStates[0];
     CFStringRef deviceActivationState = SDMMD_AMDeviceCopyValue(device, NULL, CFSTR(kActivationState));
-    if (deviceActivationState) {
-        for (uint32_t i = 1; i < kKnownActivationStatesNum; i++) {
-            if (CFStringCompare(deviceActivationState, KnownActivationStates[i].statusName, 0) == kCFCompareEqualTo) {
+    if (deviceActivationState)
+    {
+        for (uint32_t i = 1; i < kKnownActivationStatesNum; i++)
+        {
+            if (CFStringCompare(deviceActivationState, KnownActivationStates[i].statusName, 0) == kCFCompareEqualTo)
+            {
                 result = KnownActivationStates[i];
                 break;
             }

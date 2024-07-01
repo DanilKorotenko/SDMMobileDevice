@@ -61,21 +61,21 @@ void SDMMD___AppendValue(CFTypeRef append, CFMutableDataRef context);
 void SDMMD___ConvertDictEntry(const void *key, const void *value, void *context);
 CFDataRef SDMMD__CreateDataFromFileContents(char *path);
 CFMutableDictionaryRef SDMMD__CreateDictFromFileContents(char *path);
-CFMutableDictionaryRef SDMMD_create_dict();
+CFMutableDictionaryRef SDMMD_create_dict(void);
 CFMutableDictionaryRef SDMMD__CreateRequestDict(CFStringRef type);
 CFMutableDictionaryRef SDMMD__CreateMessageDict(CFStringRef type);
-CFStringRef SDMCreateCurrentDateString();
+CFStringRef SDMCreateCurrentDateString(void);
 char *SDMCFStringGetString(CFStringRef str);
 char *SDMCFURLGetString(CFURLRef url);
-CFStringRef SDMMD__GetPairingRecordDirectoryPath();
+CFStringRef SDMMD__GetPairingRecordDirectoryPath(void);
 void SDMMD__PairingRecordPathForIdentifier(CFStringRef udid, char *path);
 sdmmd_return_t SDMMD_store_dict(CFDictionaryRef dict, char *path, bool mode);
-CFStringRef SDMMD_AMDCopySystemBonjourUniqueID();
+CFStringRef SDMMD_AMDCopySystemBonjourUniqueID(void);
 sdmmd_return_t SDMMD__CreatePairingRecordFromRecordOnDiskForIdentifier(SDMMD_AMDeviceRef device, CFMutableDictionaryRef *dict);
 
 #define DefaultApplicationLookupDictionaryCount 9
 
-CFArrayRef SDMMD_ApplicationLookupDictionary();
+CFArrayRef SDMMD_ApplicationLookupDictionary(void);
 CFURLRef SDMMD__AMDCFURLCreateFromFileSystemPathWithSmarts(CFStringRef path);
 CFURLRef SDMMD__AMDCFURLCreateWithFileSystemPathRelativeToBase(CFAllocatorRef allocator, CFStringRef path, CFURLPathStyle style, Boolean dir);
 Boolean SDMMD__AMDCFURLGetCStringForFileSystemPath(CFURLRef urlRef, char *cpath);

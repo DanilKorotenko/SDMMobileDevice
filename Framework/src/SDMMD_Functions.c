@@ -111,32 +111,32 @@ void SDMMD___ConvertDictEntry(const void *key, const void *value, void *context)
 
 CFDataRef SDMMD__CreateDataFromFileContents(char *path)
 {
-	CFDataRef dataBuffer = NULL;
-	unsigned char *data = NULL;
+    CFDataRef dataBuffer = NULL;
+    unsigned char *data = NULL;
 
-	EvalConditionalAndReturnWithMessage((path == NULL), "Invalid path.");
+    EvalConditionalAndReturnWithMessage((path == NULL), "Invalid path.");
 
-	struct stat pathStat;
-	ssize_t result = lstat(path, &pathStat);
-	EvalConditionalAndReturnWithMessage((result == -1), "Could not lstat.");
+    struct stat pathStat;
+    ssize_t result = lstat(path, &pathStat);
+    EvalConditionalAndReturnWithMessage((result == -1), "Could not lstat.");
 
-	int ref = open(path, O_RDONLY);
-	EvalConditionalAndReturnWithMessage((ref == -1), "Could not open file.");
+    int ref = open(path, O_RDONLY);
+    EvalConditionalAndReturnWithMessage((ref == -1), "Could not open file.");
 
-	struct stat fileStat;
-	result = fstat(ref, &fileStat);
-	EvalConditionalAndReturnWithMessage((result == -1), "Count not fstat.");
+    struct stat fileStat;
+    result = fstat(ref, &fileStat);
+    EvalConditionalAndReturnWithMessage((result == -1), "Count not fstat.");
 
-	data = calloc(1, (unsigned long)fileStat.st_size);
-	result = read(ref, data, (size_t)fileStat.st_size);
-	EvalConditionalAndReturnWithMessage((result != fileStat.st_size), "Could not read contents of file.");
+    data = calloc(1, (unsigned long)fileStat.st_size);
+    result = read(ref, data, (size_t)fileStat.st_size);
+    EvalConditionalAndReturnWithMessage((result != fileStat.st_size), "Could not read contents of file.");
 
-	dataBuffer = CFDataCreate(kCFAllocatorDefault, data, result);
+    dataBuffer = CFDataCreate(kCFAllocatorDefault, data, result);
 
 ExitLabel:
-	Safe(free, data);
+    Safe(free, data);
 
-	return dataBuffer;
+    return dataBuffer;
 }
 
 CFMutableDictionaryRef SDMMD__CreateDictFromFileContents(char *path)
