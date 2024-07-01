@@ -29,15 +29,13 @@
 #define _SDM_MD_USBMUXLISTENER_TYPES_H_
 
 #include <CoreFoundation/CoreFoundation.h>
+#import <Foundation/Foundation.h>
 
-// Initialize static CFString key arrays
-void SDMMD_USBMuxListener_Types_Initialize(void);
-
-extern CFStringRef kSDMMD_USBMuxListenerDeviceAttachedNotification;
-extern CFStringRef kSDMMD_USBMuxListenerDeviceAttachedNotificationFinished;
-extern CFStringRef kSDMMD_USBMuxListenerDeviceDetachedNotification;
-extern CFStringRef kSDMMD_USBMuxListenerDeviceDetachedNotificationFinished;
-extern CFStringRef kSDMMD_USBMuxListenerStoppedListenerNotification;
+extern NSString *kSDMMD_USBMuxListenerDeviceAttachedNotification;
+extern NSString *kSDMMD_USBMuxListenerDeviceAttachedNotificationFinished;
+extern NSString *kSDMMD_USBMuxListenerDeviceDetachedNotification;
+extern NSString *kSDMMD_USBMuxListenerDeviceDetachedNotificationFinished;
+extern NSString *kSDMMD_USBMuxListenerStoppedListenerNotification;
 
 typedef struct USBMuxPacketBody
 {
@@ -51,7 +49,7 @@ typedef struct USBMuxPacket
 {
     dispatch_time_t timeout;
     struct USBMuxPacketBody body;
-    CFPropertyListRef payload;
+    NSDictionary *payload;
 } __attribute__((packed)) USBMuxPacket;
 
 typedef enum SDMMD_USBMuxPacketMessageType
@@ -74,7 +72,7 @@ typedef enum SDMMD_USBMuxPacketMessageType
 
 #define kKnownSDMMD_USBMuxPacketMessageType kSDMMD_USBMuxPacketMessageCount
 
-extern CFStringRef SDMMD_USBMuxPacketMessage[kSDMMD_USBMuxPacketMessageCount];
+NSString *SDMMD_USBMuxPacketMessage(SDMMD_USBMuxPacketMessageType aType);
 
 typedef enum SDMMD_USBMuxResultCodeType
 {

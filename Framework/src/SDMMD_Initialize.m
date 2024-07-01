@@ -37,7 +37,6 @@
 void InitializeSDMMobileDeviceClasses(void)
 {
     // Initialize static CFStringRef keys
-    SDMMD_USBMuxListener_Types_Initialize();
     SDMMD_AFC_Types_Initialize();
 
     // Initialize CFType classes

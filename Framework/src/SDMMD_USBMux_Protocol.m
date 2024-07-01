@@ -38,7 +38,7 @@ void SDMMD_USBMuxReceive(uint32_t sock, struct USBMuxPacket *packet);
 
 void SDMMD_USBMuxSend(uint32_t sock, struct USBMuxPacket *packet)
 {
-    CFDataRef xmlData = CFPropertyListCreateXMLData(kCFAllocatorDefault, packet->payload);
+    CFDataRef xmlData = CFPropertyListCreateXMLData(kCFAllocatorDefault, (__bridge CFDictionaryRef)packet->payload);
     char *buffer = (char *)CFDataGetBytePtr(xmlData);
     ssize_t result = send(sock, &packet->body, sizeof(struct USBMuxPacketBody), 0);
     if (result == sizeof(struct USBMuxPacketBody))
@@ -81,7 +81,7 @@ void SDMMD_USBMuxReceive(uint32_t sock, struct USBMuxPacket *packet)
                 remainder -= result;
             }
             CFDataRef xmlData = CFDataCreate(kCFAllocatorDefault, (UInt8 *)buffer, payloadSize);
-            packet->payload = CFPropertyListCreateFromXMLData(kCFAllocatorDefault, xmlData, kCFPropertyListImmutable, NULL);
+            packet->payload = CFBridgingRelease(CFPropertyListCreateFromXMLData(kCFAllocatorDefault, xmlData, kCFPropertyListImmutable, NULL));
             Safe(free, buffer);
             CFSafeRelease(xmlData);
         }

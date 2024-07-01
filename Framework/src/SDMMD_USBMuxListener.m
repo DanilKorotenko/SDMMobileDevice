@@ -38,11 +38,7 @@
 #include <sys/un.h>
 #include <Core/Core.h>
 
-typedef struct USBMuxResponseCode
-{
-    uint32_t code;
-    CFStringRef string;
-} ATR_PACK USBMuxResponseCode;
+#import "USBMuxResponseCode.h"
 
 static uint32_t transactionId = 0;
 
@@ -55,7 +51,7 @@ void SDMMD_USBMuxDetachedCallback(void *context, struct USBMuxPacket *packet);
 void SDMMD_USBMuxLogsCallback(void *context, struct USBMuxPacket *packet);
 void SDMMD_USBMuxDeviceListCallback(void *context, struct USBMuxPacket *packet);
 void SDMMD_USBMuxListenerListCallback(void *context, struct USBMuxPacket *packet);
-struct USBMuxResponseCode SDMMD_USBMuxParseReponseCode(CFDictionaryRef dict);
+
 uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
 @interface SDMMD_USBMuxListener()
@@ -132,7 +128,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     dispatch_async(dispatch_get_main_queue(),
     ^{
         CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
-            kSDMMD_USBMuxListenerStoppedListenerNotification, NULL, NULL, true);
+            (__bridge CFStringRef)kSDMMD_USBMuxListenerStoppedListenerNotification, NULL, NULL, true);
     });
 }
 
@@ -142,15 +138,15 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 {
     if (packet->payload)
     {
-        struct USBMuxResponseCode response = SDMMD_USBMuxParseReponseCode(packet->payload);
+        USBMuxResponseCode *response = [[USBMuxResponseCode alloc] initWithDictionary:packet->payload];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
             ^{
                 if (response.code)
                 {
-                    printf("usbmuxd returned%s: %d - %s.\n",
-                        (response.code ? " error" : ""), response.code,
-                        (response.string ? CFStringGetCStringPtr(response.string, kCFStringEncodingUTF8) :
-                        "Unknown Error Description"));
+                    NSLog(@"usbmuxd returned%s: %lu - %@.\n",
+                          (response.code ? " error" : ""), (unsigned long)response.code,
+                        (response.string ? response.string :
+                        @"Unknown Error Description"));
                 }
             });
         // Signal that a response was received, see SDMMD_USBMux_Protocol.c
@@ -165,7 +161,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
 - (void)deviceListCallback:(struct USBMuxPacket *)packet
 {
-    CFArrayRef devices = CFDictionaryGetValue(packet->payload, CFSTR("DeviceList"));
+    CFArrayRef devices = CFDictionaryGetValue((__bridge CFDictionaryRef)packet->payload, CFSTR("DeviceList"));
     for (uint32_t i = 0; i < CFArrayGetCount(devices); i++)
     {
         SDMMD_AMDeviceRef deviceFromList =
@@ -185,7 +181,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
 - (void)attachedCallback:(struct USBMuxPacket *)packet
 {
-    SDMMD_AMDeviceRef newDevice = SDMMD_AMDeviceCreateFromProperties(packet->payload);
+    SDMMD_AMDeviceRef newDevice = SDMMD_AMDeviceCreateFromProperties((__bridge CFDictionaryRef)(packet->payload));
     if (newDevice && !CFArrayContainsValue(SDMMobileDevice->ivars.deviceList, CFRangeMake(0,
         CFArrayGetCount(SDMMobileDevice->ivars.deviceList)), newDevice))
     {
@@ -198,7 +194,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             dispatch_async(dispatch_get_main_queue(),
             ^{
                 CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
-                    kSDMMD_USBMuxListenerDeviceAttachedNotification, NULL, NULL, true);
+                    (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceAttachedNotification, NULL, NULL, true);
             });
             CFSafeRelease(SDMMobileDevice->ivars.deviceList);
             SDMMobileDevice->ivars.deviceList = CFArrayCreateCopy(kCFAllocatorDefault, updateWithNew);
@@ -214,7 +210,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     dispatch_async(dispatch_get_main_queue(),
     ^{
         CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
-            kSDMMD_USBMuxListenerDeviceAttachedNotificationFinished, NULL, NULL, true);
+            (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceAttachedNotificationFinished, NULL, NULL, true);
     });
 }
 
@@ -228,7 +224,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     printf("Unknown response from usbmuxd!\n");
     if (packet->payload)
     {
-        PrintCFType(packet->payload);
+        NSLog(@"%@", packet->payload);
     }
     dispatch_semaphore_signal(_semaphore);
 }
@@ -236,7 +232,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 - (void)detachedCallback:(struct USBMuxPacket *)packet
 {
     uint32_t detachedId;
-    CFNumberRef deviceId = CFDictionaryGetValue(packet->payload, CFSTR("DeviceID"));
+    CFNumberRef deviceId = CFDictionaryGetValue((__bridge CFDictionaryRef)packet->payload, CFSTR("DeviceID"));
     CFNumberGetValue(deviceId, kCFNumberSInt64Type, &detachedId);
     CFMutableArrayRef updateWithRemove = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, SDMMobileDevice->ivars.deviceList);
     uint32_t removeCounter = 0;
@@ -252,7 +248,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             dispatch_async(dispatch_get_main_queue(),
             ^{
                 CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
-                    kSDMMD_USBMuxListenerDeviceDetachedNotification, NULL, NULL, true);
+                    (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceDetachedNotification, NULL, NULL, true);
             });
         }
     }
@@ -263,7 +259,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     dispatch_async(dispatch_get_main_queue(),
     ^{
         CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
-            kSDMMD_USBMuxListenerDeviceDetachedNotificationFinished, NULL, NULL, true);
+            (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceDetachedNotificationFinished, NULL, NULL, true);
     });
 }
 
@@ -291,22 +287,22 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             // Validate packet payload
             if (packet->payload != NULL)
             {
-                if (CFDictionaryContainsKey(packet->payload, CFSTR("MessageType")))
+                if (CFDictionaryContainsKey((__bridge CFDictionaryRef)packet->payload, CFSTR("MessageType")))
                 {
-                    CFStringRef type = CFDictionaryGetValue(packet->payload, CFSTR("MessageType"));
-                    if (CFStringCompare(type, SDMMD_USBMuxPacketMessage[kSDMMD_USBMuxPacketResultType], 0) == 0)
+                    CFStringRef type = CFDictionaryGetValue((__bridge CFDictionaryRef)packet->payload, CFSTR("MessageType"));
+                    if (CFStringCompare(type, (__bridge CFStringRef)SDMMD_USBMuxPacketMessage(kSDMMD_USBMuxPacketResultType), 0) == 0)
                     {
                         // Packet ownership transfered to response handler
                         CFArrayAppendValue(self->_responses, packet);
                         [self responseCallback:packet];
                     }
-                    else if (CFStringCompare(type, SDMMD_USBMuxPacketMessage[kSDMMD_USBMuxPacketAttachType], 0) == 0)
+                    else if (CFStringCompare(type, (__bridge CFStringRef)SDMMD_USBMuxPacketMessage(kSDMMD_USBMuxPacketAttachType), 0) == 0)
                     {
                         [self attachedCallback:packet];
                         // Destroy received packet
                         USBMuxPacketRelease(packet);
                     }
-                    else if (CFStringCompare(type, SDMMD_USBMuxPacketMessage[kSDMMD_USBMuxPacketDetachType], 0) == 0)
+                    else if (CFStringCompare(type, (__bridge CFStringRef)SDMMD_USBMuxPacketMessage(kSDMMD_USBMuxPacketDetachType), 0) == 0)
                     {
                         [self detachedCallback:packet];
                         // Destroy received packet
@@ -317,15 +313,15 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
                 {
                     // Packet ownership transfered to response handler
                     CFArrayAppendValue(self->_responses, packet);
-                    if (CFDictionaryContainsKey(packet->payload, CFSTR("Logs")))
+                    if (CFDictionaryContainsKey((__bridge CFDictionaryRef)packet->payload, CFSTR("Logs")))
                     {
                         [self logsCallback:packet];
                     }
-                    else if (CFDictionaryContainsKey(packet->payload, CFSTR("DeviceList")))
+                    else if (CFDictionaryContainsKey((__bridge CFDictionaryRef)packet->payload, CFSTR("DeviceList")))
                     {
                         [self deviceListCallback:packet];
                     }
-                    else if (CFDictionaryContainsKey(packet->payload, CFSTR("ListenerList")))
+                    else if (CFDictionaryContainsKey((__bridge CFDictionaryRef)packet->payload, CFSTR("ListenerList")))
                     {
                         [self listenerListCallback:packet];
                     }
@@ -369,15 +365,15 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             [self send:&startListen];
             if (startListen->payload)
             {
-                struct USBMuxResponseCode response = SDMMD_USBMuxParseReponseCode(startListen->payload);
+                USBMuxResponseCode *response = [[USBMuxResponseCode alloc] initWithDictionary:startListen->payload];
                 if (response.code == 0)
                 {
                     _isActive = true;
                 }
                 else
                 {
-                    printf("%s: non-zero response code. trying again. code:%i string:%s\n",
-                        __FUNCTION__, response.code, response.string ? CFStringGetCStringPtr(response.string, kCFStringEncodingUTF8):"");
+                    NSLog(@"%s: non-zero response code. trying again. code:%lu string:%@\n",
+                          __FUNCTION__, (unsigned long)response.code, response.string ? response.string : @"");
                 }
             }
             else
@@ -457,73 +453,6 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 }
 
 @end
-
-
-struct USBMuxResponseCode SDMMD_USBMuxParseReponseCode(CFDictionaryRef dict)
-{
-    uint32_t code = 0;
-    CFNumberRef resultCode = NULL;
-    CFStringRef resultString = NULL;
-    if (CFDictionaryContainsKey(dict, CFSTR("Number")))
-    {
-        resultCode = CFDictionaryGetValue(dict, CFSTR("Number"));
-    }
-    if (CFDictionaryContainsKey(dict, CFSTR("String")))
-    {
-        resultString = CFDictionaryGetValue(dict, CFSTR("String"));
-    }
-
-    if (resultCode)
-    {
-        CFNumberGetValue(resultCode, CFNumberGetType(resultCode), &code);
-        switch (code)
-        {
-            case SDMMD_USBMuxResult_OK:
-            {
-                resultString = CFSTR("OK");
-                break;
-            }
-            case SDMMD_USBMuxResult_BadCommand:
-            {
-                resultString = CFSTR("Bad Command");
-                break;
-            }
-            case SDMMD_USBMuxResult_BadDevice:
-            {
-                resultString = CFSTR("Bad Device");
-                break;
-            }
-            case SDMMD_USBMuxResult_ConnectionRefused:
-            {
-                resultString = CFSTR("Connection Refused by Device");
-                break;
-            }
-            case SDMMD_USBMuxResult_Unknown0:
-            {
-                break;
-            }
-            case SDMMD_USBMuxResult_BadMessage:
-            {
-                resultString = CFSTR("Incorrect Message Contents");
-                break;
-            }
-            case SDMMD_USBMuxResult_BadVersion:
-            {
-                resultString = CFSTR("Bad Protocol Version");
-                break;
-            }
-            case SDMMD_USBMuxResult_Unknown2:
-            {
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
-    }
-    return (struct USBMuxResponseCode){code, resultString};
-}
 
 /*
  debugging traffic:
@@ -621,9 +550,9 @@ sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDeviceRef device, uint32_t port
         struct USBMuxPacket *connect = SDMMD_USBMuxCreatePacketType(kSDMMD_USBMuxPacketConnectType, dict);
 
         // Requesting socket connection for specified port number
-        CFNumberRef portNumber = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &port);
-        CFDictionarySetValue((CFMutableDictionaryRef)connect->payload, CFSTR("PortNumber"), portNumber);
-        CFSafeRelease(portNumber);
+        NSMutableDictionary *mutablePayload = [NSMutableDictionary dictionaryWithDictionary:connect->payload];
+        mutablePayload[@"PortNumber"] = @(port);
+        connect->payload = [NSDictionary dictionaryWithDictionary:mutablePayload];
 
         SDMMD_USBMuxSend(*socketConn, connect);
         USBMuxPacketRelease(connect);
@@ -635,12 +564,12 @@ sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDeviceRef device, uint32_t port
         if (response->payload)
         {
             CFStringRef msgType = NULL;
-            if ((msgType = CFDictionaryGetValue(response->payload, CFSTR("MessageType"))) && CFEqual(msgType, CFSTR("Result")))
+            if ((msgType = CFDictionaryGetValue((__bridge CFDictionaryRef)response->payload, CFSTR("MessageType"))) && CFEqual(msgType, CFSTR("Result")))
             {
                 CFNumberRef msgResult = NULL;
                 SInt32 ok = kAMDSuccess;
                 CFNumberRef okResult = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &ok);
-                if ((msgResult = CFDictionaryGetValue(response->payload, CFSTR("Number"))) && CFEqual(msgResult, okResult))
+                if ((msgResult = CFDictionaryGetValue((__bridge CFDictionaryRef)response->payload, CFSTR("Number"))) && CFEqual(msgResult, okResult))
                 {
                     // Socket negotiation successful
                     result = kAMDSuccess;
@@ -675,46 +604,38 @@ struct USBMuxPacket *SDMMD_USBMuxCreatePacketType(SDMMD_USBMuxPacketMessageType 
     }
     packet->body = (struct USBMuxPacketBody){16, 1, 8, transactionId};
     transactionId++;
-    packet->payload = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks,
-        &kCFTypeDictionaryValueCallBacks);
-    CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("BundleID"), CFSTR("com.samdmarshall.sdmmobiledevice"));
-    CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("ClientVersionString"), CFSTR("usbmuxd-323")); // 344
-    CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("ProgName"), CFSTR("SDMMobileDevice"));
+
+    NSMutableDictionary *mutablePayload =[NSMutableDictionary dictionary];
+
+    mutablePayload[@"BundleID"] = @"com.samdmarshall.sdmmobiledevice";
+    mutablePayload[@"ClientVersionString"] = @"usbmuxd-323";
+    mutablePayload[@"ProgName"] = @"SDMMobileDevice";
+
     uint32_t version = 3;
-    CFNumberRef versionNumber = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &version);
-    CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("kLibUSBMuxVersion"), versionNumber);
-    CFSafeRelease(versionNumber);
+    mutablePayload[@"kLibUSBMuxVersion"] = @(version);
 
     if (dict)
     {
-        CFIndex count = CFDictionaryGetCount(dict);
-        void *keys[count];
-        void *values[count];
-        CFDictionaryGetKeysAndValues(dict, (const void **)keys, (const void **)values);
-        for (uint32_t i = 0; i < count; i++)
-        {
-            CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, keys[i], values[i]);
-        }
+        [mutablePayload addEntriesFromDictionary:(__bridge NSDictionary * _Nonnull)(dict)];
     }
 
-    CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("MessageType"), SDMMD_USBMuxPacketMessage[type]);
+    mutablePayload[@"MessageType"] = SDMMD_USBMuxPacketMessage(type);
+
     if (type == kSDMMD_USBMuxPacketConnectType)
     {
         uint16_t port = 0x7ef2;
-        CFNumberRef portNumber = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt16Type, &port);
-        CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("PortNumber"), portNumber);
-        CFSafeRelease(portNumber);
+        mutablePayload[@"PortNumber"] = @(port);
     }
 
     if (type == kSDMMD_USBMuxPacketListenType)
     {
         uint32_t connection = 0;
-        CFNumberRef connectionType = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &connection);
-        CFDictionarySetValue((CFMutableDictionaryRef)packet->payload, CFSTR("ConnType"), connectionType);
-        CFSafeRelease(connectionType);
+        mutablePayload[@"ConnType"] = @(connection);
     }
 
-    CFDataRef xmlData = CFPropertyListCreateXMLData(kCFAllocatorDefault, packet->payload);
+    packet->payload = [NSDictionary dictionaryWithDictionary:mutablePayload];
+
+    CFDataRef xmlData = CFPropertyListCreateXMLData(kCFAllocatorDefault, (__bridge CFDictionaryRef)packet->payload);
     packet->body.length = 16 + (uint32_t)CFDataGetLength(xmlData);
     CFSafeRelease(xmlData);
     return packet;
@@ -722,7 +643,6 @@ struct USBMuxPacket *SDMMD_USBMuxCreatePacketType(SDMMD_USBMuxPacketMessageType 
 
 void USBMuxPacketRelease(struct USBMuxPacket *packet)
 {
-    CFSafeRelease(packet->payload);
     Safe(free, packet);
 }
 

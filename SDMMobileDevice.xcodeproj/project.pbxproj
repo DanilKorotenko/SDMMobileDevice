@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA5C45992C32EC99005E653E /* USBMuxResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */; };
+		DA5C459A2C32EC99005E653E /* USBMuxResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */; };
 		DA606CCA2C2D8CF2002AB848 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE3731B2C2D88F40014B498 /* Core.framework */; };
 		DA606CFE2C2DC9C6002AB848 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CD62C2DC943002AB848 /* main.m */; };
 		DA606D012C2ED1E2002AB848 /* SDMMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD911B92C29A08D005EBB6E /* SDMMobileDevice.framework */; };
@@ -72,7 +74,7 @@
 		DAE372752C2B00B40014B498 /* SDMMD_Service.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912342C29A0A1005EBB6E /* SDMMD_Service.m */; };
 		DAE372762C2B00E70014B498 /* SDMMD_USBMuxListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912392C29A0A1005EBB6E /* SDMMD_USBMuxListener.m */; };
 		DAE372782C2B01640014B498 /* SDMMD_USBMux_Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912362C29A0A1005EBB6E /* SDMMD_USBMux_Protocol.m */; };
-		DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.c */; };
+		DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.m */; };
 		DAE3727A2C2B01B70014B498 /* SDMMD_Error.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912272C29A0A1005EBB6E /* SDMMD_Error.c */; };
 		DAE372882C2D7ADA0014B498 /* test_AFC.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911642C299EA2005EBB6E /* test_AFC.c */; };
 		DAE372892C2D7AF10014B498 /* test_AMDevice.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD911662C299EA2005EBB6E /* test_AMDevice.c */; };
@@ -138,6 +140,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMuxResponseCode.h; sourceTree = "<group>"; };
+		DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USBMuxResponseCode.m; sourceTree = "<group>"; };
 		DA606CCB2C2DC943002AB848 /* apps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = apps.m; sourceTree = "<group>"; };
 		DA606CCC2C2DC943002AB848 /* apps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apps.h; sourceTree = "<group>"; };
 		DA606CCD2C2DC943002AB848 /* attach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attach.m; sourceTree = "<group>"; };
@@ -338,7 +342,7 @@
 		DAD912342C29A0A1005EBB6E /* SDMMD_Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_Service.m; sourceTree = "<group>"; };
 		DAD912352C29A0A1005EBB6E /* SDMMD_SSL_Functions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SDMMD_SSL_Functions.c; sourceTree = "<group>"; };
 		DAD912362C29A0A1005EBB6E /* SDMMD_USBMux_Protocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_USBMux_Protocol.m; sourceTree = "<group>"; };
-		DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SDMMD_USBMuxListener_Types.c; sourceTree = "<group>"; };
+		DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_USBMuxListener_Types.m; sourceTree = "<group>"; };
 		DAD912392C29A0A1005EBB6E /* SDMMD_USBMuxListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_USBMuxListener.m; sourceTree = "<group>"; };
 		DAD9123B2C29A0A1005EBB6E /* SDMMobileDevice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SDMMobileDevice-Info.plist"; sourceTree = "<group>"; };
 		DAD9123C2C29A0A1005EBB6E /* SDMMobileDevice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SDMMobileDevice.entitlements; sourceTree = "<group>"; };
@@ -799,8 +803,10 @@
 				DAD912342C29A0A1005EBB6E /* SDMMD_Service.m */,
 				DAD912352C29A0A1005EBB6E /* SDMMD_SSL_Functions.c */,
 				DAD912362C29A0A1005EBB6E /* SDMMD_USBMux_Protocol.m */,
-				DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.c */,
+				DAD912382C29A0A1005EBB6E /* SDMMD_USBMuxListener_Types.m */,
 				DAD912392C29A0A1005EBB6E /* SDMMD_USBMuxListener.m */,
+				DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */,
+				DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -985,6 +991,7 @@
 				DAD912662C2AA5F5005EBB6E /* SDMMD_AFCConnection_Class.h in Headers */,
 				DAD912672C2AA620005EBB6E /* SDMMD_Connection_Class.h in Headers */,
 				DAD912682C2AA63D005EBB6E /* SDMMD_AFCOperation_Class.h in Headers */,
+				DA5C459A2C32EC99005E653E /* USBMuxResponseCode.h in Headers */,
 				DAD912692C2AA658005EBB6E /* SDMMD_Service.h in Headers */,
 				DAD9126B2C2AA6DD005EBB6E /* SDMMD_USBMuxListener.h in Headers */,
 				DAD9126A2C2AA682005EBB6E /* SDMMD_Connection.h in Headers */,
@@ -1198,6 +1205,7 @@
 				DA606D0F2C2EE346002AB848 /* SDMMD_Connection.m in Sources */,
 				DAE3726D2C2AFE040014B498 /* SDMMD_SSL_Functions.c in Sources */,
 				DAE372622C2AFC880014B498 /* SDMMD_MCP.m in Sources */,
+				DA5C45992C32EC99005E653E /* USBMuxResponseCode.m in Sources */,
 				DAE372722C2AFF590014B498 /* SDMMD_Connection_Class.c in Sources */,
 				DAD912972C2AB003005EBB6E /* SDMMD_AMDevice.m in Sources */,
 				DAE372752C2B00B40014B498 /* SDMMD_Service.m in Sources */,
@@ -1210,7 +1218,7 @@
 				DAE372632C2AFCD30014B498 /* SDMMD_Initialize.m in Sources */,
 				DAE372732C2AFFA20014B498 /* SDMMD_AMDevice_Class.c in Sources */,
 				DAE372642C2AFD1C0014B498 /* SDMMD_Functions.m in Sources */,
-				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.c in Sources */,
+				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.m in Sources */,
 				DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
