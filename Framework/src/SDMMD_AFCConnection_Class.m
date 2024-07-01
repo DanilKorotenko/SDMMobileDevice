@@ -36,29 +36,31 @@
 
 static Boolean SDMMD_AFCConnectionRefEqual(CFTypeRef cf1, CFTypeRef cf2)
 {
-	SDMMD_AFCConnectionRef connection1 = (SDMMD_AFCConnectionRef)cf1;
-	SDMMD_AFCConnectionRef connection2 = (SDMMD_AFCConnectionRef)cf2;
+    SDMMD_AFCConnectionRef connection1 = (SDMMD_AFCConnectionRef)cf1;
+    SDMMD_AFCConnectionRef connection2 = (SDMMD_AFCConnectionRef)cf2;
 
-	return (connection1->ivars.handle->ivars.socket == connection2->ivars.handle->ivars.socket);
+    return (connection1->ivars.handle->ivars.socket == connection2->ivars.handle->ivars.socket);
 }
 
 static CFStringRef SDMMD_AFCConnectionRefCopyFormattingDesc(CFTypeRef cf, CFDictionaryRef formatOpts)
 {
-	SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
-	return CFStringCreateWithFormat(CFGetAllocator(connection), NULL, CFSTR("<SDMMD_AFCConnectionRef %p>{socket = %d}"), connection, connection->ivars.handle->ivars.socket);
+    SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
+    return CFStringCreateWithFormat(CFGetAllocator(connection), NULL, CFSTR("<SDMMD_AFCConnectionRef %p>{socket = %d}"),
+        connection, connection->ivars.handle->ivars.socket);
 }
 
 static CFStringRef SDMMD_AFCConnectionRefCopyDebugDesc(CFTypeRef cf)
 {
-	SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
-	return CFStringCreateWithFormat(CFGetAllocator(connection), NULL, CFSTR("<SDMMD_AFCConnectionRef %p>{socket = %d}"), connection, connection->ivars.handle->ivars.socket);
+    SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
+    return CFStringCreateWithFormat(CFGetAllocator(connection), NULL, CFSTR("<SDMMD_AFCConnectionRef %p>{socket = %d}"),
+        connection, connection->ivars.handle->ivars.socket);
 }
 
 static void SDMMD_AFCConnectionRefFinalize(CFTypeRef cf)
 {
-	SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
-	CFSafeRelease(connection->ivars.handle);
-	Safe(dispatch_release, connection->ivars.operationQueue);
+    SDMMD_AFCConnectionRef connection = (SDMMD_AFCConnectionRef)cf;
+    CFSafeRelease(connection->ivars.handle);
+    //	Safe(dispatch_release, connection->ivars.operationQueue);
 }
 
 static CFTypeID _kSDMMD_AFCConnectionRefID = _kCFRuntimeNotATypeID;
@@ -78,7 +80,7 @@ void SDMMD_AFCConnectionRefClassInitialize(void)
     _kSDMMD_AFCConnectionRefClass.copyDebugDesc = SDMMD_AFCConnectionRefCopyDebugDesc;
     _kSDMMD_AFCConnectionRefClass.reclaim = NULL;
     _kSDMMD_AFCConnectionRefID =
-        _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AFCConnectionRefClass);
+    _CFRuntimeRegisterClass((const CFRuntimeClass *const) & _kSDMMD_AFCConnectionRefClass);
 }
 
 CFTypeID SDMMD_AFCConnectionRefGetTypeID(void)
