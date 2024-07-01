@@ -33,47 +33,52 @@
 #include <openssl/ssl.h>
 #include <SDMMobileDevice/SDMMD_Error.h>
 
-struct SDMMD_lockdown_conn_internal {
-	uint64_t connection; // 0
-	SSL *ssl;			 // 8
-	uint64_t *pointer;   // 16
-	uint64_t length;	 // 24
+struct SDMMD_lockdown_conn_internal
+{
+    uint64_t connection; // 0
+    SSL *ssl;			 // 8
+    uint64_t *pointer;   // 16
+    uint64_t length;	 // 24
 } __attribute__((packed));
 
-struct AMDeviceClassHeader {
-	unsigned char header[16];				 // AMDeviceClass CF Header
+struct AMDeviceClassHeader
+{
+    unsigned char header[16];				 // AMDeviceClass CF Header
 }; // size 0x10
 
-enum {
-	kAMDeviceConnectionTypeWiFi = 0,
-	kAMDeviceConnectionTypeUSB = 1,
+enum
+{
+    kAMDeviceConnectionTypeWiFi = 0,
+    kAMDeviceConnectionTypeUSB = 1,
 };
 typedef int32_t AMDeviceConnectionType;
 
-struct AMDeviceClassBody {
-	int32_t device_id;						 // 16
-	int32_t location_id;					 // 20
-	uint16_t product_id;					 // 24
-	int16_t padding0;						 // 26
-	int32_t unknown1;						 // 28
-	CFStringRef unique_device_id;			 // 32
-	AMDeviceConnectionType connection_type;  // 40 (1 for USB, 0 for WiFi)
-	int32_t unknown44;						 // 44
-	SDMMD_lockdown_conn *lockdown_conn;		 // 48
-	CFStringRef session;					 // 56 needs to be not zero in AMDeviceSecureStartService  -- connection
-	pthread_mutex_t mutex_lock;				 // 64 (64 bytes long)
-	CFStringRef service_name;				 // 128 bonjour service name
-	int32_t interface_index;				 // 136
-	int8_t device_active;					 // 140
-	unsigned char unknown7[3];				 // 141
-	int64_t unknown8;						 // 144
-	CFDataRef unknownData;					 // 152
-	CFDataRef network_address;				 // 160 stores a sockaddr_storage
+struct AMDeviceClassBody
+{
+    int32_t device_id;						 // 16
+    int32_t location_id;					 // 20
+    uint16_t product_id;					 // 24
+    int16_t padding0;						 // 26
+    int32_t unknown1;						 // 28
+    CFStringRef unique_device_id;			 // 32
+    AMDeviceConnectionType connection_type;  // 40 (1 for USB, 0 for WiFi)
+    int32_t unknown44;						 // 44
+    SDMMD_lockdown_conn *lockdown_conn;		 // 48
+    CFStringRef session;					 // 56 needs to be not zero in AMDeviceSecureStartService  -- connection
+    pthread_mutex_t mutex_lock;				 // 64 (64 bytes long)
+    CFStringRef service_name;				 // 128 bonjour service name
+    int32_t interface_index;				 // 136
+    int8_t device_active;					 // 140
+    unsigned char unknown7[3];				 // 141
+    int64_t unknown8;						 // 144
+    CFDataRef unknownData;					 // 152
+    CFDataRef network_address;				 // 160 stores a sockaddr_storage
 }; // size 0x98
 
-struct sdmmd_am_device {
-	CFRuntimeBase base;
-	struct AMDeviceClassBody ivars;
+struct sdmmd_am_device
+{
+    CFRuntimeBase base;
+    struct AMDeviceClassBody ivars;
 };
 
 // Everything below here you shouldn't be calling, this is internal for the library

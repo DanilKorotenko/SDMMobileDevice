@@ -271,10 +271,12 @@ int main(int argc, const char *argv[])
             }
         }
     }
+
     if (optionsEnable[OptionsList])
     {
         ListConnectedDevices();
     }
+
     if (optionsEnable[OptionsDevice])
     {
         if (optionsEnable[OptionsInfo])

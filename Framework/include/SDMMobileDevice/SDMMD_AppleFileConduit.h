@@ -53,7 +53,7 @@ SDMMD_AFCOperationRef SDMMD_AFCOperationCreateReadDirectory(CFStringRef path);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateRemovePath(CFStringRef path);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateMakeDirectory(CFStringRef path);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetFileInfo(CFStringRef path);
-SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetDeviceInfo();
+SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetDeviceInfo(void);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateFileRefOpen(CFStringRef path, uint64_t mode);
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateReadOperation(uint64_t fileRef, uint64_t length);
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateWriteOperation(uint64_t fileRef, CFDataRef data);
@@ -61,7 +61,7 @@ SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateSeekOperation(uint64_t fileRe
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateTellOperation(uint64_t fileRef);
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateCloseOperation(uint64_t fileRef);
 SDMMD_AFCOperationRef SDMMD_AFCFileDescriptorCreateSetFileSizeOperation(uint64_t fileRef, uint64_t file_size);
-SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetConnectionInfo();
+SDMMD_AFCOperationRef SDMMD_AFCOperationCreateGetConnectionInfo(void);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateSetConnectionOptions(CFDictionaryRef options);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateRenamePath(CFStringRef anOld, CFStringRef aNew);
 SDMMD_AFCOperationRef SDMMD_AFCOperationCreateSetFSBlockSize(uint64_t fs_block_size);

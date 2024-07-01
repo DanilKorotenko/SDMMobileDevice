@@ -46,7 +46,8 @@ int main(int argc, const char * argv[])
         printf("\n");
         RunCompatibilityTests(apple_test_device, sdm_test_device);
     }
-    else {
+    else
+    {
         printf("Please attach a device to run tests\n");
     }
 
