@@ -39,10 +39,10 @@
 
 #define SHA1_HASH_LENGTH SHA_DIGEST_LENGTH
 
-CFStringRef SDMMD_CreateUUID();
+CFStringRef SDMMD_CreateUUID(void);
 void SDMMD_openSSLLockCallBack(int mode, int n, const char *file, int line);
-unsigned long SDMMD_openSSLThreadIDCallBack();
-uint32_t SDMMD_lockssl_init();
+unsigned long SDMMD_openSSLThreadIDCallBack(void);
+uint32_t SDMMD_lockssl_init(void);
 char *SDMMD_ssl_strerror(SSL *ssl, uint32_t ret);
 int SDMMD__add_ext(X509 *cert, int flag, char *name);
 CFDataRef SDMMD__create_data_from_bp(BIO *bio);

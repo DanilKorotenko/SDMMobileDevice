@@ -37,21 +37,6 @@ extern NSString *kSDMMD_USBMuxListenerDeviceDetachedNotification;
 extern NSString *kSDMMD_USBMuxListenerDeviceDetachedNotificationFinished;
 extern NSString *kSDMMD_USBMuxListenerStoppedListenerNotification;
 
-typedef struct USBMuxPacketBody
-{
-    uint32_t length;
-    uint32_t reserved;
-    uint32_t type;
-    uint32_t tag;
-} __attribute__((packed)) USBMuxPacketBody;
-
-typedef struct USBMuxPacket
-{
-    dispatch_time_t timeout;
-    struct USBMuxPacketBody body;
-    NSDictionary *payload;
-} __attribute__((packed)) USBMuxPacket;
-
 typedef enum SDMMD_USBMuxPacketMessageType
 {
     kSDMMD_USBMuxPacketInvalidType = 0x0,

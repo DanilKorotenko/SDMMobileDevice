@@ -32,25 +32,25 @@
 #include <Core/Core.h>
 #include <sys/socket.h>
 
-void SDMMD_USBMuxSend(uint32_t sock, struct USBMuxPacket *packet);
-void SDMMD_USBMuxReceive(uint32_t sock, struct USBMuxPacket *packet);
-
-
-void SDMMD_USBMuxSend(uint32_t sock, struct USBMuxPacket *packet)
+void SDMMD_USBMuxSend(uint32_t sock, USBMuxPacket *packet)
 {
     NSError *error = nil;
-    NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:packet->payload format:NSPropertyListXMLFormat_v1_0 options:0
+    NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:packet.payload format:NSPropertyListXMLFormat_v1_0 options:0
         error:&error];
 
     char *buffer = (char *)malloc(xmlData.length);
     [xmlData getBytes:buffer length:xmlData.length];
 
-    ssize_t result = send(sock, &packet->body, sizeof(struct USBMuxPacketBody), 0);
-    if (result == sizeof(struct USBMuxPacketBody))
+    NSData *bodyData = packet.bodyData;
+    void *bodyBuffer = malloc(bodyData.length);
+    [packet.bodyData getBytes:bodyBuffer length:bodyData.length];
+
+    ssize_t result = send(sock, bodyBuffer, bodyData.length, 0);
+    if (result == bodyData.length)
     {
-        if (packet->body.length > result)
+        if (packet.bodyLength > result)
         {
-            ssize_t payloadSize = packet->body.length - result;
+            ssize_t payloadSize = packet.bodyLength - result;
             ssize_t remainder = payloadSize;
             while (remainder)
             {
@@ -65,12 +65,16 @@ void SDMMD_USBMuxSend(uint32_t sock, struct USBMuxPacket *packet)
     }
 }
 
-void SDMMD_USBMuxReceive(uint32_t sock, struct USBMuxPacket *packet)
+void SDMMD_USBMuxReceive(uint32_t sock, USBMuxPacket **aPacket)
 {
-    ssize_t result = recv(sock, &packet->body, sizeof(struct USBMuxPacketBody), 0);
-    if (result == sizeof(struct USBMuxPacketBody))
+    USBMuxPacket *packet = [[USBMuxPacket alloc] init];
+
+    void *bodyBuffer = malloc(packet.bodySize);
+    ssize_t result = recv(sock, bodyBuffer, packet.bodySize, 0);
+    if (result == packet.bodySize)
     {
-        ssize_t payloadSize = packet->body.length - result;
+        [packet setBodyWithPtr:bodyBuffer];
+        ssize_t payloadSize = packet.bodyLength - result;
         if (payloadSize)
         {
             char *buffer = calloc(1, payloadSize);
@@ -86,12 +90,13 @@ void SDMMD_USBMuxReceive(uint32_t sock, struct USBMuxPacket *packet)
             }
             NSData *xmlData = [NSData dataWithBytes:buffer length:payloadSize];
             NSError *error = nil;
-            packet->payload = [NSPropertyListSerialization propertyListWithData:xmlData options:NSPropertyListImmutable format:NULL
+            packet.payload = [NSPropertyListSerialization propertyListWithData:xmlData options:NSPropertyListImmutable format:NULL
                 error:&error];
 
             Safe(free, buffer);
         }
     }
+    *aPacket = packet;
 }
 
 #endif
