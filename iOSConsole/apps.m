@@ -17,7 +17,7 @@
 
 void LookupAppsOnDevice(char *udid)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         sdmmd_return_t result = SDMMD_AMDeviceConnect(device);

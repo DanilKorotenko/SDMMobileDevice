@@ -70,7 +70,7 @@ void SDMMD_lookup_callback(CFDictionaryRef dict, void *response)
  
  */
 
-sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDeviceRef device, CFDictionaryRef options, CFDictionaryRef *response)
+sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDevice *device, CFDictionaryRef options, CFDictionaryRef *response)
 {
 	sdmmd_return_t result = kAMDInvalidArgumentError;
 	if (device) {
@@ -89,7 +89,7 @@ sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDeviceRef device, CFDictionar
 				}
 			}
 			else {
-				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device->ivars.device_id);
+				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
 			}
 			CFSafeRelease(conn);
 		}
@@ -97,7 +97,7 @@ sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDeviceRef device, CFDictionar
 	return result;
 }
 
-sdmmd_return_t SDMMD_AMDeviceLookupApplications(SDMMD_AMDeviceRef device, CFDictionaryRef options, CFDictionaryRef *response)
+sdmmd_return_t SDMMD_AMDeviceLookupApplications(SDMMD_AMDevice *device, CFDictionaryRef options, CFDictionaryRef *response)
 {
 	sdmmd_return_t result = kAMDInvalidArgumentError;
 	if (device) {
@@ -116,7 +116,7 @@ sdmmd_return_t SDMMD_AMDeviceLookupApplications(SDMMD_AMDeviceRef device, CFDict
 				}
 			}
 			else {
-				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device->ivars.device_id);
+				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
 			}
 			//CFSafeRelease(conn);
 		}
@@ -224,7 +224,7 @@ sdmmd_return_t SDMMD_AMDeviceTransferApplication(SDMMD_AMConnectionRef conn, CFS
 	ExitLabelAndReturn(result);
 }
 
-sdmmd_return_t SDMMD_AMDeviceCopyApplication(SDMMD_AMDeviceRef device, CFStringRef path)
+sdmmd_return_t SDMMD_AMDeviceCopyApplication(SDMMD_AMDevice* device, CFStringRef path)
 {
 	sdmmd_return_t result = kAMDNotConnectedError;
 	SDMMD_AMConnectionRef connection = NULL;
@@ -252,7 +252,7 @@ sdmmd_return_t SDMMD_AMDeviceCopyApplication(SDMMD_AMDeviceRef device, CFStringR
 	ExitLabelAndReturn(result);
 }
 
-sdmmd_return_t SDMMD_AMDeviceSecureInstallApplication(SDMMD_AMConnectionRef conn, SDMMD_AMDeviceRef device, CFURLRef path, CFDictionaryRef options, CallBack installCallback, void *unknown)
+sdmmd_return_t SDMMD_AMDeviceSecureInstallApplication(SDMMD_AMConnectionRef conn, SDMMD_AMDevice* device, CFURLRef path, CFDictionaryRef options, CallBack installCallback, void *unknown)
 {
 	sdmmd_return_t result = kAMDSuccess;
 	SDMMD_AMConnectionRef connection = NULL;
@@ -304,7 +304,7 @@ sdmmd_return_t SDMMD_AMDeviceSecureInstallApplication(SDMMD_AMConnectionRef conn
 	return result;
 }
 
-sdmmd_return_t SDMMD_AMDeviceInstallApplication(SDMMD_AMDeviceRef device, CFStringRef path, CFDictionaryRef options, CallBack installCallback, void *unknown)
+sdmmd_return_t SDMMD_AMDeviceInstallApplication(SDMMD_AMDevice* device, CFStringRef path, CFDictionaryRef options, CallBack installCallback, void *unknown)
 {
 	sdmmd_return_t result = kAMDSuccess;
 	uint32_t socket = -1;
@@ -328,7 +328,7 @@ sdmmd_return_t SDMMD_AMDeviceInstallApplication(SDMMD_AMDeviceRef device, CFStri
 	return result;
 }
 
-sdmmd_return_t SDMMD_AMDeviceInstallApp(SDMMD_AMDeviceRef device, CFStringRef path)
+sdmmd_return_t SDMMD_AMDeviceInstallApp(SDMMD_AMDevice* device, CFStringRef path)
 {
 	sdmmd_return_t result = kAMDNotConnectedError;
 	SDMMD_AMConnectionRef connection = NULL;

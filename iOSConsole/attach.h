@@ -12,7 +12,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include "SDMMobileDevice.h"
 
-SDMMD_AMDeviceRef FindDeviceFromUDID(char *udid);
-SDMMD_AMConnectionRef AttachToDeviceAndService(SDMMD_AMDeviceRef device, char *service);
+SDMMD_AMDevice *FindDeviceFromUDID(char *udid);
+SDMMD_AMConnectionRef AttachToDeviceAndService(SDMMD_AMDevice *device, char *service);
 
 #endif

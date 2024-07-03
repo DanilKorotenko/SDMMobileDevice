@@ -71,7 +71,7 @@ CFStringRef SDMMD__GetPairingRecordDirectoryPath(void);
 void SDMMD__PairingRecordPathForIdentifier(CFStringRef udid, char *path);
 sdmmd_return_t SDMMD_store_dict(CFDictionaryRef dict, char *path, bool mode);
 CFStringRef SDMMD_AMDCopySystemBonjourUniqueID(void);
-sdmmd_return_t SDMMD__CreatePairingRecordFromRecordOnDiskForIdentifier(SDMMD_AMDeviceRef device, CFMutableDictionaryRef *dict);
+sdmmd_return_t SDMMD__CreatePairingRecordFromRecordOnDiskForIdentifier(SDMMD_AMDevice *device, CFMutableDictionaryRef *dict);
 
 #define DefaultApplicationLookupDictionaryCount 9
 

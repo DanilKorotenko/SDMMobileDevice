@@ -309,17 +309,20 @@ CFStringRef SDMMD_AMDCopySystemBonjourUniqueID()
 	return systemBUID;
 }
 
-sdmmd_return_t SDMMD__CreatePairingRecordFromRecordOnDiskForIdentifier(SDMMD_AMDeviceRef device, CFMutableDictionaryRef *dict)
+sdmmd_return_t SDMMD__CreatePairingRecordFromRecordOnDiskForIdentifier(SDMMD_AMDevice* device, CFMutableDictionaryRef *dict)
 {
 	sdmmd_return_t result = kAMDInvalidArgumentError;
 	char path[1024] = {0};
 
-	if (device) {
-		if (dict) {
+	if (device)
+    {
+		if (dict)
+        {
 			result = kAMDNoResourcesError;
 			CFTypeRef bonjourId = SDMMD_AMDCopySystemBonjourUniqueID();
-			if (bonjourId) {
-				SDMMD__PairingRecordPathForIdentifier(device->ivars.unique_device_id, path);
+			if (bonjourId)
+            {
+                SDMMD__PairingRecordPathForIdentifier((__bridge CFStringRef)(device.unique_device_id), path);
 				CFMutableDictionaryRef fileDict = SDMMD__CreateDictFromFileContents(path);
 				result = kAMDMissingPairRecordError;
 				if (fileDict) {

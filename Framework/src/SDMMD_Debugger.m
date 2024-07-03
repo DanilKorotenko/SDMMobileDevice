@@ -56,11 +56,12 @@ static char *kHexEncodeString = "0123456789ABCDEF";
 #define kHexDecodeFirstByte(byte) (kHexCodeApplyMask(kHexCodeApplyShift(byte)))
 #define kHexDecodeSecondByte(byte) (kHexCodeApplyMask(byte))
 
-SDMMD_AMDebugConnectionRef SDMMD_AMDebugConnectionCreateForDevice(SDMMD_AMDeviceRef device)
+SDMMD_AMDebugConnectionRef SDMMD_AMDebugConnectionCreateForDevice(SDMMD_AMDevice *device)
 {
 	SDMMD_AMDebugConnectionRef dconn = calloc(1, sizeof(struct SDMMD_AMDebugConnection));
-	if (dconn) {
-		dconn->device = SDMMD_AMDeviceCreateCopy(device);
+	if (dconn)
+    {
+		dconn->device = device;
 		dconn->connection = NULL;
 		dconn->ackEnabled = true;
 	}
@@ -69,7 +70,6 @@ SDMMD_AMDebugConnectionRef SDMMD_AMDebugConnectionCreateForDevice(SDMMD_AMDevice
 
 void SDMMD_AMDebugConnectionClose(SDMMD_AMDebugConnectionRef dconn)
 {
-	CFSafeRelease(dconn->device);
 	CFSafeRelease(dconn->connection);
 	Safe(free, dconn);
 }
@@ -109,7 +109,7 @@ sdmmd_return_t SDMMD_AMDebugConnectionStop(SDMMD_AMDebugConnectionRef dconn)
 	ExitLabelAndReturn(result);
 }
 
-bool SDMMD_device_os_is_at_least(SDMMD_AMDeviceRef device, CFStringRef version)
+bool SDMMD_device_os_is_at_least(SDMMD_AMDevice* device, CFStringRef version)
 {
 	bool result = false;
 	if (device) {
@@ -123,7 +123,7 @@ bool SDMMD_device_os_is_at_least(SDMMD_AMDeviceRef device, CFStringRef version)
 	return result;
 }
 
-sdmmd_return_t SDMMD_copy_image(SDMMD_AMDeviceRef device, CFStringRef path)
+sdmmd_return_t SDMMD_copy_image(SDMMD_AMDevice* device, CFStringRef path)
 {
 	sdmmd_return_t result = kAMDUndefinedError;
 	if (device) {
@@ -196,7 +196,7 @@ CFStringRef SDMMD_CopyDeviceSupportPathFromXCRUN()
 	return xcrun_path;
 }
 
-CFStringRef SDMMD_PathToDeviceSupport(SDMMD_AMDeviceRef device)
+CFStringRef SDMMD_PathToDeviceSupport(SDMMD_AMDevice* device)
 {
 	CFStringRef dev_support_path = NULL;
 	if (device) {
@@ -263,7 +263,7 @@ CFDictionaryRef SDMMD_CreateImageDictionary(CFStringRef device_support_image)
 	return dict;
 }
 
-sdmmd_return_t SDMMD_AMDeviceMountDeveloperImage(SDMMD_AMDeviceRef device)
+sdmmd_return_t SDMMD_AMDeviceMountDeveloperImage(SDMMD_AMDevice* device)
 {
 	sdmmd_return_t result = kAMDMissingOptionsError;
 	if (device) {
@@ -403,7 +403,7 @@ sdmmd_return_t SDMMD_mount_image(SDMMD_AMConnectionRef connection, CFStringRef i
 	ExitLabelAndReturn(result);
 }
 
-sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDeviceRef device, CFStringRef path, CFDictionaryRef dict, CallBack handle, void *unknown)
+sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDevice* device, CFStringRef path, CFDictionaryRef dict, CallBack handle, void *unknown)
 {
 	sdmmd_return_t result = kAMDSuccess;
 	if (dict) {
@@ -416,19 +416,23 @@ sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDeviceRef device, CFStringRef pa
 			result = SDMMD_AMDeviceDigestFile(path, PtrCast(&sum_digest, unsigned char **));
 			CheckErrorAndReturn(result);
 
-			SDMMD_AMDeviceRef device_copy = SDMMD_AMDeviceCreateCopy(device);
-			if (SDMMD_AMDeviceIsValid(device_copy)) {
+			SDMMD_AMDevice* device_copy = device;
+			if (SDMMD_AMDeviceIsValid(device_copy))
+            {
 				result = SDMMD_AMDeviceSecureStartSessionedService(device, CFSTR(AMSVC_MOBILE_IMAGE_MOUNT), &connection);
 				CheckErrorAndReturn(result);
 
 				SDMMD_fire_callback(handle, unknown, CFSTR("LookingUpImage"));
-				if (connection) {
+				if (connection)
+                {
 					CFMutableDictionaryRef commandDict = SDMMD_create_dict();
-					if (commandDict) {
+					if (commandDict)
+                    {
 						CFDictionarySetValue(commandDict, CFSTR("Command"), CFSTR("LookupImage"));
 						CFDictionarySetValue(commandDict, CFSTR("ImageType"), image_type);
 					}
-					else {
+					else
+                    {
 						result = kAMDNoResourcesError;
 					}
 
@@ -483,10 +487,10 @@ sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDeviceRef device, CFStringRef pa
 					}
 				}
 				CFSafeRelease(connection);
-				CFSafeRelease(device_copy);
 				CheckErrorAndReturn(result);
 			}
-			else {
+			else
+            {
 				result = kAMDUndefinedError;
 			}
 		}

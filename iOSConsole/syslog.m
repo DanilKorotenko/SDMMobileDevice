@@ -47,7 +47,7 @@ void Syslog(char *udid)
     PrintSysLog();
 }
 
-void EnableExtendedLogging(SDMMD_AMDeviceRef device)
+void EnableExtendedLogging(SDMMD_AMDevice* device)
 {
     sdmmd_return_t result = SDMMD_AMDeviceConnect(device);
     if (SDM_MD_CallSuccessful(result)) {
@@ -78,7 +78,7 @@ void EnableExtendedLogging(SDMMD_AMDeviceRef device)
 void AttachToSyslog(char *udid)
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0x0), ^{
-        SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+        SDMMD_AMDevice* device = FindDeviceFromUDID(udid);
         if (device) {
             //EnableExtendedLogging(device);
             SDMMD_AMConnectionRef syslog = AttachToDeviceAndService(device, AMSVC_SYSLOG_RELAY);

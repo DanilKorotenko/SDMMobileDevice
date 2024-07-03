@@ -34,7 +34,7 @@
 #include <SDMMobileDevice/SDMMD_AMDevice_Class.h>
 #else
 #include "CFRuntime.h"
-#include "SDMMD_AMDevice_Class.h"
+#include "SDMMD_AMDevice.h"
 #endif
 
 #include <openssl/ssl.h>
@@ -55,7 +55,7 @@ struct AMConnectionClassBody {
 	int8_t closeOnInvalid;						 // 32
 	int8_t isValid;								 // 33
 	unsigned char unknown2[2];					 // 34
-	SDMMD_AMDeviceRef device;					 // 36
+	SDMMD_AMDevice *device;					 // 36
 	char service[128];							 // 40
 }; // size 0x98
 

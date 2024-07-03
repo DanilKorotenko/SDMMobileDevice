@@ -49,7 +49,7 @@ SDMMD_AFCConnectionRef SDMMD_AFCConnectionCreate(SDMMD_AMConnectionRef conn)
     if (afc != NULL)
     {
         afc->ivars.handle = conn;
-        char *udidString = SDMCFStringGetString((conn->ivars.device)->ivars.unique_device_id);
+        char *udidString = [(conn->ivars.device).unique_device_id UTF8String];
         CFStringRef date_string = SDMCreateCurrentDateString();
         char *dateString = SDMCFStringGetString(date_string);
         CFSafeRelease(date_string);

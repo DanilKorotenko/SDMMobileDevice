@@ -34,8 +34,7 @@
 
 struct sdm_mobiledevice_body
 {
-//    SDMMD_USBMuxListenerRef usbmuxd;
-    CFArrayRef deviceList;
+    NSArray *deviceList;
     uint64_t peer_certificate_data_index;
 };
 

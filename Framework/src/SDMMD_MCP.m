@@ -48,8 +48,7 @@ SDMMobileDeviceRef InitializeSDMMobileDevice(void)
         if (controller == NULL)
         {
             controller = SDMMobileDeviceRefCreateEmpty();
-            controller->ivars.deviceList = CFArrayCreate(kCFAllocatorDefault, NULL, 0,
-                &kCFTypeArrayCallBacks);
+            controller->ivars.deviceList = [NSArray array];
 
             [[SDMMD_USBMuxListener sharedInstance] start];
             SSL_library_init();

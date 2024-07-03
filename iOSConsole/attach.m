@@ -12,11 +12,11 @@
 #include "attach.h"
 #include "Core.h"
 
-SDMMD_AMDeviceRef FindDeviceFromUDID(char *udid)
+SDMMD_AMDevice *FindDeviceFromUDID(char *udid)
 {
-    CFArrayRef devices = SDMMD_AMDCreateDeviceList();
-    CFIndex numberOfDevices = CFArrayGetCount(devices);
-    SDMMD_AMDeviceRef device = NULL;
+    NSArray *devices = SDMMD_AMDCreateDeviceList();
+    CFIndex numberOfDevices = devices.count;
+    SDMMD_AMDevice* device = NULL;
     if (numberOfDevices)
     {
         // return type (uint32_t) corresponds with known return codes (SDMMD_Error.h)
@@ -26,7 +26,7 @@ SDMMD_AMDeviceRef FindDeviceFromUDID(char *udid)
         // Iterating over connected devices
         for (index = 0; index < numberOfDevices; index++)
         {
-            SDMMD_AMDeviceRef device = (SDMMD_AMDeviceRef)CFArrayGetValueAtIndex(devices, index);
+            SDMMD_AMDevice* device = [devices objectAtIndex:index];
             CFTypeRef deviceUDID = SDMMD_AMDeviceCopyUDID(device);
             if (deviceUDID)
             {
@@ -45,19 +45,18 @@ SDMMD_AMDeviceRef FindDeviceFromUDID(char *udid)
         }
         if (foundDevice)
         {
-            device = SDMMD_AMDeviceCreateCopy(
-                (SDMMD_AMDeviceRef)CFArrayGetValueAtIndex(devices, index));
+            device = [devices objectAtIndex:index];
         }
     }
     else
     {
         printf("No devices connected.\n");
     }
-    CFSafeRelease(devices);
+    
     return device;
 }
 
-SDMMD_AMConnectionRef AttachToDeviceAndService(SDMMD_AMDeviceRef device, char *service)
+SDMMD_AMConnectionRef AttachToDeviceAndService(SDMMD_AMDevice *device, char *service)
 {
     SDMMD_AMConnectionRef serviceCon = NULL;
     if (device)

@@ -36,7 +36,7 @@ struct USBMuxPacketBody
 
 - (instancetype)initWithType:(SDMMD_USBMuxPacketMessageType)type payload:(NSDictionary * _Nullable)dict
 {
-    self = [super init];
+    self = [self init];
     if (self)
     {
         if (type == kSDMMD_USBMuxPacketListenType || type == kSDMMD_USBMuxPacketConnectType)

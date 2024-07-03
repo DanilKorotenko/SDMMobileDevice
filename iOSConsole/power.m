@@ -18,7 +18,7 @@
 
 void SendDeviceCommand(char *udid, CFDictionaryRef request)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         SDMMD_AMConnectionRef powerDiag = AttachToDeviceAndService(device, AMSVC_DIAG_RELAY);

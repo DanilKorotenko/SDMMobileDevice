@@ -35,8 +35,8 @@
 #include "SDMMD_AMDevice.h"
 #endif
 
-CFStringRef SDMMD_CopyDeviceSupportPathFromXCRUN();
-CFStringRef SDMMD_PathToDeviceSupport(SDMMD_AMDeviceRef device);
+CFStringRef SDMMD_CopyDeviceSupportPathFromXCRUN(void);
+CFStringRef SDMMD_PathToDeviceSupport(SDMMD_AMDevice *device);
 CFStringRef SDMMD_PathToDeviceSupportDiskImage(CFStringRef device_support);
 CFDictionaryRef SDMMD_CreateImageDictionary(CFStringRef device_support_image);
 

@@ -11,6 +11,6 @@
 
 #include <SDMMobileDevice/SDMMD_AMDevice.h>
 
-sdmmd_return_t SDMMD_AMDeviceRelayFile(SDMMD_AMDeviceRef device, CFStringRef source, CFDictionaryRef options);
+sdmmd_return_t SDMMD_AMDeviceRelayFile(SDMMD_AMDevice *device, CFStringRef source, CFDictionaryRef options);
 
 #endif

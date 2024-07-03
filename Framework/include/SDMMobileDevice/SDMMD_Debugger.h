@@ -113,7 +113,7 @@ struct DebuggerCommand {
 typedef struct DebuggerCommand *DebuggerCommandRef;
 
 struct SDMMD_AMDebugConnection {
-	SDMMD_AMDeviceRef device;
+	SDMMD_AMDevice *device;
 	SDMMD_AMConnectionRef connection;
 	bool ackEnabled;
 } __attribute__((packed));
@@ -194,14 +194,14 @@ static struct SDMMD_DebugCommandType KnownDebugCommands[kDebugCommandCount] = {
 #pragma mark FUNCTIONS
 #pragma mark -
 
-SDMMD_AMDebugConnectionRef SDMMD_AMDebugConnectionCreateForDevice(SDMMD_AMDeviceRef device);
+SDMMD_AMDebugConnectionRef SDMMD_AMDebugConnectionCreateForDevice(SDMMD_AMDevice *device);
 void SDMMD_AMDebugConnectionClose(SDMMD_AMDebugConnectionRef dconn);
 
 sdmmd_return_t SDMMD_AMDebugConnectionStart(SDMMD_AMDebugConnectionRef dconn);
 sdmmd_return_t SDMMD_AMDebugConnectionStop(SDMMD_AMDebugConnectionRef dconn);
 
-sdmmd_return_t SDMMD_AMDeviceMountDeveloperImage(SDMMD_AMDeviceRef device); // use me instead of the one below for convenience
-sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDeviceRef device, CFStringRef path, CFDictionaryRef dict, CallBack handle, void *unknown);
+sdmmd_return_t SDMMD_AMDeviceMountDeveloperImage(SDMMD_AMDevice *device); // use me instead of the one below for convenience
+sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDevice *device, CFStringRef path, CFDictionaryRef dict, CallBack handle, void *unknown);
 
 DebuggerCommandRef SDMMD_CreateDebuggingCommand(DebuggerCommandType commandCode, CFStringRef command, CFArrayRef arguments);
 void SDMMD_DebuggingCommandRelease(DebuggerCommandRef command);
@@ -211,7 +211,7 @@ void SDMMD_DebuggingCommandRelease(DebuggerCommandRef command);
 sdmmd_return_t SDMMD_DebuggingSend(SDMMD_AMDebugConnectionRef dconn, DebuggerCommandRef command, CFDataRef *response);
 sdmmd_return_t SDMMD_DebuggingReceive(SDMMD_AMDebugConnectionRef dconn, CFDataRef *response);
 
-bool SDMMD_device_os_is_at_least(SDMMD_AMDeviceRef device, CFStringRef version);
+bool SDMMD_device_os_is_at_least(SDMMD_AMDevice *device, CFStringRef version);
 sdmmd_return_t SDMMD_stream_image(SDMMD_AMConnectionRef connection, CFStringRef path, CFStringRef image_type);
 
 //sdmmd_debug_return_t SDMMD_DebuggingSend(SDMMD_AMDebugConnectionRef connection, SDMMD_DebugCommandType commandType, CFStringRef command);

@@ -32,13 +32,6 @@
 #include "SDMMD_MCP_Internal.h"
 #include <Core/Core.h>
 
-static void SDMMD_SDMMobileDeviceRefFinalize(CFTypeRef cf)
-{
-	SDMMobileDeviceRef manager = (SDMMobileDeviceRef)cf;
-//	CFSafeRelease(manager->ivars.usbmuxd);
-	CFSafeRelease(manager->ivars.deviceList);
-}
-
 static CFTypeID _kSDMMD_SDMMobileDeviceRefID = _kCFRuntimeNotATypeID;
 
 static CFRuntimeClass _kSDMMD_SDMMobileDeviceRefClass = {0};
@@ -49,7 +42,6 @@ void SDMMD_SDMMobileDeviceRefClassInitialize(void)
     _kSDMMD_SDMMobileDeviceRefClass.className = "SDMMobileDeviceRef";
     _kSDMMD_SDMMobileDeviceRefClass.init = NULL;
     _kSDMMD_SDMMobileDeviceRefClass.copy = NULL;
-    _kSDMMD_SDMMobileDeviceRefClass.finalize = SDMMD_SDMMobileDeviceRefFinalize;
     _kSDMMD_SDMMobileDeviceRefClass.equal = NULL;
     _kSDMMD_SDMMobileDeviceRefClass.hash = NULL;
     _kSDMMD_SDMMobileDeviceRefClass.copyFormattingDesc = NULL;

@@ -150,50 +150,45 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
 - (void)deviceListCallback:(USBMuxPacket *)packet
 {
-    CFArrayRef devices = CFDictionaryGetValue((__bridge CFDictionaryRef)packet.payload, CFSTR("DeviceList"));
-    for (uint32_t i = 0; i < CFArrayGetCount(devices); i++)
+    NSArray *devices = packet.payload[@"DeviceList"];
+    for (NSDictionary *properties in devices)
     {
-        SDMMD_AMDeviceRef deviceFromList =
-            SDMMD_AMDeviceCreateFromProperties(CFArrayGetValueAtIndex(devices, i));
-        if (deviceFromList && !CFArrayContainsValue(SDMMobileDevice->ivars.deviceList, CFRangeMake(0,
-            CFArrayGetCount(SDMMobileDevice->ivars.deviceList)), deviceFromList))
+        SDMMD_AMDevice *deviceFromList = SDMMD_AMDeviceCreateFromProperties(properties);
+
+        if (deviceFromList && ![SDMMobileDevice->ivars.deviceList containsObject:deviceFromList])
         {
-            USBMuxPacket *devicePacket = [packet copy];
-            devicePacket.payload = CFBridgingRelease(CFArrayGetValueAtIndex(devices, i));
+            USBMuxPacket *devicePacket = packet;
+            devicePacket.payload = properties;
             [self attachedCallback:devicePacket];
         }
-        CFSafeRelease(deviceFromList);
     }
     dispatch_semaphore_signal(_semaphore);
 }
 
 - (void)attachedCallback:(USBMuxPacket *)packet
 {
-    SDMMD_AMDeviceRef newDevice = SDMMD_AMDeviceCreateFromProperties((__bridge CFDictionaryRef)(packet.payload));
-    if (newDevice && !CFArrayContainsValue(SDMMobileDevice->ivars.deviceList, CFRangeMake(0,
-        CFArrayGetCount(SDMMobileDevice->ivars.deviceList)), newDevice))
+    SDMMD_AMDevice* newDevice = SDMMD_AMDeviceCreateFromProperties(packet.payload);
+    if (newDevice && ![SDMMobileDevice->ivars.deviceList containsObject:newDevice])
     {
-        CFMutableArrayRef updateWithNew = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0,
-            SDMMobileDevice->ivars.deviceList);
+        NSMutableArray *updateWithNew = [NSMutableArray arrayWithArray:SDMMobileDevice->ivars.deviceList];
+
         // give priority to usb over wifi
-        if (newDevice->ivars.connection_type == kAMDeviceConnectionTypeUSB)
+        if (newDevice.connection_type == kAMDeviceConnectionTypeUSB)
         {
-            CFArrayAppendValue(updateWithNew, newDevice);
+            [updateWithNew addObject:newDevice];
             dispatch_async(dispatch_get_main_queue(),
             ^{
                 CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
                     (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceAttachedNotification, NULL, NULL, true);
             });
-            CFSafeRelease(SDMMobileDevice->ivars.deviceList);
-            SDMMobileDevice->ivars.deviceList = CFArrayCreateCopy(kCFAllocatorDefault, updateWithNew);
+
+            SDMMobileDevice->ivars.deviceList = updateWithNew;
         }
-        else if (newDevice->ivars.connection_type == kAMDeviceConnectionTypeWiFi)
+        else if (newDevice.connection_type == kAMDeviceConnectionTypeWiFi)
         {
             // wifi
         }
-        CFSafeRelease(updateWithNew);
     }
-    CFSafeRelease(newDevice);
 
     dispatch_async(dispatch_get_main_queue(),
     ^{
@@ -221,17 +216,15 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 {
     uint32_t detachedId = [(NSNumber *)packet.payload[@"DeviceID"] unsignedIntValue];
 
-    CFMutableArrayRef updateWithRemove = CFArrayCreateMutableCopy(kCFAllocatorDefault, 0, SDMMobileDevice->ivars.deviceList);
-    uint32_t removeCounter = 0;
-    SDMMD_AMDeviceRef detachedDevice = NULL;
-    for (uint32_t i = 0; i < CFArrayGetCount(SDMMobileDevice->ivars.deviceList); i++)
+    NSMutableArray *updateWithRemove = [NSMutableArray arrayWithArray:SDMMobileDevice->ivars.deviceList];
+
+    for (SDMMD_AMDevice *detachedDevice in SDMMobileDevice->ivars.deviceList)
     {
-        detachedDevice = (SDMMD_AMDeviceRef)CFArrayGetValueAtIndex(SDMMobileDevice->ivars.deviceList, i);
         // add something for then updating to use wifi if available.
         if (detachedId == SDMMD_AMDeviceGetConnectionID(detachedDevice))
         {
-            CFArrayRemoveValueAtIndex(updateWithRemove, i - removeCounter);
-            removeCounter++;
+            [updateWithRemove removeObject:detachedDevice];
+
             dispatch_async(dispatch_get_main_queue(),
             ^{
                 CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
@@ -239,10 +232,9 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             });
         }
     }
-    CFSafeRelease(SDMMobileDevice->ivars.deviceList);
-    SDMMobileDevice->ivars.deviceList = CFArrayCreateCopy(kCFAllocatorDefault, updateWithRemove);
 
-    CFSafeRelease(updateWithRemove);
+    SDMMobileDevice->ivars.deviceList = [NSArray arrayWithArray:updateWithRemove];
+
     dispatch_async(dispatch_get_main_queue(),
     ^{
         CFNotificationCenterPostNotification(CFNotificationCenterGetLocalCenter(),
@@ -504,7 +496,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec)
     return sock;
 }
 
-sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDeviceRef device, uint32_t port, uint32_t *socketConn)
+sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDevice *device, uint32_t port, uint32_t *socketConn)
 {
     sdmmd_return_t result = kAMDMuxConnectError;
     // 10-sec recv timeout
@@ -513,7 +505,7 @@ sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDeviceRef device, uint32_t port
     {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
-        [dict setObject:@(device->ivars.device_id) forKey:@"DeviceID"];
+        [dict setObject:@(device.device_id) forKey:@"DeviceID"];
 
         USBMuxPacket *connect = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketConnectType payload:dict];
 

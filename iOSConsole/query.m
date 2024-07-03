@@ -14,7 +14,7 @@
 #include "Core.h"
 #include "SDMMobileDevice.h"
 
-void RunQueryOnDevice(SDMMD_AMDeviceRef device, char *domain, char *key, sdmmd_return_t result)
+void RunQueryOnDevice(SDMMD_AMDevice *device, char *domain, char *key, sdmmd_return_t result)
 {
     if (SDM_MD_CallSuccessful(result))
     {
@@ -44,7 +44,7 @@ void PerformQuery(char *udid, char *domain, char *key)
 {
     if ((udid && strlen(udid) == 0x28) && key)
     {
-        SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+        SDMMD_AMDevice* device = FindDeviceFromUDID(udid);
         if (device)
         {
             sdmmd_return_t result = SDMMD_AMDeviceConnect(device);

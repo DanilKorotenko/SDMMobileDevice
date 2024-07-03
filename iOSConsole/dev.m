@@ -28,7 +28,7 @@ target create \"{APP_PATH}\"\n\
 
 void SetupDeviceForDevelopment(char *udid)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         SDMMD_AMDeviceMountDeveloperImage(device);
@@ -37,7 +37,7 @@ void SetupDeviceForDevelopment(char *udid)
 
 void TranferAppForInstallOnDevice(char *udid, char *app_path)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         CFStringRef path = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8 *)app_path,
@@ -49,7 +49,7 @@ void TranferAppForInstallOnDevice(char *udid, char *app_path)
 
 void InstallApplicationOnDevice(char *udid, char *app_path)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         CFStringRef path = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8 *)app_path,
@@ -96,7 +96,7 @@ void socket_callback(CFSocketRef s, CFSocketCallBackType callbackType, CFDataRef
     CFRelease(s);
 }
 
-CFURLRef copy_device_app_url(SDMMD_AMDeviceRef device, CFStringRef identifier)
+CFURLRef copy_device_app_url(SDMMD_AMDevice *device, CFStringRef identifier)
 {
     CFArrayRef values = SDMMD_ApplicationLookupDictionary();
     CFMutableDictionaryRef optionsDict = SDMMD_create_dict();
@@ -156,7 +156,7 @@ Boolean path_exists(CFTypeRef path)
 
 void StartDebuggingAndDetach(char *udid, char *app_path)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         CFStringRef bundleId = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8 *)app_path,
@@ -191,7 +191,7 @@ void StartDebuggingAndDetach(char *udid, char *app_path)
         CFRunLoopAddSource(CFRunLoopGetMain(), CFSocketCreateRunLoopSource(NULL, fdvendor, 0),
             kCFRunLoopCommonModes);
 
-        SDMMD_AMDeviceRef device = SDMMD_AMDServiceConnectionGetDevice(debug->connection);
+        SDMMD_AMDevice *device = SDMMD_AMDServiceConnectionGetDevice(debug->connection);
         CFMutableStringRef cmds = CFStringCreateMutableCopy(NULL, 0, LLDB_PREP_CMDS);
         CFRange range = {0, CFStringGetLength(cmds)};
 

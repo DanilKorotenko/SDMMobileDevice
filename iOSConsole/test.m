@@ -19,8 +19,9 @@
 
 void WhatDoesThisDo(char *udid)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
-    if (device) {
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
+    if (device)
+    {
         sdmmd_return_t result = kAMDInvalidArgumentError;
         SDMMD_AMDeviceConnect(device);
         SDMMD_AMDeviceStartSession(device);
@@ -51,7 +52,7 @@ void WhatDoesThisDo(char *udid)
             }
         }
         else {
-            printf("%s: Was unable to start the service on the device: %i\n", __FUNCTION__, SDMMD_AMDeviceUSBDeviceID(device));
+            printf("%s: Was unable to start the service on the device: %i\n", __FUNCTION__, device.device_id);
         }
     }
 }

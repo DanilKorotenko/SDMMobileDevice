@@ -277,7 +277,7 @@ CFPropertyListRef FormatHomescreen(struct SpringboardDeviceInfo *info, CFPropert
     return newFormat;
 }
 
-struct SpringboardDeviceInfo *CreateSpringboardInfoFromDevice(SDMMD_AMDeviceRef device)
+struct SpringboardDeviceInfo *CreateSpringboardInfoFromDevice(SDMMD_AMDevice *device)
 {
     struct SpringboardDeviceInfo *info = calloc(0x1, S(struct SpringboardDeviceInfo));
 
@@ -314,8 +314,9 @@ struct SpringboardDeviceInfo *CreateSpringboardInfoFromDevice(SDMMD_AMDeviceRef 
 
 void SpringboardQuery(char *udid)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
-    if (device) {
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
+    if (device)
+    {
         //struct SpringboardDeviceInfo *info = CreateSpringboardInfoFromDevice(device);
 
         SDMMD_AMConnectionRef springboard = AttachToDeviceAndService(device, AMSVC_SPRINGBOARD_SERVICES);
@@ -324,10 +325,12 @@ void SpringboardQuery(char *udid)
         CFDictionarySetValue(request, CFSTR(kFormatVersion), CFSTR("2"));
         SocketConnection socket = SDMMD_TranslateConnectionToSocket(springboard);
         sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, request, kCFPropertyListBinaryFormat_v1_0);
-        if (result == kAMDSuccess) {
+        if (result == kAMDSuccess)
+        {
             CFPropertyListRef response = NULL;
             result = SDMMD_ServiceReceiveMessage(socket, &response);
-            if (result == kAMDSuccess && response) {
+            if (result == kAMDSuccess && response)
+            {
                 PrintCFType(response);
             }
         }

@@ -38,15 +38,16 @@
 
 sdmmd_return_t SDMMD_perform_command(SDMMD_AMConnectionRef conn, CFStringRef command, uint64_t code, CallBack callback, uint32_t argsCount, void *paramStart, ...);
 
-sdmmd_return_t SDMMD_AMDeviceStartService(SDMMD_AMDeviceRef device, CFStringRef service, CFDictionaryRef options, SDMMD_AMConnectionRef *connection);
-sdmmd_return_t SDMMD_AMDeviceSecureStartService(SDMMD_AMDeviceRef device, CFStringRef service, CFDictionaryRef options, SDMMD_AMConnectionRef *connection);
+sdmmd_return_t SDMMD_AMDeviceStartService(SDMMD_AMDevice *device, CFStringRef service, CFDictionaryRef options, SDMMD_AMConnectionRef *connection);
+sdmmd_return_t SDMMD_AMDeviceSecureStartService(SDMMD_AMDevice *device, CFStringRef service, CFDictionaryRef options, SDMMD_AMConnectionRef *connection);
 
 void SDMMD_AMDServiceConnectionSetServiceName(SDMMD_AMConnectionRef *connection, CFStringRef service);
-void SDMMD_AMDServiceConnectionSetDevice(SDMMD_AMConnectionRef *connection, SDMMD_AMDeviceRef device);
-CF_RETURNS_NOT_RETAINED SDMMD_AMDeviceRef SDMMD_AMDServiceConnectionGetDevice(SDMMD_AMConnectionRef connection);
+void SDMMD_AMDServiceConnectionSetDevice(SDMMD_AMConnectionRef *connection, SDMMD_AMDevice *device);
+SDMMD_AMDevice *SDMMD_AMDServiceConnectionGetDevice(SDMMD_AMConnectionRef connection);
 
 uint32_t SDMMD_AMDServiceConnectionGetSocket(SDMMD_AMConnectionRef connection);
 
-sdmmd_return_t SDMMD_AMDeviceSecureStartSessionedService(SDMMD_AMDeviceRef device, CFStringRef service, SDMMD_AMConnectionRef *connection);
+sdmmd_return_t SDMMD_AMDeviceSecureStartSessionedService(SDMMD_AMDevice *device,
+    CFStringRef service, SDMMD_AMConnectionRef *connection);
 
 #endif

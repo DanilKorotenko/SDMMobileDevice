@@ -58,7 +58,7 @@ void ServiceSocketCallback(CFSocketRef s, CFSocketCallBackType callbackType, CFD
 
 void CreateLocalSocket(char *udid, struct SDM_MD_Service_Identifiers service)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     SDMMD_AMConnectionRef serviceCon = AttachToDeviceAndService(device, service.identifier);
     if (serviceCon)
     {

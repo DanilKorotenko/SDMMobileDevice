@@ -40,7 +40,6 @@ void InitializeSDMMobileDeviceClasses(void)
     SDMMD_AFC_Types_Initialize();
 
     // Initialize CFType classes
-    SDMMD_AMDeviceRefClassInitialize();
     SDMMD_AMConnectionRefClassInitialize();
     SDMMD_AFCConnectionRefClassInitialize();
     SDMMD_AFCOperationRefClassInitialize();

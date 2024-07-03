@@ -18,7 +18,7 @@
 
 void InstallAppToDevice(char *udid, char *path)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice* device = FindDeviceFromUDID(udid);
     if (device)
     {
         CFStringRef app_path = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%s"), path);
@@ -30,7 +30,7 @@ void InstallAppToDevice(char *udid, char *path)
 
 void InstallProfileToDevice(char *udid, char *path)
 {
-    SDMMD_AMDeviceRef device = FindDeviceFromUDID(udid);
+    SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
     {
         SDMMD_AMDeviceConnect(device);

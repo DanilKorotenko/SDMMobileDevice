@@ -29,7 +29,7 @@
 #define _SDM_MD_CLASSES_H_
 
 #include "SDMMD_MCP_Class.h"
-#include "SDMMD_AMDevice_Class.h"
+#include "SDMMD_AMDevice.h"
 #include "SDMMD_Connection_Class.h"
 #include "SDMMD_AFCOperation_Class.h"
 #include "SDMMD_AFCConnection_Class.h"

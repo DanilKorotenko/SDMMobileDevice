@@ -18,22 +18,22 @@
 
 void ListConnectedDevices(void)
 {
-    CFArrayRef devices = SDMMD_AMDCreateDeviceList();
-    CFIndex numberOfDevices = CFArrayGetCount(devices);
+    NSArray *devices = SDMMD_AMDCreateDeviceList();
+    CFIndex numberOfDevices = devices.count;
     LogLine(PrintCode_Norm, "Currently connected devices: (%ld)", numberOfDevices);
     if (numberOfDevices)
     {
         // return type (uint32_t) corresponds with known return codes (SDMMD_Error.h)
         sdmmd_return_t result;
 
-        uint32_t index;
+        uint32_t index = 0;
         // Iterating over connected devices
-        for (index = 0; index < numberOfDevices; index++)
+        for (SDMMD_AMDevice *device in devices)
         {
             // getting the device object from the array of connected devices
-            SDMMD_AMDeviceRef device = (SDMMD_AMDeviceRef)CFArrayGetValueAtIndex(devices, index);
             bool validDevice = SDMMD_AMDeviceIsValid(device);
-            if (validDevice) {
+            if (validDevice)
+            {
                 // attempting to connect to the device
                 result = SDMMD_AMDeviceConnect(device);
                 if (SDM_MD_CallSuccessful(result))
@@ -96,7 +96,6 @@ void ListConnectedDevices(void)
             }
         }
     }
-    CFSafeRelease(devices);
 }
 
 #endif
