@@ -35,28 +35,21 @@
 #include <openssl/err.h>
 #include <openssl/crypto.h>
 #include "SDMMD_SSL_Functions.h"
-#include "SDMMD_MCP_Internal.h"
+#import "SDMMobileDevice/SDMMD_USBMuxListener.h"
 
-static SDMMobileDeviceRef controller = NULL;
 static dispatch_once_t once;
 
-SDMMobileDeviceRef InitializeSDMMobileDevice(void)
+void InitializeSDMMobileDevice(void)
 {
     dispatch_once(&once,
     ^{
         InitializeSDMMobileDeviceClasses();
-        if (controller == NULL)
-        {
-            controller = SDMMobileDeviceRefCreateEmpty();
 
-            [[SDMMD_USBMuxListener sharedInstance] start];
-            SSL_library_init();
-            ERR_load_crypto_strings();
-            SSL_load_error_strings();
-            controller->ivars.peer_certificate_data_index = SDMMD_lockssl_init();
-        }
+        [[SDMMD_USBMuxListener sharedInstance] start];
+        SSL_library_init();
+        ERR_load_crypto_strings();
+        SSL_load_error_strings();
     });
-    return controller;
 }
 
 #endif

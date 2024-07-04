@@ -67,7 +67,7 @@ static bool optionsEnable[OptionsCount] = {};
 
 int main(int argc, const char *argv[])
 {
-    SDMMobileDevice;
+    InitializeSDMMobileDevice();
 
     NSString *udid = nil;
     NSString *service = nil;

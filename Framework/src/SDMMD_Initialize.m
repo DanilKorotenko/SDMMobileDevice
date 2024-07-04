@@ -43,7 +43,6 @@ void InitializeSDMMobileDeviceClasses(void)
     SDMMD_AMConnectionRefClassInitialize();
     SDMMD_AFCConnectionRefClassInitialize();
     SDMMD_AFCOperationRefClassInitialize();
-    SDMMD_SDMMobileDeviceRefClassInitialize();
 }
 
 #endif

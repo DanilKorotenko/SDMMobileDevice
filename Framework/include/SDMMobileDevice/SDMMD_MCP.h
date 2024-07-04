@@ -28,10 +28,6 @@
 #ifndef _SDM_MD_MCP_H_
 #define _SDM_MD_MCP_H_
 
-#include <SDMMobileDevice/SDMMD_MCP_Class.h>
-
-SDMMobileDeviceRef InitializeSDMMobileDevice(void);
-
-#define SDMMobileDevice InitializeSDMMobileDevice()
+void InitializeSDMMobileDevice(void);
 
 #endif

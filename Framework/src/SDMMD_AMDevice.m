@@ -52,7 +52,6 @@
 #include "SDMMD_Functions.h"
 #include "SDMMD_AppleFileConduit.h"
 #include "SDMMD_SSL_Functions.h"
-#include "SDMMD_MCP_Internal.h"
 #include "SDMMD_Error.h"
 #import "SDMMD_lockdown_conn.h"
 
@@ -149,6 +148,16 @@ sdmmd_return_t SDMMD_lockdown_connection_destory(SDMMD_lockdown_conn *lockdownCo
 
 @end
 
+uint64_t peer_certificate_data_index(void)
+{
+    static uint64_t data_index = 0;
+    if (data_index == 0)
+    {
+        data_index = SDMMD_lockssl_init();
+    }
+    return data_index;
+}
+
 SDMMD_lockdown_conn *SDMMD_lockdown_connection_create(uint32_t socket)
 {
     SDMMD_lockdown_conn *lockdown = [[SDMMD_lockdown_conn alloc] init];
@@ -201,7 +210,7 @@ int SDMMD__ssl_verify_callback(int value, X509_STORE_CTX *store)
             SSL *storeSSL = (SSL *)X509_STORE_CTX_get_ex_data(store,
                 SSL_get_ex_data_X509_STORE_CTX_idx());
             CFDataRef data = SSL_get_ex_data(storeSSL,
-                (uint32_t)SDMMobileDevice->ivars.peer_certificate_data_index);
+                (uint32_t)peer_certificate_data_index());
             decoded = SDMMD__decode_certificate(data);
             uint32_t data1 = i2d_X509(cert, NULL);
             uint32_t data2 = i2d_X509(decoded, NULL);
@@ -312,7 +321,7 @@ SSL *SDMMD_lockssl_handshake(uint64_t socket, CFTypeRef hostCert, CFTypeRef devi
                         SSL_set_verify_depth(ssl, 0);
                         SSL_set_bio(ssl, bioSocket, bioSocket);
                         SSL_set_ex_data(ssl,
-                            (uint32_t)SDMMobileDevice->ivars.peer_certificate_data_index,
+                            (uint32_t)peer_certificate_data_index(),
                                 (void *)deviceCert);
 
                         ERR_clear_error();

@@ -44,7 +44,6 @@
 		DAD912462C29A2D4005EBB6E /* SDMMD_AMDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911E42C29A0A1005EBB6E /* SDMMD_AMDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912482C29A323005EBB6E /* SDMMD_Keys.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911F22C29A0A1005EBB6E /* SDMMD_Keys.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912492C29A341005EBB6E /* SDMMD_Applications.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911E62C29A0A1005EBB6E /* SDMMD_Applications.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DAD9125C2C29A452005EBB6E /* SDMMD_MCP_Class.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911F32C29A0A1005EBB6E /* SDMMD_MCP_Class.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912642C29A564005EBB6E /* SDMMD_AppleFileConduit.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911E52C29A0A1005EBB6E /* SDMMD_AppleFileConduit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912652C2AA55A005EBB6E /* SDMMD_AFC_Types.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911D92C29A0A1005EBB6E /* SDMMD_AFC_Types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAD912662C2AA5F5005EBB6E /* SDMMD_AFCConnection_Class.h in Headers */ = {isa = PBXBuildFile; fileRef = DAD911DA2C29A0A1005EBB6E /* SDMMD_AFCConnection_Class.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,7 +70,6 @@
 		DAE372702C2AFEE80014B498 /* SDMMD_AFCOperation_Class.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD9121B2C29A0A1005EBB6E /* SDMMD_AFCOperation_Class.c */; };
 		DAE372712C2AFF2B0014B498 /* SDMMD_AFC_Types.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD912192C29A0A1005EBB6E /* SDMMD_AFC_Types.c */; };
 		DAE372722C2AFF590014B498 /* SDMMD_Connection_Class.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912242C29A0A1005EBB6E /* SDMMD_Connection_Class.m */; };
-		DAE372742C2B007E0014B498 /* SDMMD_MCP_Class.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD9122B2C29A0A1005EBB6E /* SDMMD_MCP_Class.m */; };
 		DAE372752C2B00B40014B498 /* SDMMD_Service.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912342C29A0A1005EBB6E /* SDMMD_Service.m */; };
 		DAE372762C2B00E70014B498 /* SDMMD_USBMuxListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912392C29A0A1005EBB6E /* SDMMD_USBMuxListener.m */; };
 		DAE372782C2B01640014B498 /* SDMMD_USBMux_Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD912362C29A0A1005EBB6E /* SDMMD_USBMux_Protocol.m */; };
@@ -284,8 +282,6 @@
 		DAD911F02C29A0A1005EBB6E /* SDMMD_Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_Functions.h; sourceTree = "<group>"; };
 		DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_Initialize.h; sourceTree = "<group>"; };
 		DAD911F22C29A0A1005EBB6E /* SDMMD_Keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_Keys.h; sourceTree = "<group>"; };
-		DAD911F32C29A0A1005EBB6E /* SDMMD_MCP_Class.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_MCP_Class.h; sourceTree = "<group>"; };
-		DAD911F42C29A0A1005EBB6E /* SDMMD_MCP_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_MCP_Internal.h; sourceTree = "<group>"; };
 		DAD911F52C29A0A1005EBB6E /* SDMMD_MCP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_MCP.h; sourceTree = "<group>"; };
 		DAD911F62C29A0A1005EBB6E /* SDMMD_MDFUModeDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_MDFUModeDevice.h; sourceTree = "<group>"; };
 		DAD911F72C29A0A1005EBB6E /* SDMMD_MobileBackup2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_MobileBackup2.h; sourceTree = "<group>"; };
@@ -333,7 +329,6 @@
 		DAD912282C29A0A1005EBB6E /* SDMMD_FileRelay.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SDMMD_FileRelay.c; sourceTree = "<group>"; };
 		DAD912292C29A0A1005EBB6E /* SDMMD_Functions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_Functions.m; sourceTree = "<group>"; };
 		DAD9122A2C29A0A1005EBB6E /* SDMMD_Initialize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_Initialize.m; sourceTree = "<group>"; };
-		DAD9122B2C29A0A1005EBB6E /* SDMMD_MCP_Class.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_MCP_Class.m; sourceTree = "<group>"; };
 		DAD9122C2C29A0A1005EBB6E /* SDMMD_MCP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_MCP.m; sourceTree = "<group>"; };
 		DAD9122D2C29A0A1005EBB6E /* SDMMD_MDFUModeDevice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SDMMD_MDFUModeDevice.c; sourceTree = "<group>"; };
 		DAD9122E2C29A0A1005EBB6E /* SDMMD_MobileBackup2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SDMMD_MobileBackup2.c; sourceTree = "<group>"; };
@@ -722,8 +717,6 @@
 				DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */,
 				DAD911F22C29A0A1005EBB6E /* SDMMD_Keys.h */,
 				DAC8B7552C344C4300DDBB63 /* SDMMD_lockdown_conn.h */,
-				DAD911F32C29A0A1005EBB6E /* SDMMD_MCP_Class.h */,
-				DAD911F42C29A0A1005EBB6E /* SDMMD_MCP_Internal.h */,
 				DAD911F52C29A0A1005EBB6E /* SDMMD_MCP.h */,
 				DAD911F62C29A0A1005EBB6E /* SDMMD_MDFUModeDevice.h */,
 				DAD911F72C29A0A1005EBB6E /* SDMMD_MobileBackup2.h */,
@@ -796,7 +789,6 @@
 				DAD912282C29A0A1005EBB6E /* SDMMD_FileRelay.c */,
 				DAD912292C29A0A1005EBB6E /* SDMMD_Functions.m */,
 				DAD9122A2C29A0A1005EBB6E /* SDMMD_Initialize.m */,
-				DAD9122B2C29A0A1005EBB6E /* SDMMD_MCP_Class.m */,
 				DAD9122C2C29A0A1005EBB6E /* SDMMD_MCP.m */,
 				DAD9122D2C29A0A1005EBB6E /* SDMMD_MDFUModeDevice.c */,
 				DAD9122E2C29A0A1005EBB6E /* SDMMD_MobileBackup2.c */,
@@ -989,7 +981,6 @@
 				DAD912462C29A2D4005EBB6E /* SDMMD_AMDevice.h in Headers */,
 				DAD912482C29A323005EBB6E /* SDMMD_Keys.h in Headers */,
 				DAD912492C29A341005EBB6E /* SDMMD_Applications.h in Headers */,
-				DAD9125C2C29A452005EBB6E /* SDMMD_MCP_Class.h in Headers */,
 				DAD912652C2AA55A005EBB6E /* SDMMD_AFC_Types.h in Headers */,
 				DAD912642C29A564005EBB6E /* SDMMD_AppleFileConduit.h in Headers */,
 				DAD912662C2AA5F5005EBB6E /* SDMMD_AFCConnection_Class.h in Headers */,
@@ -1216,7 +1207,6 @@
 				DAD912972C2AB003005EBB6E /* SDMMD_AMDevice.m in Sources */,
 				DAE372752C2B00B40014B498 /* SDMMD_Service.m in Sources */,
 				DAE372712C2AFF2B0014B498 /* SDMMD_AFC_Types.c in Sources */,
-				DAE372742C2B007E0014B498 /* SDMMD_MCP_Class.m in Sources */,
 				DAE372782C2B01640014B498 /* SDMMD_USBMux_Protocol.m in Sources */,
 				DA606D0C2C2EE2B0002AB848 /* SDMMD_Debugger.m in Sources */,
 				DAE3726F2C2AFE820014B498 /* SDMMD_AFCConnection_Class.m in Sources */,
