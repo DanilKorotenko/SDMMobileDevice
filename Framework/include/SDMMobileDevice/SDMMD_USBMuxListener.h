@@ -47,6 +47,9 @@ USBMuxPacket *SDMMD_USBMuxCreatePacketType(SDMMD_USBMuxPacketMessageType type, C
 
 + (SDMMD_USBMuxListener *)sharedInstance;
 
+@property(readonly) NSArray *deviceList;
+- (void)updateDeviceList;
+
 /*
  * Pass reference to packet to send. Upon return, *packet will either contain response
  * packet or empty packet structure.

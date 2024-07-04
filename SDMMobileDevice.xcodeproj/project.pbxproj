@@ -721,6 +721,7 @@
 				DAD911F02C29A0A1005EBB6E /* SDMMD_Functions.h */,
 				DAD911F12C29A0A1005EBB6E /* SDMMD_Initialize.h */,
 				DAD911F22C29A0A1005EBB6E /* SDMMD_Keys.h */,
+				DAC8B7552C344C4300DDBB63 /* SDMMD_lockdown_conn.h */,
 				DAD911F32C29A0A1005EBB6E /* SDMMD_MCP_Class.h */,
 				DAD911F42C29A0A1005EBB6E /* SDMMD_MCP_Internal.h */,
 				DAD911F52C29A0A1005EBB6E /* SDMMD_MCP.h */,
@@ -742,7 +743,6 @@
 				DAD912082C29A0A1005EBB6E /* SDMTranslation.h */,
 				DAD912092C29A0A1005EBB6E /* SDMTypeTranslation.h */,
 				DA5C459B2C340836005E653E /* USBMuxPacket.h */,
-				DAC8B7552C344C4300DDBB63 /* SDMMD_lockdown_conn.h */,
 			);
 			path = SDMMobileDevice;
 			sourceTree = "<group>";

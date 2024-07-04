@@ -48,6 +48,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 @interface SDMMD_USBMuxListener()
 
 @property (strong) NSMutableArray *responses;
+@property (strong) NSArray *deviceList;
 
 @end
 
@@ -83,6 +84,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
             DISPATCH_QUEUE_SERIAL);
         _socketQueue = dispatch_queue_create("com.samdmarshall.sdmmobiledevice.socketQueue", NULL);
         self.responses = [NSMutableArray array];
+        self.deviceList = [NSArray array];
     }
     return self;
 }
@@ -155,7 +157,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     {
         SDMMD_AMDevice *deviceFromList = SDMMD_AMDeviceCreateFromProperties(properties);
 
-        if (deviceFromList && ![SDMMobileDevice->ivars.deviceList containsObject:deviceFromList])
+        if (deviceFromList && ![self.deviceList containsObject:deviceFromList])
         {
             USBMuxPacket *devicePacket = packet;
             devicePacket.payload = properties;
@@ -168,9 +170,9 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 - (void)attachedCallback:(USBMuxPacket *)packet
 {
     SDMMD_AMDevice* newDevice = SDMMD_AMDeviceCreateFromProperties(packet.payload);
-    if (newDevice && ![SDMMobileDevice->ivars.deviceList containsObject:newDevice])
+    if (newDevice && ![self.deviceList containsObject:newDevice])
     {
-        NSMutableArray *updateWithNew = [NSMutableArray arrayWithArray:SDMMobileDevice->ivars.deviceList];
+        NSMutableArray *updateWithNew = [NSMutableArray arrayWithArray:self.deviceList];
 
         // give priority to usb over wifi
         if (newDevice.connection_type == kAMDeviceConnectionTypeUSB)
@@ -182,7 +184,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
                     (__bridge CFStringRef)kSDMMD_USBMuxListenerDeviceAttachedNotification, NULL, NULL, true);
             });
 
-            SDMMobileDevice->ivars.deviceList = updateWithNew;
+            self.deviceList = updateWithNew;
         }
         else if (newDevice.connection_type == kAMDeviceConnectionTypeWiFi)
         {
@@ -216,9 +218,9 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 {
     uint32_t detachedId = [(NSNumber *)packet.payload[@"DeviceID"] unsignedIntValue];
 
-    NSMutableArray *updateWithRemove = [NSMutableArray arrayWithArray:SDMMobileDevice->ivars.deviceList];
+    NSMutableArray *updateWithRemove = [NSMutableArray arrayWithArray:self.deviceList];
 
-    for (SDMMD_AMDevice *detachedDevice in SDMMobileDevice->ivars.deviceList)
+    for (SDMMD_AMDevice *detachedDevice in self.deviceList)
     {
         // add something for then updating to use wifi if available.
         if (detachedId == SDMMD_AMDeviceGetConnectionID(detachedDevice))
@@ -233,7 +235,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
         }
     }
 
-    SDMMobileDevice->ivars.deviceList = [NSArray arrayWithArray:updateWithRemove];
+    self.deviceList = [NSArray arrayWithArray:updateWithRemove];
 
     dispatch_async(dispatch_get_main_queue(),
     ^{
@@ -246,6 +248,16 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 {
     dispatch_semaphore_signal(_semaphore);
 }
+
+#pragma mark -
+
+- (void)updateDeviceList
+{
+    USBMuxPacket *devicesPacket = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketListDevicesType payload:nil];
+    [[SDMMD_USBMuxListener sharedInstance] send:&devicesPacket];
+}
+
+#pragma mark -
 
 - (void)start
 {

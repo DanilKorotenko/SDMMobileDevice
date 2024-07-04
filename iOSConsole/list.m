@@ -18,7 +18,8 @@
 
 void ListConnectedDevices(void)
 {
-    NSArray *devices = SDMMD_AMDCreateDeviceList();
+    [[SDMMD_USBMuxListener sharedInstance] updateDeviceList];
+    NSArray *devices = [SDMMD_USBMuxListener sharedInstance].deviceList;
     CFIndex numberOfDevices = devices.count;
     LogLine(PrintCode_Norm, "Currently connected devices: (%ld)", numberOfDevices);
     if (numberOfDevices)

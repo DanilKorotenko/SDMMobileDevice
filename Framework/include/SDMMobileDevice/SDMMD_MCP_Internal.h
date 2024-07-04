@@ -34,7 +34,6 @@
 
 struct sdm_mobiledevice_body
 {
-    NSArray *deviceList;
     uint64_t peer_certificate_data_index;
 };
 

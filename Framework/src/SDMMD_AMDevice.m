@@ -967,7 +967,7 @@ bool SDMMD_isDeviceAttached(uint32_t device_id)
 {
     bool result = false;
 
-    NSArray *devices = SDMMobileDevice->ivars.deviceList;
+    NSArray *devices = [SDMMD_USBMuxListener sharedInstance].deviceList;
 
     if (devices)
     {
@@ -2020,9 +2020,9 @@ bool SDMMD_AMDeviceIsAttached(SDMMD_AMDevice* device)
     bool result = false;
     USBMuxPacket *devicesPacket = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketListDevicesType payload:nil];
     [[SDMMD_USBMuxListener sharedInstance] send:&devicesPacket];
-    for (uint32_t i = 0; i < SDMMobileDevice->ivars.deviceList.count; i++)
+    for (uint32_t i = 0; i < [SDMMD_USBMuxListener sharedInstance].deviceList.count; i++)
     {
-        SDMMD_AMDevice* deviceCheck = (SDMMD_AMDevice*)[SDMMobileDevice->ivars.deviceList objectAtIndex:i];
+        SDMMD_AMDevice* deviceCheck = (SDMMD_AMDevice*)[[SDMMD_USBMuxListener sharedInstance].deviceList objectAtIndex:i];
         if (SDMMD_AMDeviceGetConnectionID(device) == SDMMD_AMDeviceGetConnectionID(deviceCheck))
         {
             result = true;
@@ -2030,13 +2030,6 @@ bool SDMMD_AMDeviceIsAttached(SDMMD_AMDevice* device)
         }
     }
     return result;
-}
-
-NSArray *SDMMD_AMDCreateDeviceList(void)
-{
-    USBMuxPacket *devicesPacket = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketListDevicesType payload:nil];
-    [[SDMMD_USBMuxListener sharedInstance] send:&devicesPacket];
-    return SDMMobileDevice->ivars.deviceList;
 }
 
 sdmmd_sim_return_t SDMMD_GetSIMStatusCode(SDMMD_AMDevice* device)

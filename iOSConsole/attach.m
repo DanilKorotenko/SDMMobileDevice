@@ -14,7 +14,8 @@
 
 SDMMD_AMDevice *FindDeviceFromUDID(char *udid)
 {
-    NSArray *devices = SDMMD_AMDCreateDeviceList();
+    [[SDMMD_USBMuxListener sharedInstance] updateDeviceList];
+    NSArray *devices = [SDMMD_USBMuxListener sharedInstance].deviceList;
     CFIndex numberOfDevices = devices.count;
     SDMMD_AMDevice* device = NULL;
     if (numberOfDevices)
@@ -52,7 +53,7 @@ SDMMD_AMDevice *FindDeviceFromUDID(char *udid)
     {
         printf("No devices connected.\n");
     }
-    
+
     return device;
 }
 

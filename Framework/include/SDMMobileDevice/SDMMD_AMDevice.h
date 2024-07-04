@@ -232,13 +232,6 @@ CFTypeRef SDMMD_AMDeviceCopyValue(SDMMD_AMDevice* device, CFStringRef domain, CF
  */
 sdmmd_return_t SDMMD_AMDeviceSetValue(SDMMD_AMDevice* device, CFStringRef domain, CFStringRef key, CFTypeRef value);
 
-/*!
- @function SDMMD_AMDCreateDeviceList
- @discussion
- Returns a CFArrayRef of all attached devices.
- */
-NSArray *SDMMD_AMDCreateDeviceList(void);
-
 sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDevice* device, CFStringRef path, CFDictionaryRef dict, CallBack handle, void *unknown);
 
 /*!
