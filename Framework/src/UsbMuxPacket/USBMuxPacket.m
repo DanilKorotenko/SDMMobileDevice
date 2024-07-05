@@ -21,6 +21,8 @@ struct USBMuxPacketBody
 @interface USBMuxPacket ()
 
 @property(readwrite) dispatch_time_t timeout;
+@property(readonly) NSString *packetMessage;
+@property(strong) NSDictionary *payload;
 
 @end
 
@@ -95,6 +97,28 @@ struct USBMuxPacketBody
     return self;
 }
 
+- (instancetype)initWithPayloadData:(NSData *)aPayloadData
+{
+    self = [self init];
+    if (self)
+    {
+        NSError *error = nil;
+        self.payload = [NSPropertyListSerialization propertyListWithData:aPayloadData options:NSPropertyListImmutable format:NULL
+            error:&error];
+    }
+    return self;
+}
+
+- (instancetype)initWithPayload:(NSDictionary *)aPayload
+{
+    self = [self init];
+    if (self)
+    {
+        self.payload = aPayload;
+    }
+    return self;
+}
+
 - (BOOL)isEqual:(id)other
 {
     if (other == self)
@@ -116,6 +140,34 @@ struct USBMuxPacketBody
 {
     return self.bodyTag;
 }
+
+#pragma mark -
+
+//- (dispatch_time_t)timeout
+//{
+//    return dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 5);
+//}
+
+- (NSString *)packetMessage
+{
+    return @"Invalid";
+}
+
+//- (NSDictionary *)payload
+//{
+//    if (payload == nil)
+//    {
+//        payload =
+//            @{
+//                @"BundleID":            @"com.samdmarshall.sdmmobiledevice",
+//                @"ClientVersionString": @"usbmuxd-323",
+//                @"ProgName":            @"SDMMobileDevice",
+//                @"kLibUSBMuxVersion":   @(3),
+//                @"MessageType":         self.packetMessage
+//            };
+//    }
+//    return payload;
+//}
 
 - (uint32_t)bodySize
 {

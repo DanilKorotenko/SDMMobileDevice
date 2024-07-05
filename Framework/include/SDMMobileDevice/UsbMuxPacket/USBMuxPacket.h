@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface USBMuxPacket : NSObject
 
+- (instancetype)initWithPayloadData:(NSData *)aPayloadData;
+- (instancetype)initWithPayload:(NSDictionary *)aPayload;
 - (instancetype)initWithType:(SDMMD_USBMuxPacketMessageType)type payload:(NSDictionary * _Nullable)dict;
 
 @property(readwrite) uint32_t bodyLength;
@@ -21,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(readonly) uint32_t bodySize;
 - (void)setBodyWithPtr:(void *)aPtr;
 
-@property(strong) NSDictionary *payload;
+@property(readonly) NSDictionary *payload;
 @property(readonly) NSData *bodyData;
 
 @property(readonly) dispatch_time_t timeout;

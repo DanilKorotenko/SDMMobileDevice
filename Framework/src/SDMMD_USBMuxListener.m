@@ -38,6 +38,9 @@
 #include <Core/Core.h>
 
 #import "USBMuxResponseCode.h"
+//#import "UsbMuxPacketListDevices.h"
+#import "UsbMuxPacketListen.h"
+#import "UsbMuxPacketConnect.h"
 
 void SDMMD_USBMuxSend(uint32_t sock, USBMuxPacket *packet);
 void SDMMD_USBMuxReceive(uint32_t sock, USBMuxPacket **aPacket);
@@ -159,8 +162,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
         if (deviceFromList && ![self.deviceList containsObject:deviceFromList])
         {
-            USBMuxPacket *devicePacket = packet;
-            devicePacket.payload = properties;
+            USBMuxPacket *devicePacket = [[USBMuxPacket alloc] initWithPayload:properties];
             [self attachedCallback:devicePacket];
         }
     }
@@ -515,13 +517,14 @@ sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDevice *device, uint32_t port, 
     *socketConn = SDMMD_ConnectToUSBMux(10);
     if (*socketConn)
     {
-        USBMuxPacket *connect = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketConnectType
-            payload:@{@"DeviceID" : @(device.device_id)}];
-
         // Requesting socket connection for specified port number
-        NSMutableDictionary *mutablePayload = [NSMutableDictionary dictionaryWithDictionary:connect.payload];
-        mutablePayload[@"PortNumber"] = @(port);
-        connect.payload = [NSDictionary dictionaryWithDictionary:mutablePayload];
+        USBMuxPacket *connect = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketConnectType
+            payload:
+            @{
+                @"DeviceID" : @(device.device_id),
+                @"PortNumber": @(port)
+            }];
+
 
         SDMMD_USBMuxSend(*socketConn, connect);
 

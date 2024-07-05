@@ -89,9 +89,7 @@ void SDMMD_USBMuxReceive(uint32_t sock, USBMuxPacket **aPacket)
                 remainder -= result;
             }
             NSData *xmlData = [NSData dataWithBytes:buffer length:payloadSize];
-            NSError *error = nil;
-            packet.payload = [NSPropertyListSerialization propertyListWithData:xmlData options:NSPropertyListImmutable format:NULL
-                error:&error];
+            packet = [[USBMuxPacket alloc] initWithPayloadData:xmlData];
 
             Safe(free, buffer);
         }

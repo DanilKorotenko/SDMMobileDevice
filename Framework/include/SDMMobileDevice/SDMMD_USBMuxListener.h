@@ -41,8 +41,6 @@
 
 sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDevice *device, uint32_t port, uint32_t *socketConn);
 
-USBMuxPacket *SDMMD_USBMuxCreatePacketType(SDMMD_USBMuxPacketMessageType type, CFDictionaryRef payload);
-
 @interface SDMMD_USBMuxListener : NSObject
 
 + (SDMMD_USBMuxListener *)sharedInstance;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA27079F2C37F86E005CBA1D /* UsbMuxPacketListen.m in Sources */ = {isa = PBXBuildFile; fileRef = DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */; };
+		DA2707A52C37FEAB005CBA1D /* UsbMuxPacketConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2707A32C37FEA0005CBA1D /* UsbMuxPacketConnect.m */; };
 		DA5C45992C32EC99005E653E /* USBMuxResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */; };
 		DA5C459A2C32EC99005E653E /* USBMuxResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */; };
 		DA5C459D2C34083A005E653E /* USBMuxPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5C459C2C340836005E653E /* USBMuxPacket.m */; };
@@ -142,6 +143,8 @@
 /* Begin PBXFileReference section */
 		DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UsbMuxPacketListen.h; sourceTree = "<group>"; };
 		DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UsbMuxPacketListen.m; sourceTree = "<group>"; };
+		DA2707A22C37FEA0005CBA1D /* UsbMuxPacketConnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UsbMuxPacketConnect.h; sourceTree = "<group>"; };
+		DA2707A32C37FEA0005CBA1D /* UsbMuxPacketConnect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UsbMuxPacketConnect.m; sourceTree = "<group>"; };
 		DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMuxResponseCode.h; sourceTree = "<group>"; };
 		DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USBMuxResponseCode.m; sourceTree = "<group>"; };
 		DA5C459B2C340836005E653E /* USBMuxPacket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMuxPacket.h; sourceTree = "<group>"; };
@@ -493,8 +496,9 @@
 		DA2707A02C37F87D005CBA1D /* UsbMuxPacket */ = {
 			isa = PBXGroup;
 			children = (
-				DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */,
 				DA5C459B2C340836005E653E /* USBMuxPacket.h */,
+				DA2707A22C37FEA0005CBA1D /* UsbMuxPacketConnect.h */,
+				DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */,
 			);
 			path = UsbMuxPacket;
 			sourceTree = "<group>";
@@ -503,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				DA5C459C2C340836005E653E /* USBMuxPacket.m */,
+				DA2707A32C37FEA0005CBA1D /* UsbMuxPacketConnect.m */,
 				DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */,
 			);
 			path = UsbMuxPacket;
@@ -1238,6 +1243,7 @@
 				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.m in Sources */,
 				DA27079F2C37F86E005CBA1D /* UsbMuxPacketListen.m in Sources */,
 				DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.m in Sources */,
+				DA2707A52C37FEAB005CBA1D /* UsbMuxPacketConnect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
