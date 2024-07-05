@@ -20,6 +20,8 @@ struct USBMuxPacketBody
 
 @interface USBMuxPacket ()
 
+@property(readwrite) dispatch_time_t timeout;
+
 @end
 
 @implementation USBMuxPacket

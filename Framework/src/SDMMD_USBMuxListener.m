@@ -49,12 +49,13 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 @property (strong) NSMutableArray *responses;
 @property (strong) NSArray *deviceList;
 
+@property (readwrite) BOOL isActive;
+
 @end
 
 @implementation SDMMD_USBMuxListener
 {
     uint32_t                _socket;
-    BOOL                    _isActive;
     dispatch_queue_t        _operationQueue;
     dispatch_queue_t        _socketQueue;
     dispatch_source_t       _socketSource;
@@ -78,7 +79,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
     if (self)
     {
         _socket = -1;
-        _isActive = NO;
+        self.isActive = NO;
         _operationQueue = dispatch_queue_create("com.samdmarshall.sdmmobiledevice.usbmux-operation-queue",
             DISPATCH_QUEUE_SERIAL);
         _socketQueue = dispatch_queue_create("com.samdmarshall.sdmmobiledevice.socketQueue", NULL);
@@ -112,7 +113,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
 - (void)dealloc
 {
-    _isActive = NO;
+    self.isActive = NO;
     Safe(close, _socket);
 //    Safe(dispatch_release, _socketQueue);
     dispatch_async(dispatch_get_main_queue(),
@@ -134,7 +135,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
                 if (response.code)
                 {
                     NSLog(@"usbmuxd returned%s: %lu - %@.\n",
-                          (response.code ? " error" : ""), (unsigned long)response.code,
+                        (response.code ? " error" : ""), (unsigned long)response.code,
                         (response.string ? response.string :
                         @"Unknown Error Description"));
                 }
@@ -344,7 +345,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
 
         dispatch_resume(_socketSource);
 
-        while (!_isActive)
+        while (!self.isActive)
         {
             USBMuxPacket *startListen = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketListenType payload:nil];
             [self send:&startListen];
@@ -353,7 +354,7 @@ uint32_t SDMMD_ConnectToUSBMux(time_t recvTimeoutSec);
                 USBMuxResponseCode *response = [[USBMuxResponseCode alloc] initWithDictionary:startListen.payload];
                 if (response.code == 0)
                 {
-                    _isActive = true;
+                    self.isActive = true;
                 }
                 else
                 {
@@ -514,11 +515,8 @@ sdmmd_return_t SDMMD_USBMuxConnectByPort(SDMMD_AMDevice *device, uint32_t port, 
     *socketConn = SDMMD_ConnectToUSBMux(10);
     if (*socketConn)
     {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
-        [dict setObject:@(device.device_id) forKey:@"DeviceID"];
-
-        USBMuxPacket *connect = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketConnectType payload:dict];
+        USBMuxPacket *connect = [[USBMuxPacket alloc] initWithType:kSDMMD_USBMuxPacketConnectType
+            payload:@{@"DeviceID" : @(device.device_id)}];
 
         // Requesting socket connection for specified port number
         NSMutableDictionary *mutablePayload = [NSMutableDictionary dictionaryWithDictionary:connect.payload];

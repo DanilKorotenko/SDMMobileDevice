@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA27079F2C37F86E005CBA1D /* UsbMuxPacketListen.m in Sources */ = {isa = PBXBuildFile; fileRef = DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */; };
 		DA5C45992C32EC99005E653E /* USBMuxResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */; };
 		DA5C459A2C32EC99005E653E /* USBMuxResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */; };
 		DA5C459D2C34083A005E653E /* USBMuxPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5C459C2C340836005E653E /* USBMuxPacket.m */; };
@@ -139,6 +140,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UsbMuxPacketListen.h; sourceTree = "<group>"; };
+		DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UsbMuxPacketListen.m; sourceTree = "<group>"; };
 		DA5C45972C32EC98005E653E /* USBMuxResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMuxResponseCode.h; sourceTree = "<group>"; };
 		DA5C45982C32EC98005E653E /* USBMuxResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USBMuxResponseCode.m; sourceTree = "<group>"; };
 		DA5C459B2C340836005E653E /* USBMuxPacket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMuxPacket.h; sourceTree = "<group>"; };
@@ -487,6 +490,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA2707A02C37F87D005CBA1D /* UsbMuxPacket */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UsbMuxPacket;
+			sourceTree = "<group>";
+		};
 		DA606CE52C2DC943002AB848 /* iOSConsole */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,7 +745,9 @@
 				DAD912072C29A0A1005EBB6E /* SDMMobileDevice.h */,
 				DAD912082C29A0A1005EBB6E /* SDMTranslation.h */,
 				DAD912092C29A0A1005EBB6E /* SDMTypeTranslation.h */,
+				DA2707A02C37F87D005CBA1D /* UsbMuxPacket */,
 				DA5C459B2C340836005E653E /* USBMuxPacket.h */,
+				DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */,
 			);
 			path = SDMMobileDevice;
 			sourceTree = "<group>";
@@ -771,6 +783,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC8B7562C344C4300DDBB63 /* SDMMD_lockdown_conn.m */,
+				DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */,
 				DA5C459C2C340836005E653E /* USBMuxPacket.m */,
 				DAD912192C29A0A1005EBB6E /* SDMMD_AFC_Types.c */,
 				DAD9121A2C29A0A1005EBB6E /* SDMMD_AFCConnection_Class.m */,
@@ -1215,6 +1228,7 @@
 				DAE372632C2AFCD30014B498 /* SDMMD_Initialize.m in Sources */,
 				DAE372642C2AFD1C0014B498 /* SDMMD_Functions.m in Sources */,
 				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.m in Sources */,
+				DA27079F2C37F86E005CBA1D /* UsbMuxPacketListen.m in Sources */,
 				DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

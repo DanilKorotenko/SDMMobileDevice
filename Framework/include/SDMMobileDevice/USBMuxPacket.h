@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong) NSDictionary *payload;
 @property(readonly) NSData *bodyData;
 
-@property(readwrite) dispatch_time_t timeout;
+@property(readonly) dispatch_time_t timeout;
 
 @end
 
