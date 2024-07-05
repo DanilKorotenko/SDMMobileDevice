@@ -493,6 +493,17 @@
 		DA2707A02C37F87D005CBA1D /* UsbMuxPacket */ = {
 			isa = PBXGroup;
 			children = (
+				DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */,
+				DA5C459B2C340836005E653E /* USBMuxPacket.h */,
+			);
+			path = UsbMuxPacket;
+			sourceTree = "<group>";
+		};
+		DA2707A12C37FC3E005CBA1D /* UsbMuxPacket */ = {
+			isa = PBXGroup;
+			children = (
+				DA5C459C2C340836005E653E /* USBMuxPacket.m */,
+				DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */,
 			);
 			path = UsbMuxPacket;
 			sourceTree = "<group>";
@@ -746,8 +757,6 @@
 				DAD912082C29A0A1005EBB6E /* SDMTranslation.h */,
 				DAD912092C29A0A1005EBB6E /* SDMTypeTranslation.h */,
 				DA2707A02C37F87D005CBA1D /* UsbMuxPacket */,
-				DA5C459B2C340836005E653E /* USBMuxPacket.h */,
-				DA27079C2C37F865005CBA1D /* UsbMuxPacketListen.h */,
 			);
 			path = SDMMobileDevice;
 			sourceTree = "<group>";
@@ -782,9 +791,8 @@
 		DAD9123A2C29A0A1005EBB6E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				DA2707A12C37FC3E005CBA1D /* UsbMuxPacket */,
 				DAC8B7562C344C4300DDBB63 /* SDMMD_lockdown_conn.m */,
-				DA27079D2C37F865005CBA1D /* UsbMuxPacketListen.m */,
-				DA5C459C2C340836005E653E /* USBMuxPacket.m */,
 				DAD912192C29A0A1005EBB6E /* SDMMD_AFC_Types.c */,
 				DAD9121A2C29A0A1005EBB6E /* SDMMD_AFCConnection_Class.m */,
 				DAD9121B2C29A0A1005EBB6E /* SDMMD_AFCOperation_Class.c */,
