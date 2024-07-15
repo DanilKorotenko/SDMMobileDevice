@@ -164,33 +164,25 @@ ExitLabel:
 	return dict;
 }
 
-CFMutableDictionaryRef SDMMD__CreateRequestDict(CFStringRef type)
+NSMutableDictionary *SDMMD__CreateRequestDict(NSString *type)
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
-    dict[@"Request"] = (__bridge id _Nullable)(type);
-
-    return (CFMutableDictionaryRef)CFBridgingRetain(dict);
+    dict[@"Request"] = type;
+    return dict;
 }
 
 CFMutableDictionaryRef SDMMD__CreateMessageDict(CFStringRef type)
 {
-	CFMutableDictionaryRef dict = SDMMD__CreateRequestDict(type);
-	if (dict) {
-		CFDictionarySetValue(dict, CFSTR("ProtocolVersion"), CFSTR("2"));
-		const char *appName = getprogname();
-		if (appName) {
-			CFStringRef name = CFStringCreateWithCString(kCFAllocatorDefault, appName, kCFStringEncodingUTF8);
-			if (name) {
-				CFDictionarySetValue(dict, CFSTR("Label"), name);
-				CFSafeRelease(name);
-			}
-		}
-	}
-	return dict;
+    NSMutableDictionary *dict = SDMMD__CreateRequestDict((__bridge NSString *)(type));
+    if (dict)
+    {
+        dict[@"ProtocolVersion"] = @"2";
+        dict[@"Label"] = [[[NSProcessInfo processInfo] arguments] objectAtIndex:0];
+    }
+    return (CFMutableDictionaryRef)CFBridgingRetain(dict);
 }
 
-CFStringRef SDMCreateCurrentDateString()
+CFStringRef SDMCreateCurrentDateString(void)
 {
 	CFLocaleRef currentLocale = CFLocaleCopyCurrent();
 	CFDateRef date = CFDateCreate(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent());

@@ -61,7 +61,7 @@ void SDMMD___AppendValue(CFTypeRef append, CFMutableDataRef context);
 void SDMMD___ConvertDictEntry(const void *key, const void *value, void *context);
 CFDataRef SDMMD__CreateDataFromFileContents(char *path);
 CFMutableDictionaryRef SDMMD__CreateDictFromFileContents(char *path);
-CFMutableDictionaryRef SDMMD__CreateRequestDict(CFStringRef type);
+NSMutableDictionary *SDMMD__CreateRequestDict(NSString *type);
 CFMutableDictionaryRef SDMMD__CreateMessageDict(CFStringRef type);
 CFStringRef SDMCreateCurrentDateString(void);
 char *SDMCFStringGetString(CFStringRef str);

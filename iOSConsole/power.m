@@ -46,24 +46,24 @@ void SendDeviceCommand(char *udid, CFDictionaryRef request)
 
 void SendSleepToDevice(char *udid)
 {
-    CFMutableDictionaryRef request = SDMMD__CreateRequestDict(CFSTR("Sleep"));
-    SendDeviceCommand(udid, request);
+    NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Sleep");
+    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
 }
 
 void SendRebootToDevice(char *udid)
 {
-    CFMutableDictionaryRef request = SDMMD__CreateRequestDict(CFSTR("Restart"));
-    CFDictionarySetValue(request, CFSTR("DisplayPass"), kCFBooleanTrue);
-    CFDictionarySetValue(request, CFSTR("WaitForDisconnect"), kCFBooleanFalse);
-    SendDeviceCommand(udid, request);
+    NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Restart");
+    request[@"DisplayPass"] = @(YES);
+    request[@"WaitForDisconnect"] = @(NO);
+    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
 }
 
 void SendShutdownToDevice(char *udid)
 {
-    CFMutableDictionaryRef request = SDMMD__CreateRequestDict(CFSTR("Shutdown"));
-    CFDictionarySetValue(request, CFSTR("DisplayPass"), kCFBooleanTrue);
-    CFDictionarySetValue(request, CFSTR("WaitForDisconnect"), kCFBooleanFalse);
-    SendDeviceCommand(udid, request);
+    NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Shutdown");
+    request[@"DisplayPass"] = @(YES);
+    request[@"WaitForDisconnect"] = @(NO);
+    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
 }
 
 #endif
