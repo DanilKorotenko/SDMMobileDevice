@@ -33,7 +33,7 @@ void WhatDoesThisDo(char *udid)
             NSMutableDictionary *optionsDict = [NSMutableDictionary dictionary];
             optionsDict[@"Request"] = @"GasGauge";
 
-            result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), (__bridge CFPropertyListRef)(optionsDict), kCFPropertyListXMLFormat_v1_0);
+            result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), optionsDict);
 
             CFMutableDictionaryRef response;
             result = SDMMD_ServiceReceiveMessage(SDMMD_TranslateConnectionToSocket(conn), (CFPropertyListRef *)&response);

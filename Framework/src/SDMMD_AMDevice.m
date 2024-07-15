@@ -421,7 +421,7 @@ sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice* device, NSDictionary 
                     {.conn = (uint32_t)device.lockdown_conn.connection}};
             }
 
-            SDMMD_ServiceSendMessage(conn, (__bridge CFPropertyListRef)(dict), kCFPropertyListXMLFormat_v1_0);
+            SDMMD_ServiceSendMessage(conn, dict);
         }
         else
         {

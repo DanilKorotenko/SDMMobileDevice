@@ -166,7 +166,7 @@ sdmmd_return_t SDMMD__hangup_with_image_mounter_service(SDMMD_AMConnectionRef co
     if (connection)
     {
         SocketConnection socket = SDMMD_TranslateConnectionToSocket(connection);
-        result = SDMMD_ServiceSendMessage(socket, (__bridge CFPropertyListRef)(dict), kCFPropertyListXMLFormat_v1_0);
+        result = SDMMD_ServiceSendMessage(socket, dict);
 		CheckErrorAndReturn(result);
 
 		CFPropertyListRef response = NULL;
@@ -292,7 +292,7 @@ sdmmd_return_t SDMMD_stream_image(SDMMD_AMConnectionRef connection, CFStringRef 
         streamDict[@"Command"] = @"ReceiveBytes";
         streamDict[@"ImageType"] = (__bridge id _Nullable)(image_type);
         streamDict[@"ImageSize"] = (__bridge id _Nullable)(size);
-        result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), (__bridge CFPropertyListRef)(streamDict), kCFPropertyListXMLFormat_v1_0);
+        result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), streamDict);
 
         CFSafeRelease(size);
 
@@ -382,7 +382,7 @@ sdmmd_return_t SDMMD_mount_image(SDMMD_AMConnectionRef connection, CFStringRef i
         {
             mountDict[@"ImageSignature"] = (__bridge id _Nullable)(signature);
         }
-        result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), (__bridge CFPropertyListRef)(mountDict), kCFPropertyListXMLFormat_v1_0);
+        result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), mountDict);
 
         CheckErrorAndReturn(result);
 
@@ -457,70 +457,80 @@ sdmmd_return_t SDMMD_AMDeviceMountImage(SDMMD_AMDevice* device, CFStringRef path
 
                     CheckErrorAndReturn(result);
 
-                    result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), (__bridge CFPropertyListRef)(commandDict), kCFPropertyListXMLFormat_v1_0);
+                    result = SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(connection), commandDict);
 
                     CheckErrorAndReturn(result);
 
                     CFDictionaryRef response;
                     result = SDMMD_ServiceReceiveMessage(SDMMD_TranslateConnectionToSocket(connection), (CFPropertyListRef *)&response);
 
-					CheckErrorAndReturn(result);
+                    CheckErrorAndReturn(result);
 
-					if (response) {
-						result = SDMMD__ErrorHandler(SDMMD__ConvertServiceError, response);
+                    if (response)
+                    {
+                        result = SDMMD__ErrorHandler(SDMMD__ConvertServiceError, response);
 
-						CheckErrorAndReturn(result);
+                        CheckErrorAndReturn(result);
 
-						CFTypeRef image = CFDictionaryGetValue(response, CFSTR("ImagePresent"));
-						if (image) {
-							if (CFEqual(image, kCFBooleanTrue)) {
-								digest = CFDictionaryGetValue(response, CFSTR("ImageDigest"));
-							}
-							else {
-								result = kAMDMissingDigestError;
-							}
-						}
-					}
+                        CFTypeRef image = CFDictionaryGetValue(response, CFSTR("ImagePresent"));
+                        if (image)
+                        {
+                            if (CFEqual(image, kCFBooleanTrue))
+                            {
+                                digest = CFDictionaryGetValue(response, CFSTR("ImageDigest"));
+                            }
+                            else
+                            {
+                                result = kAMDMissingDigestError;
+                            }
+                        }
+                    }
 
-					if (!digest) {
-						bool use_stream = SDMMD_device_os_is_at_least(device, CFSTR("7.0"));
-						if (use_stream) {
-							SDMMD_fire_callback(handle, unknown, CFSTR("StreamingImage"));
-							result = SDMMD_stream_image(connection, path, image_type);
-						}
-						else {
-							SDMMD_fire_callback(handle, unknown, CFSTR("CopyingImage"));
-							result = SDMMD_copy_image(device, path);
-						}
-					}
+                    if (!digest)
+                    {
+                        bool use_stream = SDMMD_device_os_is_at_least(device, CFSTR("7.0"));
+                        if (use_stream)
+                        {
+                            SDMMD_fire_callback(handle, unknown, CFSTR("StreamingImage"));
+                            result = SDMMD_stream_image(connection, path, image_type);
+                        }
+                        else
+                        {
+                            SDMMD_fire_callback(handle, unknown, CFSTR("CopyingImage"));
+                            result = SDMMD_copy_image(device, path);
+                        }
+                    }
 
-					CheckErrorAndReturn(result);
+                    CheckErrorAndReturn(result);
 
-					bool mounted = false;
-					SDMMD_fire_callback(handle, unknown, CFSTR("MountingImage"));
-					result = SDMMD_mount_image(connection, image_type, signature, &mounted);
+                    bool mounted = false;
+                    SDMMD_fire_callback(handle, unknown, CFSTR("MountingImage"));
+                    result = SDMMD_mount_image(connection, image_type, signature, &mounted);
 
-					if (mounted) {
-						result = SDMMD__hangup_with_image_mounter_service(connection);
-					}
-				}
-				CFSafeRelease(connection);
-				CheckErrorAndReturn(result);
-			}
-			else
+                    if (mounted)
+                    {
+                        result = SDMMD__hangup_with_image_mounter_service(connection);
+                    }
+                }
+                CFSafeRelease(connection);
+                CheckErrorAndReturn(result);
+            }
+            else
             {
-				result = kAMDUndefinedError;
-			}
-		}
-		else {
-			result = kAMDMissingImageTypeError;
-		}
-	}
-	else {
-		result = kAMDMissingOptionsError;
-	}
+                result = kAMDUndefinedError;
+            }
+        }
+        else
+        {
+            result = kAMDMissingImageTypeError;
+        }
+    }
+    else
+    {
+        result = kAMDMissingOptionsError;
+    }
 
-	ExitLabelAndReturn(result);
+    ExitLabelAndReturn(result);
 }
 
 uint32_t GenerateChecksumForData(char *strPtr, uint32_t length)

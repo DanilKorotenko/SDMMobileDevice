@@ -25,8 +25,7 @@ void SendDeviceCommand(char *udid, CFDictionaryRef request)
         if (request)
         {
             SocketConnection socket = SDMMD_TranslateConnectionToSocket(powerDiag);
-            sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, request,
-                kCFPropertyListXMLFormat_v1_0);
+            sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, (__bridge NSDictionary *)(request));
             if (SDM_MD_CallSuccessful(result))
             {
                 CFStringRef command = CFDictionaryGetValue(request, CFSTR("Request"));

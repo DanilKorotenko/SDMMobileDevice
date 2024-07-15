@@ -290,14 +290,14 @@ sdmmd_return_t SDMMD_DirectServiceReceive(SocketConnection handle, CFMutableData
 	return kAMDSuccess;
 }
 
-sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, CFPropertyListRef data, CFPropertyListFormat format)
+sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, NSDictionary *data)
 {
-	CFErrorRef error;
-	CFDataRef xmlData = CFPropertyListCreateData(kCFAllocatorDefault, data, format, 0, &error);
-	sdmmd_return_t result = ((xmlData) ? SDMMD_ServiceSend(handle, xmlData) : kAMDInvalidArgumentError);
+    NSError *error = nil;
+    NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:data format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
 
-	CFSafeRelease(xmlData);
-	return result;
+    sdmmd_return_t result = ((xmlData) ? SDMMD_ServiceSend(handle, (__bridge CFDataRef)(xmlData)) : kAMDInvalidArgumentError);
+
+    return result;
 }
 
 sdmmd_return_t SDMMD_ServiceReceiveMessage(SocketConnection handle, CFPropertyListRef *data)

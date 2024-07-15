@@ -324,7 +324,7 @@ void SpringboardQuery(char *udid)
         request[@kCommand] = @kCommandGetIconState;
         request[@kFormatVersion] = @"2";
         SocketConnection socket = SDMMD_TranslateConnectionToSocket(springboard);
-        sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, (__bridge CFPropertyListRef)(request), kCFPropertyListBinaryFormat_v1_0);
+        sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, request);
         if (result == kAMDSuccess)
         {
             CFPropertyListRef response = NULL;

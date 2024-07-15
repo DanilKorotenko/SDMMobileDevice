@@ -44,8 +44,7 @@ void InstallProfileToDevice(char *udid, char *path)
         request[@"RequestType"] = @"InstallProfile";
         request[@"Payload"] = (__bridge id _Nullable)(config_data);
 
-        SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), (__bridge CFPropertyListRef)(request),
-            kCFPropertyListXMLFormat_v1_0);
+        SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), request);
 
         CFSafeRelease(config_data);
 
