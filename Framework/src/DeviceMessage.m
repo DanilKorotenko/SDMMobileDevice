@@ -5,15 +5,15 @@
 //  Created by Danil Korotenko on 7/15/24.
 //
 
-#import "DeviceRequest.h"
+#import "DeviceMessage.h"
 
-@interface DeviceRequest ()
+@interface DeviceMessage ()
 
 @property (readonly) NSMutableDictionary *mutableDictionary;
 
 @end
 
-@implementation DeviceRequest
+@implementation DeviceMessage
 
 @synthesize mutableDictionary;
 

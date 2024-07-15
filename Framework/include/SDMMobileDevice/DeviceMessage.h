@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DeviceRequest : NSObject
+@interface DeviceMessage : NSObject
 
 - (instancetype)initWithType:(NSString *)aType;
 
