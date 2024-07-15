@@ -181,7 +181,7 @@ sdmmd_return_t SDMMD_send_service_start(SDMMD_AMDevice* device, CFStringRef serv
             dict[@"EscrowBag"] = (__bridge id _Nullable)(escrowBag);
         }
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(dict));
+        result = SDMMD_lockconn_send_message(device, dict);
 
         CheckErrorAndReturn(result);
 

@@ -402,7 +402,7 @@ sdmmd_return_t SDMMD_lockconn_disable_ssl(SDMMD_lockdown_conn *lockdown_conn)
     return result;
 }
 
-sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice* device, CFDictionaryRef dict)
+sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice* device, NSDictionary *dict)
 {
     sdmmd_return_t result = kAMDSuccess;
     if (device.lockdown_conn)
@@ -421,7 +421,7 @@ sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice* device, CFDictionaryR
                     {.conn = (uint32_t)device.lockdown_conn.connection}};
             }
 
-            SDMMD_ServiceSendMessage(conn, dict, kCFPropertyListXMLFormat_v1_0);
+            SDMMD_ServiceSendMessage(conn, (__bridge CFPropertyListRef)(dict), kCFPropertyListXMLFormat_v1_0);
         }
         else
         {
@@ -502,7 +502,7 @@ CFTypeRef SDMMD_copy_lockdown_value(SDMMD_AMDevice* device, CFStringRef domain, 
             request[@"Key"] = (__bridge id _Nullable)(key);
         }
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(request));
+        result = SDMMD_lockconn_send_message(device, request);
 
         if (!SDM_MD_CallSuccessful(result))
         {
@@ -592,7 +592,7 @@ sdmmd_return_t SDMMD_send_set_value(SDMMD_AMDevice* device, CFStringRef domain, 
         setVal[@"Key"] = (__bridge id _Nullable)(key);
         setVal[@"Value"] = (__bridge id _Nullable)(value);
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(setVal));
+        result = SDMMD_lockconn_send_message(device, setVal);
 
         if (!SDM_MD_CallSuccessful(result))
         {
@@ -667,7 +667,7 @@ sdmmd_return_t SDMMD_send_unpair(SDMMD_AMDevice* device, CFStringRef hostId)
         NSDictionary *host = @{@"HostID": hostIdStr};
 
         dict[@"PairRecord"] = host;
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(dict));
+        result = SDMMD_lockconn_send_message(device, dict);
 
         if (SDM_MD_CallSuccessful(result))
         {
@@ -729,7 +729,7 @@ sdmmd_return_t SDMMD_send_pair(SDMMD_AMDevice* device, CFMutableDictionaryRef pa
             pRecord[@"PairingOptions"] = (__bridge id _Nullable)(options);
         }
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(pRecord));
+        result = SDMMD_lockconn_send_message(device, pRecord);
 
         if (!SDM_MD_CallSuccessful(result))
         {
@@ -815,7 +815,7 @@ sdmmd_return_t SDMMD_send_validate_pair(SDMMD_AMDevice* device, CFStringRef host
 
         dict[@"PairRecord"] = host;
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(dict));
+        result = SDMMD_lockconn_send_message(device, dict);
 
         if (SDM_MD_CallSuccessful(result))
         {
@@ -862,7 +862,7 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, CFStringRef *name)
 
         NSMutableDictionary *queryDict = SDMMD__CreateMessageDict(@"QueryType");
 
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(queryDict));
+        result = SDMMD_lockconn_send_message(device, queryDict);
 
         if (!SDM_MD_CallSuccessful(result))
         {
@@ -1030,7 +1030,7 @@ sdmmd_return_t SDMMD_send_activation(SDMMD_AMDevice* device, CFDictionaryRef dic
                 NSMutableDictionary *messageDict = SDMMD__CreateMessageDict(@"Activate");
 
                 messageDict[@"ActivationRecord"] = (__bridge id _Nullable)(dict);
-                result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(messageDict));
+                result = SDMMD_lockconn_send_message(device, messageDict);
                 if (result == kAMDSuccess)
                 {
                     result = SDMMD_lockconn_receive_message(device, &message);
@@ -1066,7 +1066,7 @@ sdmmd_return_t SDMMD_send_deactivation(SDMMD_AMDevice* device)
             //result = kAMDInvalidArgumentError;
             NSMutableDictionary *messageDict = SDMMD__CreateMessageDict(@"Deactivate");
 
-            result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(messageDict));
+            result = SDMMD_lockconn_send_message(device, messageDict);
             if (result == kAMDSuccess)
             {
                 result = SDMMD_lockconn_receive_message(device, &message);
@@ -1124,7 +1124,7 @@ sdmmd_return_t SDMMD_send_session_start(SDMMD_AMDevice* device, CFDictionaryRef 
             if (isValidHostBUID && result == kAMDSuccess)
             {
                 // SDM: this is a check against the host BUID and the BUID of the pairing record. this is a security measure.
-                result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(message));
+                result = SDMMD_lockconn_send_message(device, message);
                 //PrintCFType(message);
                 if (result == kAMDSuccess)
                 {
@@ -1221,7 +1221,7 @@ sdmmd_return_t SDMMD_send_session_stop(SDMMD_AMDevice* device, CFTypeRef session
         NSMutableDictionary *dict = SDMMD__CreateMessageDict(@"StopSession");
 
         dict[@"SessionID"] = (__bridge id _Nullable)(session);
-        result = SDMMD_lockconn_send_message(device, (__bridge CFDictionaryRef)(dict));
+        result = SDMMD_lockconn_send_message(device, dict);
 
         if (!SDM_MD_CallSuccessful(result))
         {

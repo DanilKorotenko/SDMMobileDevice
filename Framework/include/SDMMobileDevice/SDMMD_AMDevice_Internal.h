@@ -40,7 +40,7 @@ sdmmd_return_t SDMMD__CopyEscrowBag(SDMMD_AMDevice *device, CFDataRef *bag);
 SSL *SDMMD_lockssl_handshake(uint64_t socket, CFTypeRef hostCert, CFTypeRef deviceCert, CFTypeRef hostPrivKey, uint32_t num);
 sdmmd_return_t SDMMD__connect_to_port(SDMMD_AMDevice *device, uint32_t port, bool hasTimeout, uint32_t *socketConn, bool isSSL);
 
-sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice *device, CFDictionaryRef dict);
+sdmmd_return_t SDMMD_lockconn_send_message(SDMMD_AMDevice *device, NSDictionary *dict);
 sdmmd_return_t SDMMD_lockconn_receive_message(SDMMD_AMDevice *device, CFMutableDictionaryRef *dict);
 
 #endif
