@@ -39,72 +39,88 @@
 
 sdmmd_return_t SDMMD_perform_command(SDMMD_AMConnectionRef conn, CFStringRef command, uint64_t code, CallBack handle, uint32_t argsCount, void *paramStart, ...)
 {
-	sdmmd_return_t result = kAMDSuccess;
-	CFMutableDictionaryRef message = SDMMD_create_dict();
+    sdmmd_return_t result = kAMDSuccess;
+    NSMutableDictionary *message = [NSMutableDictionary dictionary];
 
-	if (message) {
-		va_list args;
+    if (message)
+    {
+        va_list args;
 
-		CFDictionarySetValue(message, CFSTR("Command"), command);
-		va_start(args, paramStart);
-		CFTypeRef key, value;
-		for (uint32_t i = 0; i < argsCount; i++) {
-			key = va_arg(args, CFTypeRef);
-			value = va_arg(args, CFTypeRef);
-			CFDictionarySetValue(message, key, value);
-			i++;
-		}
-		va_end(args);
+        NSString *commandStr = (__bridge NSString *)(command);
+        message[@"Command"] = commandStr;
+        va_start(args, paramStart);
+        NSString *key;
+        id value;
+        for (uint32_t i = 0; i < argsCount; i++)
+        {
+            key = va_arg(args, NSString*);
+            value = va_arg(args, id);
+            message[key] = value;
+            i++;
+        }
+        va_end(args);
 
-		SocketConnection sock = SDMMD_TranslateConnectionToSocket(conn);
-		result = SDMMD_ServiceSendStream(sock, message, kCFPropertyListXMLFormat_v1_0);
-		CFSafeRelease(message);
-		if (result == kAMDSuccess) {
-			CFDictionaryRef response = NULL;
-			result = SDMMD_ServiceReceiveStream(sock, (CFPropertyListRef *)&response);
-			if (result == kAMDSuccess && response) {
-				while (result == kAMDSuccess) {
-					result = SDMMD__ErrorHandler(SDMMD__ConvertServiceError, response);
+        SocketConnection sock = SDMMD_TranslateConnectionToSocket(conn);
+        result = SDMMD_ServiceSendStream(sock, (__bridge CFPropertyListRef)(message), kCFPropertyListXMLFormat_v1_0);
 
-					CheckErrorAndReturn(result);
+        if (result == kAMDSuccess)
+        {
+            CFDictionaryRef response = NULL;
+            result = SDMMD_ServiceReceiveStream(sock, (CFPropertyListRef *)&response);
+            if (result == kAMDSuccess && response)
+            {
+                while (result == kAMDSuccess)
+                {
+                    result = SDMMD__ErrorHandler(SDMMD__ConvertServiceError, response);
 
-					CFTypeRef status = CFDictionaryGetValue(response, CFSTR("Status"));
-					if (status) {
-						if (CFStringCompare(status, CFSTR("Complete"), 0) != 0) {
-							CFArrayRef responses = CFDictionaryGetValue(response, CFSTR("CurrentList"));
-							if (responses) {
-								uint64_t count = CFArrayGetCount(responses);
-								for (uint32_t i = 0; i < count; i++) {
-									CFDictionaryRef value = CFArrayGetValueAtIndex(responses, i);
-									handle(value, paramStart);
-								}
-							}
-							else {
-								handle(response, 0);
-							}
-						}
-						else {
-							break;
-						}
-					}
-					SDMMD_ServiceReceiveStream(sock, (CFPropertyListRef *)&response);
-				}
-			}
-			else {
-				result = kAMDReceiveMessageError;
-				printf("call_and_response: Could not receive response from proxy.\n");
-			}
-		}
-		else {
-			result = kAMDSendMessageError;
-			printf("call_and_response: Could not send request to proxy.\n");
-		}
-	}
-	else {
-		result = kAMDUndefinedError;
-	}
+                    CheckErrorAndReturn(result);
 
-	ExitLabelAndReturn(result);
+                    CFTypeRef status = CFDictionaryGetValue(response, CFSTR("Status"));
+                    if (status)
+                    {
+                        if (CFStringCompare(status, CFSTR("Complete"), 0) != 0)
+                        {
+                            CFArrayRef responses = CFDictionaryGetValue(response, CFSTR("CurrentList"));
+                            if (responses)
+                            {
+                                uint64_t count = CFArrayGetCount(responses);
+                                for (uint32_t i = 0; i < count; i++)
+                                {
+                                    CFDictionaryRef value = CFArrayGetValueAtIndex(responses, i);
+                                    handle(value, paramStart);
+                                }
+                            }
+                            else
+                            {
+                                handle(response, 0);
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    SDMMD_ServiceReceiveStream(sock, (CFPropertyListRef *)&response);
+                }
+            }
+            else
+            {
+                result = kAMDReceiveMessageError;
+                printf("call_and_response: Could not receive response from proxy.\n");
+            }
+        }
+        else
+        {
+            result = kAMDSendMessageError;
+            printf("call_and_response: Could not send request to proxy.\n");
+        }
+    }
+    else
+    {
+        result = kAMDUndefinedError;
+    }
+
+    ExitLabelAndReturn(result);
 }
 
 SDMMD_AMConnectionRef SDMMD__CreateTemporaryServConn(uint32_t socket, SSL *ssl)
@@ -331,12 +347,14 @@ sdmmd_return_t SDMMD_AMDeviceSecureStartService(SDMMD_AMDevice* device, CFString
 										}
 									}
 									CFSafeRelease(record);
-									if (result == kAMDSuccess) {
-										CFMutableDictionaryRef connDict = SDMMD_create_dict();
-										result = kAMDNoResourcesError;
-										if (connDict) {
-											CFDictionarySetValue(connDict, CFSTR("CloseOnInvalidate"), (closeOnInvalidate ? kCFBooleanTrue : kCFBooleanFalse));
-											SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(socket, ssl, connDict);
+									if (result == kAMDSuccess)
+                                    {
+                                        NSMutableDictionary *connDict = [NSMutableDictionary dictionary];
+                                        result = kAMDNoResourcesError;
+                                        if (connDict)
+                                        {
+                                            connDict[@"CloseOnInvalidate"] = (closeOnInvalidate ? @(YES) : @(NO));
+                                            SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(socket, ssl, (__bridge CFDictionaryRef)(connDict));
 											result = kAMDNoResourcesError;
 											if (conn) {
 												SDMMD_AMDServiceConnectionSetDevice(&conn, device);
@@ -346,7 +364,6 @@ sdmmd_return_t SDMMD_AMDeviceSecureStartService(SDMMD_AMDevice* device, CFString
 												ssl = NULL;
 												result = kAMDSuccess;
 											}
-											CFSafeRelease(connDict);
 										}
 									}
 								}
@@ -354,20 +371,22 @@ sdmmd_return_t SDMMD_AMDeviceSecureStartService(SDMMD_AMDevice* device, CFString
 									result = kAMDInvalidArgumentError;
 								}
 							}
-							else {
-								CFMutableDictionaryRef connDict = SDMMD_create_dict();
-								result = kAMDNoResourcesError;
-								if (connDict) {
-									CFDictionarySetValue(connDict, CFSTR("CloseOnInvalidate"), (closeOnInvalidate ? kCFBooleanTrue : kCFBooleanFalse));
-									SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(socket, ssl, connDict);
+							else
+                            {
+                                NSMutableDictionary *connDict = [NSMutableDictionary dictionary];
+                                result = kAMDNoResourcesError;
+                                if (connDict)
+                                {
+                                    connDict[@"CloseOnInvalidate"] = closeOnInvalidate ? @(YES) : @(NO);
+                                    SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(socket, ssl, (__bridge CFDictionaryRef)(connDict));
 									result = kAMDNoResourcesError;
-									if (conn) {
+									if (conn)
+                                    {
 										SDMMD_AMDServiceConnectionSetDevice(&conn, device);
 										SDMMD_AMDServiceConnectionSetServiceName(&conn, service);
 										*connection = conn;
 										result = kAMDSuccess;
 									}
-									CFSafeRelease(connDict);
 								}
 							}
 						}

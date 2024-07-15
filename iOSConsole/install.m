@@ -37,15 +37,16 @@ void InstallProfileToDevice(char *udid, char *path)
         SDMMD_AMDeviceStartSession(device);
         SDMMD_AMConnectionRef conn = NULL;
         SDMMD_AMDeviceStartService(device, CFSTR(AMSVC_MCINSTALL), NULL, &conn);
+
         CFDataRef config_data = CFDataCreateFromFilePath(path);
 
-        CFMutableDictionaryRef request = SDMMD_create_dict();
-        CFDictionaryAddValue(request, CFSTR("RequestType"), CFSTR("InstallProfile"));
-        CFDictionaryAddValue(request, CFSTR("Payload"), config_data);
+        NSMutableDictionary *request = [NSMutableDictionary dictionary];
+        request[@"RequestType"] = @"InstallProfile";
+        request[@"Payload"] = (__bridge id _Nullable)(config_data);
 
-        SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), request,
+        SDMMD_ServiceSendMessage(SDMMD_TranslateConnectionToSocket(conn), (__bridge CFPropertyListRef)(request),
             kCFPropertyListXMLFormat_v1_0);
-        CFSafeRelease(request);
+
         CFSafeRelease(config_data);
 
         CFPropertyListRef response = NULL;

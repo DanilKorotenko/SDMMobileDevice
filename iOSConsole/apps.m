@@ -29,10 +29,10 @@ void LookupAppsOnDevice(char *udid)
                 CFDictionaryRef response;
 
                 CFArrayRef lookupValues = SDMMD_ApplicationLookupDictionary();
-                CFMutableDictionaryRef optionsDict = SDMMD_create_dict();
-                CFDictionarySetValue(optionsDict, CFSTR("ReturnAttributes"), lookupValues);
+                NSMutableDictionary *optionsDict = [NSMutableDictionary dictionary];
+                optionsDict[@"ReturnAttributes"] = (__bridge id _Nullable)(lookupValues);
 
-                result = SDMMD_AMDeviceLookupApplications(device, optionsDict, &response);
+                result = SDMMD_AMDeviceLookupApplications(device, (__bridge CFDictionaryRef)(optionsDict), &response);
                 if (SDM_MD_CallSuccessful(result))
                 {
                     CFIndex keyCount = CFDictionaryGetCount(response);
@@ -90,18 +90,13 @@ void LookupAppsOnDevice(char *udid)
 
                         PrintCFDictionary(value);
 
-                        CFMutableArrayRef lookupValues = CFArrayCreateMutable(kCFAllocatorDefault, 0x0,
-                            &kCFTypeArrayCallBacks);
-                        CFArrayAppendValue(lookupValues, CFSTR(kAppLookupKeyCFBundleIdentifier));
-                        CFArrayAppendValue(lookupValues, CFSTR("SequenceNumber"));
-                        CFMutableDictionaryRef appOptionsDict = SDMMD_create_dict();
-                        CFDictionarySetValue(appOptionsDict, CFSTR("ReturnAttributes"), lookupValues);
-                        CFDictionarySetValue(appOptionsDict,
-                            CFSTR("com.apple.mobile_installation.metadata"), kCFBooleanTrue);
-                        CFDictionarySetValue(appOptionsDict, CFSTR("BundleIDs"), key);
+                        NSMutableDictionary *appOptionsDict = [NSMutableDictionary dictionary];
+                        appOptionsDict[@"ReturnAttributes"] = @[@kAppLookupKeyCFBundleIdentifier, @"SequenceNumber"];
+                        appOptionsDict[@"com.apple.mobile_installation.metadata"] = @(YES);
+                        appOptionsDict[@"BundleIDs"] = (__bridge id _Nullable)(key);
 
                         CFDictionaryRef appResponse;
-                        result = SDMMD_AMDeviceLookupAppInfo(device, appOptionsDict, &appResponse);
+                        result = SDMMD_AMDeviceLookupAppInfo(device, (__bridge CFDictionaryRef)(appOptionsDict), &appResponse);
                         if (SDM_MD_CallSuccessful(result))
                         {
                             PrintCFDictionary(appResponse);

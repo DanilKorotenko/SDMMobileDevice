@@ -29,10 +29,10 @@ void RunAppOnDeviceWithIdentifier(char *udid, char *identifier, bool waitForDebu
             {
                 CFDictionaryRef response;
                 CFArrayRef lookupValues = SDMMD_ApplicationLookupDictionary();
-                CFMutableDictionaryRef optionsDict = SDMMD_create_dict();
-                CFDictionarySetValue(optionsDict, CFSTR("ReturnAttributes"), lookupValues);
+                NSMutableDictionary *optionsDict = [NSMutableDictionary dictionary];
+                optionsDict[@"ReturnAttributes"] = (__bridge id _Nullable)(lookupValues);
 
-                result = SDMMD_AMDeviceLookupApplications(device, optionsDict, &response);
+                result = SDMMD_AMDeviceLookupApplications(device, (__bridge CFDictionaryRef)(optionsDict), &response);
                 if (SDM_MD_CallSuccessful(result))
                 {
                     CFStringRef bundleIdentifier = CFStringCreateWithCString(kCFAllocatorDefault,

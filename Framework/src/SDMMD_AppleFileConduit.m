@@ -810,7 +810,8 @@ sdmmd_return_t SDMMD_AMDeviceCopyFile(CallBack callback, void *thing2, void *thi
         uint64_t remainder = 0;
         uint32_t percent_calc = 30;
         bool should_stop = false;
-        for (uint32_t index = 0; index < packets; index++) {
+        for (uint32_t index = 0; index < packets; index++)
+        {
             offset = kAFCMaxTransferSize * index;
             remainder = (CFDataGetLength(local_file) - offset);
             remainder = (remainder > kAFCMaxTransferSize ? kAFCMaxTransferSize : remainder);
@@ -818,26 +819,26 @@ sdmmd_return_t SDMMD_AMDeviceCopyFile(CallBack callback, void *thing2, void *thi
             CFDataRef write_data = CFDataCreateFromSubrangeOfData(local_file, current_read);
             SDMMD_AFCOperationRef write_op = SDMMD_AFCFileDescriptorCreateWriteOperation(file_descriptor, write_data);
             result = SDMMD_AFCProcessOperation(conn, &write_op);
-            if (SDM_MD_CallSuccessful(result)) {
-                if (callback != NULL) {
-                    CFMutableDictionaryRef status = SDMMD_create_dict();
-                    CFDictionarySetValue(status, CFSTR("Status"), CFSTR("CopyingFile"));
+            if (SDM_MD_CallSuccessful(result))
+            {
+                if (callback != NULL)
+                {
+                    NSMutableDictionary *status = [NSMutableDictionary dictionary];
+                    status[@"Status"] = @"CopyingFile";
                     double test = (double)CFDataGetLength(local_file);
                     percent_calc += (floor(((double)remainder / test) * 100.0) * 0.59);
-                    CFNumberRef percent = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &percent_calc);
-                    CFDictionarySetValue(status, CFSTR("PercentComplete"), percent);
-                    CFStringRef local_path = CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)local, strlen(local), kCFStringEncodingUTF8, false);
-                    CFDictionarySetValue(status, CFSTR("LocalPath"), local_path);
-                    CFStringRef remote_path = CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)remote, strlen(remote), kCFStringEncodingUTF8, false);
-                    CFDictionarySetValue(status, CFSTR("RemotePath"), remote_path);
-                    callback(status, thing3);
-                    CFSafeRelease(status);
-                    CFSafeRelease(local_path);
-                    CFSafeRelease(remote_path);
-                    CFSafeRelease(percent);
+
+                    status[@"PercentComplete"] = @(percent_calc);
+                    NSString *local_path = [[NSString alloc] initWithUTF8String:local];
+
+                    status[@"LocalPath"] = local_path;
+                    NSString *remote_path = [[NSString alloc] initWithUTF8String:remote];
+                    status[@"RemotePath"] = remote_path;
+                    callback((__bridge CFDictionaryRef)(status), thing3);
                 }
             }
-            else {
+            else
+            {
                 should_stop = true;
             }
             CFSafeRelease(write_op);

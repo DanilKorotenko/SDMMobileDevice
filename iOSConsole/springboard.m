@@ -141,12 +141,12 @@ bool HomescreenHasApp(CFPropertyListRef homescreen, CFStringRef bundleID, CFDict
 
 CFMutableDictionaryRef CreateEmptyFolder(CFStringRef name)
 {
-    CFMutableDictionaryRef folder = SDMMD_create_dict();
-    CFDictionarySetValue(folder, CFSTR(kDisplayName), name);
-    CFMutableArrayRef apps = CFArrayCreateMutable(kCFAllocatorDefault, 0x0, &kCFTypeArrayCallBacks);
-    CFDictionarySetValue(folder, CFSTR(kIconLists), apps);
-    CFDictionarySetValue(folder, CFSTR(kListType), CFSTR("folder"));
-    return folder;
+    NSMutableDictionary *folder = [NSMutableDictionary dictionary];
+    folder[@kDisplayName] = (__bridge id _Nullable)(name);
+    NSMutableArray *apps = [NSMutableArray array];
+    folder[@kIconLists] = apps;
+    folder[@kListType] = @"folder";
+    return (CFMutableDictionaryRef)CFBridgingRetain(folder);
 }
 
 CFMutableArrayRef AppendApp(struct SpringboardDeviceInfo *info, CFPropertyListRef homescreen, CFMutableArrayRef screen, CFDictionaryRef item)
@@ -235,10 +235,10 @@ CFArrayRef CreateSpringboardScreen(struct SpringboardDeviceInfo *info, CFPropert
 
 CFDictionaryRef CreateSpringboardItem(CFStringRef type, CFTypeRef value)
 {
-    CFMutableDictionaryRef sbItem = SDMMD_create_dict();
-    CFDictionarySetValue(sbItem, CFSTR("Type"), type);
-    CFDictionarySetValue(sbItem, CFSTR("Contents"), value);
-    return sbItem;
+    NSMutableDictionary *sbItem = [NSMutableDictionary dictionary];
+    sbItem[@"Type"] = (__bridge id _Nullable)(type);
+    sbItem[@"Contents"] = (__bridge id _Nullable)value;
+    return CFBridgingRetain(sbItem);
 }
 
 CFDictionaryRef CreateSpringboardApp(CFStringRef bundleID)
@@ -248,10 +248,10 @@ CFDictionaryRef CreateSpringboardApp(CFStringRef bundleID)
 
 CFDictionaryRef CreateSpringboardFolder(CFStringRef name, CFArrayRef contents)
 {
-    CFMutableDictionaryRef value = SDMMD_create_dict();
-    CFDictionarySetValue(value, CFSTR("Name"), name);
-    CFDictionarySetValue(value, CFSTR("Contents"), contents);
-    return CreateSpringboardItem(CFSTR("Folder"), value);
+    NSMutableDictionary *value = [NSMutableDictionary dictionary];
+    value[@"Name"] = (__bridge id _Nullable)(name);
+    value[@"Contents"] = (__bridge id _Nullable)(contents);
+    return CreateSpringboardItem(CFSTR("Folder"), CFBridgingRetain(value));
 }
 
 CFPropertyListRef FormatHomescreen(struct SpringboardDeviceInfo *info, CFPropertyListRef homescreen, CFArrayRef dock, CFArrayRef pages)
@@ -320,11 +320,11 @@ void SpringboardQuery(char *udid)
         //struct SpringboardDeviceInfo *info = CreateSpringboardInfoFromDevice(device);
 
         SDMMD_AMConnectionRef springboard = AttachToDeviceAndService(device, AMSVC_SPRINGBOARD_SERVICES);
-        CFMutableDictionaryRef request = SDMMD_create_dict();
-        CFDictionarySetValue(request, CFSTR(kCommand), CFSTR(kCommandGetIconState));
-        CFDictionarySetValue(request, CFSTR(kFormatVersion), CFSTR("2"));
+        NSMutableDictionary *request = [NSMutableDictionary dictionary];
+        request[@kCommand] = @kCommandGetIconState;
+        request[@kFormatVersion] = @"2";
         SocketConnection socket = SDMMD_TranslateConnectionToSocket(springboard);
-        sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, request, kCFPropertyListBinaryFormat_v1_0);
+        sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, (__bridge CFPropertyListRef)(request), kCFPropertyListBinaryFormat_v1_0);
         if (result == kAMDSuccess)
         {
             CFPropertyListRef response = NULL;

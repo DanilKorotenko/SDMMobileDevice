@@ -164,18 +164,13 @@ ExitLabel:
 	return dict;
 }
 
-CFMutableDictionaryRef SDMMD_create_dict()
-{
-	return CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-}
-
 CFMutableDictionaryRef SDMMD__CreateRequestDict(CFStringRef type)
 {
-	CFMutableDictionaryRef dict = SDMMD_create_dict();
-	if (dict) {
-		CFDictionarySetValue(dict, CFSTR("Request"), type);
-	}
-	return dict;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+    dict[@"Request"] = (__bridge id _Nullable)(type);
+
+    return (CFMutableDictionaryRef)CFBridgingRetain(dict);
 }
 
 CFMutableDictionaryRef SDMMD__CreateMessageDict(CFStringRef type)
@@ -265,26 +260,28 @@ sdmmd_return_t SDMMD_store_dict(CFDictionaryRef dict, char *path, bool mode)
 	return result;
 }
 
-CFStringRef SDMMD_AMDCopySystemBonjourUniqueID()
+CFStringRef SDMMD_AMDCopySystemBonjourUniqueID(void)
 {
+    CFStringRef systemBUID = NULL;
 
-	CFStringRef systemBUID = NULL;
+    // Get SystemConfiguration dict from disk
+    char sysconfigPath[1025] = {0};
+    SDMMD__PairingRecordPathForIdentifier(CFSTR("SystemConfiguration"), sysconfigPath);
+    CFMutableDictionaryRef sysconfigDict = SDMMD__CreateDictFromFileContents(sysconfigPath);
 
-	// Get SystemConfiguration dict from disk
-	char sysconfigPath[1025] = {0};
-	SDMMD__PairingRecordPathForIdentifier(CFSTR("SystemConfiguration"), sysconfigPath);
-	CFMutableDictionaryRef sysconfigDict = SDMMD__CreateDictFromFileContents(sysconfigPath);
+    if (sysconfigDict == NULL)
+    {
+        // No SystemConfiguration dict, create a new one
+        sysconfigDict = CFBridgingRetain([NSMutableDictionary dictionary]);
+    }
 
-	if (sysconfigDict == NULL) {
-		// No SystemConfiguration dict, create a new one
-		sysconfigDict = SDMMD_create_dict();
-	}
+    if (sysconfigDict)
+    {
+        // Try to get SystemBUID value
+        CFTypeRef value = CFDictionaryGetValue(sysconfigDict, CFSTR("SystemBUID"));
 
-	if (sysconfigDict) {
-		// Try to get SystemBUID value
-		CFTypeRef value = CFDictionaryGetValue(sysconfigDict, CFSTR("SystemBUID"));
-
-		if (value != NULL && CFGetTypeID(value) == CFStringGetTypeID()) {
+        if (value != NULL && CFGetTypeID(value) == CFStringGetTypeID())
+        {
 			// Return existing value
 			systemBUID = CFStringCreateCopy(kCFAllocatorDefault, value);
 		}
@@ -404,27 +401,25 @@ Boolean SDMMD__AMDCFURLGetCStringForFileSystemPath(CFURLRef urlRef, char *cpath)
 
 void SDMMD_fire_callback(CallBack handle, void *unknown, CFStringRef status)
 {
-	if (handle) {
-		CFMutableDictionaryRef dict = SDMMD_create_dict();
-		if (dict) {
-			CFDictionarySetValue(dict, CFSTR("Status"), status);
-		}
-		handle(dict, unknown);
-	}
+    if (handle)
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+        dict[@"Status"] = (__bridge id _Nullable)(status);
+
+        handle(CFBridgingRetain(dict), unknown);
+    }
 }
 
 void SDMMD_fire_callback_767f4(CallBack handle, void *unknown, uint32_t percent, CFStringRef string)
 {
-	if (handle) {
-		CFMutableDictionaryRef dict = SDMMD_create_dict();
-		CFNumberRef num = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &percent);
-		if (dict) {
-			CFDictionarySetValue(dict, CFSTR("Status"), string);
-			CFDictionarySetValue(dict, CFSTR("PercentComplete"), num);
-		}
-		CFSafeRelease(num);
-		handle(dict, unknown);
-	}
+    if (handle)
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"Status"] = (__bridge id _Nullable)(string);
+        dict[@"PercentComplete"] = @(percent);
+        handle(CFBridgingRetain(dict), unknown);
+    }
 }
 
 sdmmd_return_t SDMMD_AMDeviceDigestFile(CFStringRef path, unsigned char **digest)

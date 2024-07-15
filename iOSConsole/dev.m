@@ -99,12 +99,12 @@ void socket_callback(CFSocketRef s, CFSocketCallBackType callbackType, CFDataRef
 CFURLRef copy_device_app_url(SDMMD_AMDevice *device, CFStringRef identifier)
 {
     CFArrayRef values = SDMMD_ApplicationLookupDictionary();
-    CFMutableDictionaryRef optionsDict = SDMMD_create_dict();
-    CFDictionarySetValue(optionsDict, CFSTR("ReturnAttributes"), values);
+    NSMutableDictionary *optionsDict = [NSMutableDictionary dictionary];
+    optionsDict[@"ReturnAttributes"] = (__bridge id _Nullable)(values);
     CFDictionaryRef response;
     SDMMD_AMDeviceConnect(device);
     SDMMD_AMDeviceStartSession(device);
-    SDMMD_AMDeviceLookupApplications(device, optionsDict, &response);
+    SDMMD_AMDeviceLookupApplications(device, (__bridge CFDictionaryRef)(optionsDict), &response);
 
     CFDictionaryRef app_dict = CFDictionaryGetValue(response, identifier);
     assert(app_dict != NULL);

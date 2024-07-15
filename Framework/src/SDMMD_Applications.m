@@ -72,26 +72,32 @@ void SDMMD_lookup_callback(CFDictionaryRef dict, void *response)
 
 sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDevice *device, CFDictionaryRef options, CFDictionaryRef *response)
 {
-	sdmmd_return_t result = kAMDInvalidArgumentError;
-	if (device) {
-		if (options) {
-			CFDictionaryRef options_dict = NULL;
-			SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(0, NULL, options_dict);
-			result = SDMMD_AMDeviceSecureStartService(device, CFSTR(AMSVC_INSTALLATION_PROXY), NULL, &conn);
-			if (result == 0) {
-				CFMutableDictionaryRef dict = SDMMD_create_dict();
-				result = kAMDNoResourcesError;
-				if (dict) {
-					result = SDMMD_perform_command(conn, CFSTR("Lookup"), 0, (CallBack)SDMMD_lookup_callback, 2, dict, CFSTR("ClientOptions"), options);
-					if (!result) {
-						*response = dict;
-					}
-				}
-			}
-			else {
-				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
-			}
-			CFSafeRelease(conn);
+    sdmmd_return_t result = kAMDInvalidArgumentError;
+    if (device)
+    {
+        if (options)
+        {
+            CFDictionaryRef options_dict = NULL;
+            SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(0, NULL, options_dict);
+            result = SDMMD_AMDeviceSecureStartService(device, CFSTR(AMSVC_INSTALLATION_PROXY), NULL, &conn);
+            if (result == 0)
+            {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                result = kAMDNoResourcesError;
+                if (dict)
+                {
+                    result = SDMMD_perform_command(conn, CFSTR("Lookup"), 0, (CallBack)SDMMD_lookup_callback, 2, (__bridge void *)(dict), CFSTR("ClientOptions"), options);
+                    if (!result)
+                    {
+                        *response = CFBridgingRetain(dict);
+                    }
+                }
+            }
+            else
+            {
+                printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
+            }
+            CFSafeRelease(conn);
 		}
 	}
 	return result;
@@ -99,25 +105,31 @@ sdmmd_return_t SDMMD_AMDeviceLookupAppInfo(SDMMD_AMDevice *device, CFDictionaryR
 
 sdmmd_return_t SDMMD_AMDeviceLookupApplications(SDMMD_AMDevice *device, CFDictionaryRef options, CFDictionaryRef *response)
 {
-	sdmmd_return_t result = kAMDInvalidArgumentError;
-	if (device) {
-		if (options) {
-			CFDictionaryRef options_dict = NULL;
-			SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(0, NULL, options_dict);
-			result = SDMMD_AMDeviceSecureStartService(device, CFSTR(AMSVC_INSTALLATION_PROXY), NULL, &conn);
-			if (result == 0) {
-				CFMutableDictionaryRef dict = SDMMD_create_dict();
-				result = kAMDNoResourcesError;
-				if (dict) {
-					result = SDMMD_perform_command(conn, CFSTR("Browse"), 0, SDMMD_browse_callback, 2, dict, CFSTR("ClientOptions"), options);
-					if (!result) {
-						*response = dict;
-					}
-				}
-			}
-			else {
-				printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
-			}
+    sdmmd_return_t result = kAMDInvalidArgumentError;
+    if (device)
+    {
+        if (options)
+        {
+            CFDictionaryRef options_dict = NULL;
+            SDMMD_AMConnectionRef conn = SDMMD_AMDServiceConnectionCreate(0, NULL, options_dict);
+            result = SDMMD_AMDeviceSecureStartService(device, CFSTR(AMSVC_INSTALLATION_PROXY), NULL, &conn);
+            if (result == 0)
+            {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                result = kAMDNoResourcesError;
+                if (dict)
+                {
+                    result = SDMMD_perform_command(conn, CFSTR("Browse"), 0, SDMMD_browse_callback, 2, (__bridge void *)(dict), CFSTR("ClientOptions"), options);
+                    if (!result)
+                    {
+                        *response = CFBridgingRetain(dict);
+                    }
+                }
+            }
+            else
+            {
+                printf("%s: Was unable to start the install service on the device: %i\n", __FUNCTION__, device.device_id);
+            }
 			//CFSafeRelease(conn);
 		}
 	}
