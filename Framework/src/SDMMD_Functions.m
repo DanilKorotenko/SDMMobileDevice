@@ -171,15 +171,14 @@ NSMutableDictionary *SDMMD__CreateRequestDict(NSString *type)
     return dict;
 }
 
-CFMutableDictionaryRef SDMMD__CreateMessageDict(CFStringRef type)
+NSMutableDictionary *SDMMD__CreateMessageDict(NSString *type)
 {
-    NSMutableDictionary *dict = SDMMD__CreateRequestDict((__bridge NSString *)(type));
-    if (dict)
-    {
-        dict[@"ProtocolVersion"] = @"2";
-        dict[@"Label"] = [[[NSProcessInfo processInfo] arguments] objectAtIndex:0];
-    }
-    return (CFMutableDictionaryRef)CFBridgingRetain(dict);
+    NSMutableDictionary *dict = SDMMD__CreateRequestDict(type);
+
+    dict[@"ProtocolVersion"] = @"2";
+    dict[@"Label"] = [[[NSProcessInfo processInfo] arguments] objectAtIndex:0];
+
+    return dict;
 }
 
 CFStringRef SDMCreateCurrentDateString(void)

@@ -33,6 +33,7 @@
 		DA606D132C2EE533002AB848 /* springboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CDF2C2DC943002AB848 /* springboard.m */; };
 		DA606D142C2EE544002AB848 /* syslog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE12C2DC943002AB848 /* syslog.m */; };
 		DA606D152C2EE555002AB848 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = DA606CE32C2DC943002AB848 /* test.m */; };
+		DA8504252C4565EF00D10202 /* DeviceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8504242C4565E900D10202 /* DeviceRequest.m */; };
 		DA899F7E2C2F16C30068B5B7 /* libcrypto.1.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = DAE373102C2D88750014B498 /* libcrypto.1.1.dylib */; };
 		DA899F7F2C2F16C30068B5B7 /* libssl.1.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = DAE373112C2D88750014B498 /* libssl.1.1.dylib */; };
 		DAC8B7582C344C4600DDBB63 /* SDMMD_lockdown_conn.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC8B7562C344C4300DDBB63 /* SDMMD_lockdown_conn.m */; };
@@ -178,6 +179,8 @@
 		DA606CF72C2DC9AD002AB848 /* iOSConsole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iOSConsole; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA606D042C2ED289002AB848 /* SDMMobileDevice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SDMMobileDevice.xcconfig; sourceTree = "<group>"; };
 		DA606D052C2ED2FD002AB848 /* iOSConsole.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = iOSConsole.xcconfig; sourceTree = "<group>"; };
+		DA8504232C4565E900D10202 /* DeviceRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceRequest.h; sourceTree = "<group>"; };
+		DA8504242C4565E900D10202 /* DeviceRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceRequest.m; sourceTree = "<group>"; };
 		DAC8B7552C344C4300DDBB63 /* SDMMD_lockdown_conn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDMMD_lockdown_conn.h; sourceTree = "<group>"; };
 		DAC8B7562C344C4300DDBB63 /* SDMMD_lockdown_conn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDMMD_lockdown_conn.m; sourceTree = "<group>"; };
 		DAD911612C299EA2005EBB6E /* listener.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = listener.c; sourceTree = "<group>"; };
@@ -762,6 +765,7 @@
 				DAD912082C29A0A1005EBB6E /* SDMTranslation.h */,
 				DAD912092C29A0A1005EBB6E /* SDMTypeTranslation.h */,
 				DA2707A02C37F87D005CBA1D /* UsbMuxPacket */,
+				DA8504232C4565E900D10202 /* DeviceRequest.h */,
 			);
 			path = SDMMobileDevice;
 			sourceTree = "<group>";
@@ -796,6 +800,7 @@
 		DAD9123A2C29A0A1005EBB6E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				DA8504242C4565E900D10202 /* DeviceRequest.m */,
 				DA2707A12C37FC3E005CBA1D /* UsbMuxPacket */,
 				DAC8B7562C344C4300DDBB63 /* SDMMD_lockdown_conn.m */,
 				DAD912192C29A0A1005EBB6E /* SDMMD_AFC_Types.c */,
@@ -1240,6 +1245,7 @@
 				DA606D102C2EE44F002AB848 /* SDMMD_Applications.m in Sources */,
 				DAE372632C2AFCD30014B498 /* SDMMD_Initialize.m in Sources */,
 				DAE372642C2AFD1C0014B498 /* SDMMD_Functions.m in Sources */,
+				DA8504252C4565EF00D10202 /* DeviceRequest.m in Sources */,
 				DAE372792C2B01950014B498 /* SDMMD_USBMuxListener_Types.m in Sources */,
 				DA27079F2C37F86E005CBA1D /* UsbMuxPacketListen.m in Sources */,
 				DA606D0E2C2EE319002AB848 /* SDMMD_AppleFileConduit.m in Sources */,
