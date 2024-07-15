@@ -43,167 +43,201 @@
 
 int32_t CheckIfExpectingResponse(SocketConnection handle, uint32_t timeout)
 {
-	fd_set fds;
-	int32_t returnValue = -1;
-	struct timeval to;
-	struct timeval *pto;
+    fd_set fds;
+    int32_t returnValue = -1;
+    struct timeval to;
+    struct timeval *pto;
 
-	FD_ZERO(&fds);
-	if (!handle.isSSL) {
-		FD_SET(handle.socket.conn, &fds);
-	}
+    FD_ZERO(&fds);
+    if (!handle.isSSL)
+    {
+        FD_SET(handle.socket.conn, &fds);
+    }
 
-	if (timeout > 0) {
-		to.tv_sec = (time_t)(timeout / kMilliseconds);
-		to.tv_usec = (__darwin_suseconds_t)((timeout - (to.tv_sec * kMilliseconds)) * kMilliseconds);
-		pto = &to;
-	}
-	else {
-		pto = NULL;
-	}
-	if (!handle.isSSL) {
-		returnValue = select(handle.socket.conn + 1, &fds, NULL, NULL, pto);
-	}
-	else {
-		returnValue = 0;
-	}
-	return returnValue;
+    if (timeout > 0)
+    {
+        to.tv_sec = (time_t)(timeout / kMilliseconds);
+        to.tv_usec = (__darwin_suseconds_t)((timeout - (to.tv_sec * kMilliseconds)) * kMilliseconds);
+        pto = &to;
+    }
+    else
+    {
+        pto = NULL;
+    }
+    if (!handle.isSSL)
+    {
+        returnValue = select(handle.socket.conn + 1, &fds, NULL, NULL, pto);
+    }
+    else
+    {
+        returnValue = 0;
+    }
+    return returnValue;
 }
 
 sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, CFDataRef data)
 {
-	CFIndex msgLen = (data ? CFDataGetLength(data) : 0);
-	if (msgLen) {
-		msgLen = htonl((uint32_t)msgLen);
-		uint64_t result;
-		// Send 32-bit data length header
-		if (handle.isSSL) {
-			if (handle.socket.ssl != NULL && SSL_is_init_finished(handle.socket.ssl)) {
-				result = SSL_write(handle.socket.ssl, &msgLen, sizeof(uint32_t));
-			}
-			else {
-				printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
-				return kAMDNotConnectedError;
-			}
-		}
-		else {
-			if (handle.socket.conn != -1) {
-				result = send(handle.socket.conn, &msgLen, sizeof(uint32_t), 0);
-			}
-			else {
-				printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
-				return kAMDNotConnectedError;
-			}
-		}
-		// Send data body
-		if (result == sizeof(uint32_t)) {
-			msgLen = ntohl(msgLen);
-			if (handle.isSSL) {
-				result = SSL_write(handle.socket.ssl, CFDataGetBytePtr(data), (uint32_t)msgLen);
-			}
-			else {
-				result = send(handle.socket.conn, CFDataGetBytePtr(data), msgLen, 0);
-			}
-			return (result == msgLen ? kAMDSuccess : kAMDInvalidResponseError);
-		}
-		else {
-			printf("%s: Incomplete length.\n", __PRETTY_FUNCTION__);
-			return kAMDNotConnectedError;
-		}
-	}
-	else {
-		return kAMDInvalidArgumentError;
-	}
+    CFIndex msgLen = (data ? CFDataGetLength(data) : 0);
+    if (msgLen)
+    {
+        msgLen = htonl((uint32_t)msgLen);
+        uint64_t result;
+        // Send 32-bit data length header
+        if (handle.isSSL)
+        {
+            if (handle.socket.ssl != NULL && SSL_is_init_finished(handle.socket.ssl))
+            {
+                result = SSL_write(handle.socket.ssl, &msgLen, sizeof(uint32_t));
+            }
+            else
+            {
+                printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
+                return kAMDNotConnectedError;
+            }
+        }
+        else
+        {
+            if (handle.socket.conn != -1)
+            {
+                result = send(handle.socket.conn, &msgLen, sizeof(uint32_t), 0);
+            }
+            else
+            {
+                printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
+                return kAMDNotConnectedError;
+            }
+        }
+        // Send data body
+        if (result == sizeof(uint32_t))
+        {
+            msgLen = ntohl(msgLen);
+            if (handle.isSSL)
+            {
+                result = SSL_write(handle.socket.ssl, CFDataGetBytePtr(data), (uint32_t)msgLen);
+            }
+            else
+            {
+                result = send(handle.socket.conn, CFDataGetBytePtr(data), msgLen, 0);
+            }
+            return (result == msgLen ? kAMDSuccess : kAMDInvalidResponseError);
+        }
+        else
+        {
+            printf("%s: Incomplete length.\n", __PRETTY_FUNCTION__);
+            return kAMDNotConnectedError;
+        }
+    }
+    else
+    {
+        return kAMDInvalidArgumentError;
+    }
 }
 
 sdmmd_return_t SDMMD_DirectServiceSend(SocketConnection handle, CFDataRef data)
 {
-	CFIndex msgLen = (data ? CFDataGetLength(data) : 0);
-	if (msgLen) {
-		uint64_t result = 0;
-		// Send data body
-		if (handle.isSSL) {
-			if (handle.socket.ssl != NULL) {
-				result = SSL_write(handle.socket.ssl, CFDataGetBytePtr(data), (uint32_t)msgLen);
-			}
-			else {
-				printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
-				return kAMDNotConnectedError;
-			}
-		}
-		else {
-			if (handle.socket.conn != -1) {
-				result = send(handle.socket.conn, CFDataGetBytePtr(data), msgLen, 0);
-			}
-			else {
-				printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
-				return kAMDNotConnectedError;
-			}
-		}
-		return (result == msgLen ? kAMDSuccess : kAMDNotConnectedError);
-	}
-	else {
-		return kAMDInvalidArgumentError;
-	}
+    CFIndex msgLen = (data ? CFDataGetLength(data) : 0);
+    if (msgLen)
+    {
+        uint64_t result = 0;
+        // Send data body
+        if (handle.isSSL)
+        {
+            if (handle.socket.ssl != NULL)
+            {
+                result = SSL_write(handle.socket.ssl, CFDataGetBytePtr(data), (uint32_t)msgLen);
+            }
+            else
+            {
+                printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
+                return kAMDNotConnectedError;
+            }
+        }
+        else
+        {
+            if (handle.socket.conn != -1)
+            {
+                result = send(handle.socket.conn, CFDataGetBytePtr(data), msgLen, 0);
+            }
+            else
+            {
+                printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
+                return kAMDNotConnectedError;
+            }
+        }
+        return (result == msgLen ? kAMDSuccess : kAMDNotConnectedError);
+    }
+    else
+    {
+        return kAMDInvalidArgumentError;
+    }
 }
 
 size_t SDMMD__ServiceReceiveBytesSock(SocketConnection handle, void *buffer, size_t length)
 {
-	ssize_t received = 0;
-	size_t receivedTotal = 0;
+    ssize_t received = 0;
+    size_t receivedTotal = 0;
 
-	if (handle.socket.conn != -1) {
-		do {
-			// Try to read up to length
-			received = recv(handle.socket.conn, &buffer[receivedTotal], length - receivedTotal, 0);
-			if (received == 0) {
-				// EOF
-				break;
-			}
-			else if (received < 0) {
-				printf("recv error: (%s)\n", strerror(errno));
-				break;
-			}
+    if (handle.socket.conn != -1)
+    {
+        do
+        {
+            // Try to read up to length
+            received = recv(handle.socket.conn, &buffer[receivedTotal], length - receivedTotal, 0);
+            if (received == 0)
+            {
+                // EOF
+                break;
+            }
+            else if (received < 0)
+            {
+                printf("recv error: (%s)\n", strerror(errno));
+                break;
+            }
 
-			// Move ahead length
-			receivedTotal += received;
+            // Move ahead length
+            receivedTotal += received;
 
-		} while (receivedTotal < length);
-	}
-	else {
-		printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
-	}
+        } while (receivedTotal < length);
+    }
+    else
+    {
+        printf("%s: Invalid Socket!\n", __PRETTY_FUNCTION__);
+    }
 
-	return receivedTotal;
+    return receivedTotal;
 }
 
 size_t SDMMD__ServiceReceiveBytesSSL(SocketConnection handle, void *buffer, int length)
 {
-	int received = 0, receivedTotal = 0;
+    int received = 0, receivedTotal = 0;
 
-	if (handle.socket.ssl != NULL) {
-		do {
-			ERR_clear_error();
-			// Try to read up to length
-			received = SSL_read(handle.socket.ssl, &buffer[receivedTotal], length - receivedTotal);
-			if (received <= 0) {
-				// Read failed, check if theres an SSLreceived error
-				int ret = SSL_get_error(handle.socket.ssl, received);
-				char *ssl_error = SDMMD_ssl_strerror(handle.socket.ssl, received);
-				printf("SSL_read error: (%x) (%s)\n", ret, ssl_error);
-				break;
-			}
+    if (handle.socket.ssl != NULL)
+    {
+        do
+        {
+            ERR_clear_error();
+            // Try to read up to length
+            received = SSL_read(handle.socket.ssl, &buffer[receivedTotal], length - receivedTotal);
+            if (received <= 0)
+            {
+                // Read failed, check if theres an SSLreceived error
+                int ret = SSL_get_error(handle.socket.ssl, received);
+                char *ssl_error = SDMMD_ssl_strerror(handle.socket.ssl, received);
+                printf("SSL_read error: (%x) (%s)\n", ret, ssl_error);
+                break;
+            }
 
-			// Move ahead length
-			receivedTotal += received;
+            // Move ahead length
+            receivedTotal += received;
 
-		} while (receivedTotal < length);
-	}
-	else {
-		printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
-	}
+        } while (receivedTotal < length);
+    }
+    else
+    {
+        printf("%s: Invalid SSL Socket!\n", __PRETTY_FUNCTION__);
+    }
 
-	return receivedTotal;
+    return receivedTotal;
 }
 
 /*
@@ -212,82 +246,94 @@ size_t SDMMD__ServiceReceiveBytesSSL(SocketConnection handle, void *buffer, int 
  */
 size_t SDMMD__ServiceReceiveBytes(SocketConnection handle, void *buffer, size_t length)
 {
-	if (handle.isSSL) {
-		// Note: SSL only handles int sizes :(
-		return SDMMD__ServiceReceiveBytesSSL(handle, buffer, (int)length);
-	}
-	else {
-		return SDMMD__ServiceReceiveBytesSock(handle, buffer, length);
-	}
+    if (handle.isSSL)
+    {
+        // Note: SSL only handles int sizes :(
+        return SDMMD__ServiceReceiveBytesSSL(handle, buffer, (int)length);
+    }
+    else
+    {
+        return SDMMD__ServiceReceiveBytesSock(handle, buffer, length);
+    }
 }
 
 sdmmd_return_t SDMMD_ServiceReceive(SocketConnection handle, CFDataRef *data)
 {
-	size_t received;
-	uint32_t length = 0;
-	sdmmd_return_t response = kAMDErrorError;
+    size_t received;
+    uint32_t length = 0;
+    sdmmd_return_t response = kAMDErrorError;
 
-	if (handle.isSSL == true || CheckIfExpectingResponse(handle, 10 * kMilliseconds)) {
+    if (handle.isSSL == true || CheckIfExpectingResponse(handle, 10 * kMilliseconds))
+    {
+        // Receive data length header
+        // Note: in iOS 8 the header 4-byte int may have to be read in multiple parts
+        received = SDMMD__ServiceReceiveBytes(handle, &length, 4);
 
-		// Receive data length header
-		// Note: in iOS 8 the header 4-byte int may have to be read in multiple parts
-		received = SDMMD__ServiceReceiveBytes(handle, &length, 4);
+        if (received == 4)
+        {
+            // Convert from device byte order
+            length = ntohl(length);
 
-		if (received == 4) {
-			// Convert from device byte order
-			length = ntohl(length);
+            // Receive data body
+            unsigned char *buffer = calloc(1, length);
+            received = SDMMD__ServiceReceiveBytes(handle, buffer, length);
 
-			// Receive data body
-			unsigned char *buffer = calloc(1, length);
-			received = SDMMD__ServiceReceiveBytes(handle, buffer, length);
+            // Create data object only from received byte length
+            *data = CFDataCreate(kCFAllocatorDefault, buffer, received);
 
-			// Create data object only from received byte length
-			*data = CFDataCreate(kCFAllocatorDefault, buffer, received);
-
-			free(buffer);
-			response = kAMDSuccess;
-		}
-		else {
-			response = kAMDInvalidResponseError;
-		}
-	}
-	return response;
+            free(buffer);
+            response = kAMDSuccess;
+        }
+        else
+        {
+            response = kAMDInvalidResponseError;
+        }
+    }
+    return response;
 }
 
 sdmmd_return_t SDMMD_DirectServiceReceive(SocketConnection handle, CFMutableDataRef *data)
 {
-	uint32_t size = (data && *data ? (uint32_t)CFDataGetLength(*data) : 0);
+    uint32_t size = (data && *data ? (uint32_t)CFDataGetLength(*data) : 0);
 
-	if (size) {
-		if (handle.isSSL == true || CheckIfExpectingResponse(handle, 1 * kMilliseconds)) {
-			unsigned char *buffer = calloc(1, size);
-			uint32_t remainder = size;
-			size_t received;
-			while (remainder) {
-				if (handle.isSSL) {
-					received = SSL_read(handle.socket.ssl, &buffer[size - remainder], remainder);
-				}
-				else {
-					received = recv(handle.socket.conn, &buffer[size - remainder], remainder, 0);
-				}
-				if (!received) {
-					break;
-				}
-				remainder -= received;
-			}
-			if (*data) {
-				CFDataReplaceBytes(*data, CFRangeMake(0, size), buffer, size);
-			}
-			else {
-				CFDataRef receivedData = CFDataCreate(kCFAllocatorDefault, buffer, size);
-				*data = CFDataCreateMutableCopy(kCFAllocatorDefault, size, receivedData);
-				CFSafeRelease(receivedData);
-			}
-			free(buffer);
-		}
-		return kAMDSuccess;
-	}
-	return kAMDSuccess;
+    if (size)
+    {
+        if (handle.isSSL == true || CheckIfExpectingResponse(handle, 1 * kMilliseconds))
+        {
+            unsigned char *buffer = calloc(1, size);
+            uint32_t remainder = size;
+            size_t received;
+            while (remainder)
+            {
+                if (handle.isSSL)
+                {
+                    received = SSL_read(handle.socket.ssl, &buffer[size - remainder], remainder);
+                }
+                else
+                {
+                    received = recv(handle.socket.conn, &buffer[size - remainder], remainder, 0);
+                }
+                if (!received)
+                {
+                    break;
+                }
+                remainder -= received;
+            }
+            if (*data)
+            {
+                CFDataReplaceBytes(*data, CFRangeMake(0, size), buffer, size);
+            }
+            else
+            {
+                CFDataRef receivedData = CFDataCreate(kCFAllocatorDefault, buffer, size);
+                *data = CFDataCreateMutableCopy(kCFAllocatorDefault, size, receivedData);
+                CFSafeRelease(receivedData);
+            }
+            free(buffer);
+        }
+        return kAMDSuccess;
+    }
+    return kAMDSuccess;
 }
 
 sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, NSDictionary *data)
@@ -302,88 +348,98 @@ sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, NSDictionary *d
 
 sdmmd_return_t SDMMD_ServiceReceiveMessage(SocketConnection handle, CFPropertyListRef *data)
 {
-	CFDataRef dataBuffer = NULL;
-	sdmmd_return_t result;
-	*data = NULL;
-	CFErrorRef error = NULL;
+    CFDataRef dataBuffer = NULL;
+    sdmmd_return_t result;
+    *data = NULL;
+    CFErrorRef error = NULL;
 
-	result = SDMMD_ServiceReceive(handle, &dataBuffer);
-	if (result == kAMDSuccess) {
+    result = SDMMD_ServiceReceive(handle, &dataBuffer);
+    if (result == kAMDSuccess)
+    {
+        // ServiceReceive success does not guarantee that valid data is available
+        if (dataBuffer)
+        {
+            // CFPropertyListCreateWithData will return NULL if data is invalid format
+            *data = CFPropertyListCreateWithData(kCFAllocatorDefault, dataBuffer, kCFPropertyListImmutable, NULL, &error);
+        }
 
-		// ServiceReceive success does not guarantee that valid data is available
-		if (dataBuffer) {
-			// CFPropertyListCreateWithData will return NULL if data is invalid format
-			*data = CFPropertyListCreateWithData(kCFAllocatorDefault, dataBuffer, kCFPropertyListImmutable, NULL, &error);
-		}
+        if (*data == NULL)
+        {
+            // Could not parse received data
+            result = kAMDInvalidResponseError;
+        }
+    }
+    CFSafeRelease(dataBuffer);
 
-		if (*data == NULL) {
-			// Could not parse received data
-			result = kAMDInvalidResponseError;
-		}
-	}
-	CFSafeRelease(dataBuffer);
+    // Return an empty dictionary if a receive OR parse failure occurred
+    if (result != kAMDSuccess)
+    {
+        *data = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    }
 
-	// Return an empty dictionary if a receive OR parse failure occurred
-	if (result != kAMDSuccess) {
-		*data = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-	}
-
-	return result;
+    return result;
 }
 
 sdmmd_return_t SDMMD_ServiceSendStream(SocketConnection handle, CFPropertyListRef data, CFPropertyListFormat format)
 {
-	CFStringRef errStr;
-	CFWriteStreamRef write = CFWriteStreamCreateWithAllocatedBuffers(kCFAllocatorDefault, kCFAllocatorDefault);
+    CFStringRef errStr;
+    CFWriteStreamRef write = CFWriteStreamCreateWithAllocatedBuffers(kCFAllocatorDefault, kCFAllocatorDefault);
 
-	CFWriteStreamOpen(write);
+    CFWriteStreamOpen(write);
 
-	CFIndex length = CFPropertyListWriteToStream(data, write, format, &errStr);
-	CFDataRef xmlData = CFWriteStreamCopyProperty(write, kCFStreamPropertyDataWritten);
-	sdmmd_return_t result = kAMDInvalidArgumentError;
+    CFIndex length = CFPropertyListWriteToStream(data, write, format, &errStr);
+    CFDataRef xmlData = CFWriteStreamCopyProperty(write, kCFStreamPropertyDataWritten);
+    sdmmd_return_t result = kAMDInvalidArgumentError;
 
-	if (length == CFDataGetLength(xmlData)) {
-		result = ((xmlData) ? SDMMD_ServiceSend(handle, xmlData) : kAMDInvalidArgumentError);
-	}
-	CFSafeRelease(xmlData);
-	CFWriteStreamClose(write);
-	CFSafeRelease(write);
-	return result;
+    if (length == CFDataGetLength(xmlData))
+    {
+        result = ((xmlData) ? SDMMD_ServiceSend(handle, xmlData) : kAMDInvalidArgumentError);
+    }
+    CFSafeRelease(xmlData);
+    CFWriteStreamClose(write);
+    CFSafeRelease(write);
+    return result;
 }
 
 sdmmd_return_t SDMMD_ServiceReceiveStream(SocketConnection handle, CFPropertyListRef *data)
 {
-	CFDataRef dataBuffer = NULL;
-	sdmmd_return_t result = SDMMD_ServiceReceive(handle, &dataBuffer);
+    CFDataRef dataBuffer = NULL;
+    sdmmd_return_t result = SDMMD_ServiceReceive(handle, &dataBuffer);
 
-	CheckErrorAndReturn(result);
+    CheckErrorAndReturn(result);
 
-	if (dataBuffer && CFDataGetLength(dataBuffer)) {
-		CFReadStreamRef read = CFReadStreamCreateWithBytesNoCopy(kCFAllocatorDefault, CFDataGetBytePtr(dataBuffer), CFDataGetLength(dataBuffer), kCFAllocatorNull);
+    if (dataBuffer && CFDataGetLength(dataBuffer))
+    {
+        CFReadStreamRef read = CFReadStreamCreateWithBytesNoCopy(kCFAllocatorDefault, CFDataGetBytePtr(dataBuffer),
+            CFDataGetLength(dataBuffer), kCFAllocatorNull);
 
-		CFReadStreamOpen(read);
-		*data = CFPropertyListCreateWithStream(kCFAllocatorDefault, read, CFDataGetLength(dataBuffer), kCFPropertyListMutableContainersAndLeaves, NULL, NULL);
-		CFReadStreamClose(read);
-		CFSafeRelease(read);
-	}
-	result = kAMDSuccess;
+        CFReadStreamOpen(read);
+        *data = CFPropertyListCreateWithStream(kCFAllocatorDefault, read, CFDataGetLength(dataBuffer),
+            kCFPropertyListMutableContainersAndLeaves, NULL, NULL);
+        CFReadStreamClose(read);
+        CFSafeRelease(read);
+    }
+    result = kAMDSuccess;
 
-	CFSafeRelease(dataBuffer);
-	ExitLabelAndReturn(result);
+    CFSafeRelease(dataBuffer);
+    ExitLabelAndReturn(result);
 }
 
 SocketConnection SDMMD_TranslateConnectionToSocket(SDMMD_AMConnectionRef connection)
 {
-	SocketConnection sock;
-	if (connection != NULL) {
-		if (connection->ivars.ssl != NULL) {
-			sock = (SocketConnection){true, {.ssl = connection->ivars.ssl}};
-		}
-		else {
-			sock = (SocketConnection){false, {.conn = connection->ivars.socket}};
-		}
-	}
-	return sock;
+    SocketConnection sock;
+    if (connection != NULL)
+    {
+        if (connection->ivars.ssl != NULL)
+        {
+            sock = (SocketConnection){true, {.ssl = connection->ivars.ssl}};
+        }
+        else
+        {
+            sock = (SocketConnection){false, {.conn = connection->ivars.socket}};
+        }
+    }
+    return sock;
 }
 
 #endif
