@@ -9,20 +9,20 @@
 
 @interface DeviceMessage ()
 
-@property (readonly) NSMutableDictionary *mutableDictionary;
+@property (readonly) NSMutableDictionary *dictionary;
 
 @end
 
 @implementation DeviceMessage
 
-@synthesize mutableDictionary;
+@synthesize dictionary;
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        mutableDictionary = [NSMutableDictionary dictionary];
+        dictionary = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -32,7 +32,7 @@
     self = [self init];
     if (self)
     {
-        mutableDictionary[@"Request"] = aType;
+        dictionary[@"Request"] = aType;
     }
     return self;
 }
@@ -42,8 +42,8 @@
     self = [self initWithRequest:aType];
     if (self)
     {
-        mutableDictionary[@"ProtocolVersion"] = @"2";
-        mutableDictionary[@"Label"] = [[[[NSProcessInfo processInfo] arguments] objectAtIndex:0] lastPathComponent];
+        dictionary[@"ProtocolVersion"] = @"2";
+        dictionary[@"Label"] = [[[[NSProcessInfo processInfo] arguments] objectAtIndex:0] lastPathComponent];
     }
     return self;
 }
@@ -52,49 +52,51 @@
 
 - (BOOL)displayPass
 {
-    return [(NSNumber *)mutableDictionary[@"DisplayPass"] boolValue];
+    return [(NSNumber *)self.dictionary[@"DisplayPass"] boolValue];
 }
 
 - (void)setDisplayPass:(BOOL)displayPass
 {
-    mutableDictionary[@"DisplayPass"] = @(displayPass);
+    self.dictionary[@"DisplayPass"] = @(displayPass);
 }
 
 - (BOOL)waitForDisconnect
 {
-    return [(NSNumber *)mutableDictionary[@"WaitForDisconnect"] boolValue];
+    return [(NSNumber *)self.dictionary[@"WaitForDisconnect"] boolValue];
 }
 
 - (void)setWaitForDisconnect:(BOOL)waitForDisconnect
 {
-    mutableDictionary[@"WaitForDisconnect"] = @(waitForDisconnect);
+    self.dictionary[@"WaitForDisconnect"] = @(waitForDisconnect);
 }
 
 - (NSString *)service
 {
-    return mutableDictionary[@"Service"];
+    return self.dictionary[@"Service"];
 }
 
 - (void)setService:(NSString *)service
 {
-    mutableDictionary[@"Service"] = service;
+    self.dictionary[@"Service"] = service;
 }
 
 - (NSData *)escrowBag
 {
-    return mutableDictionary[@"EscrowBag"];
+    return self.dictionary[@"EscrowBag"];
 }
 
 - (void)setEscrowBag:(NSData *)escrowBag
 {
-    mutableDictionary[@"EscrowBag"] = escrowBag;
+    self.dictionary[@"EscrowBag"] = escrowBag;
 }
 
 #pragma mark -
 
-- (NSDictionary *)dictionary
+- (NSData *)xmlData
 {
-    return mutableDictionary;
+    NSError *error = nil;
+    NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:self.dictionary format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+    return xmlData;
 }
 
 @end

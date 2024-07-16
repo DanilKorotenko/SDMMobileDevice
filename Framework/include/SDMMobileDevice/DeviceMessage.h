@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(readwrite) NSString *service;
 @property(readwrite) NSData *escrowBag;
 
-@property(readonly) NSDictionary *dictionary;
+@property(readonly) NSData *xmlData;
 
 @end
 

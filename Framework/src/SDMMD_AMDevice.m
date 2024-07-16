@@ -146,6 +146,38 @@ sdmmd_return_t SDMMD_lockdown_connection_destory(SDMMD_lockdown_conn *lockdownCo
     return self.lockdown_conn == nil;
 }
 
+#pragma mark -
+
+- (sdmmd_return_t)lockconnSendMessage:(NSData *)anXmlData
+{
+    sdmmd_return_t result = kAMDSuccess;
+    if (self.lockdown_conn)
+    {
+        bool useSSL = (self.lockdown_conn.ssl ? true : false);
+        SocketConnection conn;
+        if (useSSL)
+        {
+            conn = (SocketConnection){true, {.ssl = self.lockdown_conn.ssl}};
+        }
+        else
+        {
+            conn = (SocketConnection){false,
+                {.conn = (uint32_t)self.lockdown_conn.connection}};
+        }
+
+        SDMMD_ServiceSend(conn, anXmlData);
+    }
+    else
+    {
+        result = SDMMD_AMDeviceIsValid(self);
+        if (result == false)
+        {
+            result = kAMDSendMessageError;
+        }
+    }
+    return result;
+}
+
 @end
 
 uint64_t peer_certificate_data_index(void)
@@ -880,7 +912,7 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, NSString **name)
 
         DeviceMessage *queryDict = [[DeviceMessage alloc] initMessageWithRequest:@"QueryType"];
 
-        result = SDMMD_lockconn_send_message(device, queryDict.dictionary);
+        result = [device lockconnSendMessage:queryDict.xmlData];
 
         if (!SDM_MD_CallSuccessful(result))
         {
