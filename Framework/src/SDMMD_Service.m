@@ -196,8 +196,8 @@ size_t SDMMD__ServiceReceiveBytesSock(SocketConnection handle, void *buffer, siz
 
             // Move ahead length
             receivedTotal += received;
-
-        } while (receivedTotal < length);
+        }
+        while (receivedTotal < length);
     }
     else
     {
@@ -280,6 +280,41 @@ sdmmd_return_t SDMMD_ServiceReceive(SocketConnection handle, CFDataRef *data)
 
             // Create data object only from received byte length
             *data = CFDataCreate(kCFAllocatorDefault, buffer, received);
+
+            free(buffer);
+            response = kAMDSuccess;
+        }
+        else
+        {
+            response = kAMDInvalidResponseError;
+        }
+    }
+    return response;
+}
+
+sdmmd_return_t SDMMD_ServiceReceive_(SocketConnection handle, NSData **data)
+{
+    size_t received;
+    uint32_t length = 0;
+    sdmmd_return_t response = kAMDErrorError;
+
+    if (handle.isSSL == true || CheckIfExpectingResponse(handle, 10 * kMilliseconds))
+    {
+        // Receive data length header
+        // Note: in iOS 8 the header 4-byte int may have to be read in multiple parts
+        received = SDMMD__ServiceReceiveBytes(handle, &length, 4);
+
+        if (received == 4)
+        {
+            // Convert from device byte order
+            length = ntohl(length);
+
+            // Receive data body
+            unsigned char *buffer = calloc(1, length);
+            received = SDMMD__ServiceReceiveBytes(handle, buffer, length);
+
+            // Create data object only from received byte length
+            *data = [NSData dataWithBytes:buffer length:received];
 
             free(buffer);
             response = kAMDSuccess;

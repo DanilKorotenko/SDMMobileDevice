@@ -841,7 +841,6 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, CFStringRef *name)
 
     do
     {
-
         if (!device)
         {
             result = kAMDInvalidArgumentError;
