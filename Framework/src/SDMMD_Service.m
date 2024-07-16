@@ -415,6 +415,40 @@ sdmmd_return_t SDMMD_ServiceReceiveMessage(SocketConnection handle, CFPropertyLi
     return result;
 }
 
+sdmmd_return_t SDMMD_ServiceReceiveMessage_(SocketConnection handle, NSDictionary **data)
+{
+    NSData *dataBuffer = nil;
+    sdmmd_return_t result;
+    *data = NULL;
+    NSError *error = nil;
+
+    result = SDMMD_ServiceReceive_(handle, &dataBuffer);
+    if (result == kAMDSuccess)
+    {
+        // ServiceReceive success does not guarantee that valid data is available
+        if (dataBuffer)
+        {
+            // CFPropertyListCreateWithData will return NULL if data is invalid format
+            *data = [NSPropertyListSerialization propertyListWithData:dataBuffer options:NSPropertyListImmutable format:NULL
+                error:&error];
+        }
+
+        if (*data == NULL)
+        {
+            // Could not parse received data
+            result = kAMDInvalidResponseError;
+        }
+    }
+
+    // Return an empty dictionary if a receive OR parse failure occurred
+    if (result != kAMDSuccess)
+    {
+        *data = [NSDictionary dictionary];
+    }
+
+    return result;
+}
+
 sdmmd_return_t SDMMD_ServiceSendStream(SocketConnection handle, CFPropertyListRef data, CFPropertyListFormat format)
 {
     CFStringRef errStr;
