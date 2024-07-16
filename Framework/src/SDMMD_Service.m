@@ -75,9 +75,9 @@ int32_t CheckIfExpectingResponse(SocketConnection handle, uint32_t timeout)
     return returnValue;
 }
 
-sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, CFDataRef data)
+sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, NSData *data)
 {
-    CFIndex msgLen = (data ? CFDataGetLength(data) : 0);
+    NSInteger msgLen = data.length;
     if (msgLen)
     {
         msgLen = htonl((uint32_t)msgLen);
@@ -113,11 +113,11 @@ sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, CFDataRef data)
             msgLen = ntohl(msgLen);
             if (handle.isSSL)
             {
-                result = SSL_write(handle.socket.ssl, CFDataGetBytePtr(data), (uint32_t)msgLen);
+                result = SSL_write(handle.socket.ssl, data.bytes, (uint32_t)msgLen);
             }
             else
             {
-                result = send(handle.socket.conn, CFDataGetBytePtr(data), msgLen, 0);
+                result = send(handle.socket.conn, data.bytes, msgLen, 0);
             }
             return (result == msgLen ? kAMDSuccess : kAMDInvalidResponseError);
         }
@@ -341,7 +341,7 @@ sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, NSDictionary *d
     NSError *error = nil;
     NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:data format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
 
-    sdmmd_return_t result = ((xmlData) ? SDMMD_ServiceSend(handle, (__bridge CFDataRef)(xmlData)) : kAMDInvalidArgumentError);
+    sdmmd_return_t result = ((xmlData) ? SDMMD_ServiceSend(handle, xmlData) : kAMDInvalidArgumentError);
 
     return result;
 }
@@ -393,7 +393,7 @@ sdmmd_return_t SDMMD_ServiceSendStream(SocketConnection handle, CFPropertyListRe
 
     if (length == CFDataGetLength(xmlData))
     {
-        result = ((xmlData) ? SDMMD_ServiceSend(handle, xmlData) : kAMDInvalidArgumentError);
+        result = ((xmlData) ? SDMMD_ServiceSend(handle, (__bridge NSData *)(xmlData)) : kAMDInvalidArgumentError);
     }
     CFSafeRelease(xmlData);
     CFWriteStreamClose(write);

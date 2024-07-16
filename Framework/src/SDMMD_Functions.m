@@ -67,26 +67,32 @@ void SDMMD___AppendValue(CFTypeRef append, CFMutableDataRef context)
 {
 	// over-allocation, check hopper again because this seems to be inaccurate with the results of a previous version of MobileDevice
 	CFTypeRef item = NULL;
-	if (CFGetTypeID(append) == CFNumberGetTypeID()) {
-		if (CFNumberIsFloatType(append)) {
+	if (CFGetTypeID(append) == CFNumberGetTypeID())
+    {
+		if (CFNumberIsFloatType(append))
+        {
 			float num = 0;
 			CFNumberGetValue(append, kCFNumberDoubleType, &num);
 			item = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%g"), num);
 		}
-		else {
+		else
+        {
 			uint64_t num = 0;
 			CFNumberGetValue(append, kCFNumberSInt64Type, &num);
 			item = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%qi"), num);
 		}
 	}
-	else if (CFGetTypeID(append) == CFBooleanGetTypeID()) {
+	else if (CFGetTypeID(append) == CFBooleanGetTypeID())
+    {
 		item = (CFEqual(append, kCFBooleanTrue) ? CFSTR("1") : CFSTR("0"));
 	}
-	else if (CFGetTypeID(append) == CFStringGetTypeID()) {
+	else if (CFGetTypeID(append) == CFStringGetTypeID())
+    {
 		item = CFStringCreateCopy(kCFAllocatorDefault, append);
 	}
 
-	if (CFGetTypeID(item) == CFStringGetTypeID()) {
+	if (CFGetTypeID(item) == CFStringGetTypeID())
+    {
 		CFIndex length = CFStringGetLength(item);
 		CFIndex alloclen = CFStringGetMaximumSizeForEncoding(length, kCFStringEncodingUTF8);
 		CFIndex usedlen = 0;
@@ -103,7 +109,8 @@ void SDMMD___AppendValue(CFTypeRef append, CFMutableDataRef context)
 
 void SDMMD___ConvertDictEntry(const void *key, const void *value, void *context)
 {
-	if (key && value) {
+	if (key && value)
+    {
 		SDMMD___AppendValue(key, context);
 		SDMMD___AppendValue(value, context);
 	}
@@ -232,12 +239,15 @@ sdmmd_return_t SDMMD_store_dict(CFDictionaryRef dict, char *path, bool mode)
 	unlink(buf);
 	mode_t fileMode = (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	int ref = open(buf, O_CREAT | O_EXCL | O_WRONLY, fileMode);
-	if (ref != -1) {
+	if (ref != -1)
+    {
 		CFDataRef xml = CFPropertyListCreateXMLData(kCFAllocatorDefault, dict);
-		if (xml) {
+		if (xml)
+        {
 			CFIndex length = CFDataGetLength(xml);
 			result = (sdmmd_return_t)write(ref, CFDataGetBytePtr(xml), length);
-			if (result == length) {
+			if (result == length)
+            {
 				rename(buf, path);
 			}
 		}
@@ -245,7 +255,8 @@ sdmmd_return_t SDMMD_store_dict(CFDictionaryRef dict, char *path, bool mode)
 		result = chmod(path, fileMode);
 		CFSafeRelease(xml);
 	}
-	else {
+	else
+    {
 		result = kAMDUndefinedError;
 	}
 	return result;

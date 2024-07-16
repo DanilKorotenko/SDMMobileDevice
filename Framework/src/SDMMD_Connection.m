@@ -36,6 +36,7 @@
 #include "SDMMD_AMDevice_Internal.h"
 #include "SDMMD_Connection_Private.h"
 #include "Core.h"
+#import "DeviceMessage.h"
 
 sdmmd_return_t SDMMD_perform_command(SDMMD_AMConnectionRef conn, CFStringRef command, uint64_t code, CallBack handle, uint32_t argsCount, void *paramStart, ...)
 {
@@ -128,7 +129,8 @@ SDMMD_AMConnectionRef SDMMD__CreateTemporaryServConn(uint32_t socket, SSL *ssl)
 	SDMMD_AMConnectionRef handle = NULL;
 	CFStringRef closeInvalid = CFSTR("CloseOnInvalidate");
 	CFDictionaryRef dict = CFDictionaryCreate(kCFAllocatorDefault, (const void **)&closeInvalid, (const void **)&kCFBooleanFalse, 0x1, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-	if (dict) {
+	if (dict)
+    {
 		handle = SDMMD_AMDServiceConnectionCreate(socket, ssl, dict);
 		CFSafeRelease(dict);
 	}
@@ -139,7 +141,8 @@ SDMMD_AMConnectionRef SDMMD_AMDServiceConnectionCreate(uint32_t socket, SSL *ssl
 {
 	SDMMD_AMConnectionRef handle = NULL;
 
-	if (ssl == NULL || SSL_is_init_finished(ssl)) {
+	if (ssl == NULL || SSL_is_init_finished(ssl))
+    {
 		// Either non-SSL connection or SSL context is not connected
 		handle = SDMMD_AMConnectionCreateEmpty();
 		handle->ivars.socket = socket;

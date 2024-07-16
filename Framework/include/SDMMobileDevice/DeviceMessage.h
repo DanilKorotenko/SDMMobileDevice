@@ -11,7 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceMessage : NSObject
 
-- (instancetype)initWithType:(NSString *)aType;
+- (instancetype)initWithRequest:(NSString *)aType;
+- (instancetype)initMessageWithRequest:(NSString *)aType;
 
 @property(readwrite) BOOL displayPass;
 @property(readwrite) BOOL waitForDisconnect;

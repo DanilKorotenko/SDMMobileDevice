@@ -267,7 +267,7 @@ __attribute__ ((unused)) static struct SDM_MD_Service_Identifiers SDMMDServiceId
 sdmmd_return_t SDMMD_DirectServiceSend(SocketConnection handle, CFDataRef data);
 sdmmd_return_t SDMMD_DirectServiceReceive(SocketConnection handle, CFMutableDataRef *data);
 
-sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, CFDataRef data);
+sdmmd_return_t SDMMD_ServiceSend(SocketConnection handle, NSData *data);
 sdmmd_return_t SDMMD_ServiceReceive(SocketConnection handle, CFDataRef *data);
 
 sdmmd_return_t SDMMD_ServiceSendMessage(SocketConnection handle, NSDictionary *data);

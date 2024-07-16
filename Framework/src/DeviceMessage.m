@@ -27,12 +27,23 @@
     return self;
 }
 
-- (instancetype)initWithType:(NSString *)aType
+- (instancetype)initWithRequest:(NSString *)aType
 {
     self = [self init];
     if (self)
     {
         mutableDictionary[@"Request"] = aType;
+    }
+    return self;
+}
+
+- (instancetype)initMessageWithRequest:(NSString *)aType
+{
+    self = [self initWithRequest:aType];
+    if (self)
+    {
+        mutableDictionary[@"ProtocolVersion"] = @"2";
+        mutableDictionary[@"Label"] = [[[[NSProcessInfo processInfo] arguments] objectAtIndex:0] lastPathComponent];
     }
     return self;
 }

@@ -623,7 +623,7 @@ sdmmd_return_t SDMMD_DebuggingSend(SDMMD_AMDebugConnectionRef dconn, DebuggerCom
 	SDMMD_FormatDebuggingCommand(buffer, entireCommand, dconn->ackEnabled);
 	CFSafeRelease(entireCommand);
 	CFDataRef sending = CFDataCreate(kCFAllocatorDefault, PtrCast(buffer->data, UInt8 *), (CFIndex)(buffer->length));
-	result = SDMMD_ServiceSend(debuggingSocket, sending);
+    result = SDMMD_ServiceSend(debuggingSocket, (__bridge NSData *)(sending));
 	CheckErrorAndReturn(result);
 
 	result = SDMMD_DebuggingReceive(dconn, response);
@@ -642,7 +642,7 @@ sdmmd_return_t SDMMD_DebuggingSendSingleByte(SDMMD_AMDebugConnectionRef dconn, c
 {
 	SocketConnection debuggingSocket = SDMMD_TranslateConnectionToSocket(dconn->connection);
 	CFDataRef data = CFDataCreate(kCFAllocatorDefault, (UInt8 *)&toSend, 1);
-	sdmmd_return_t result = SDMMD_ServiceSend(debuggingSocket, data);
+    sdmmd_return_t result = SDMMD_ServiceSend(debuggingSocket, (__bridge NSData *)(data));
 	CFSafeRelease(data);
 	return result;
 }

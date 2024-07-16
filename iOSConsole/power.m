@@ -15,8 +15,9 @@
 #include "SDMMobileDevice.h"
 #include "SDMMD_Service.h"
 #include "SDMMD_Connection_Internal.h"
+#import "DeviceMessage.h"
 
-void SendDeviceCommand(char *udid, CFDictionaryRef request)
+void SendDeviceCommand(char *udid, NSDictionary *request)
 {
     SDMMD_AMDevice *device = FindDeviceFromUDID(udid);
     if (device)
@@ -25,19 +26,17 @@ void SendDeviceCommand(char *udid, CFDictionaryRef request)
         if (request)
         {
             SocketConnection socket = SDMMD_TranslateConnectionToSocket(powerDiag);
-            sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, (__bridge NSDictionary *)(request));
+            sdmmd_return_t result = SDMMD_ServiceSendMessage(socket, request);
             if (SDM_MD_CallSuccessful(result))
             {
-                CFStringRef command = CFDictionaryGetValue(request, CFSTR("Request"));
-                char *commandString = SDMCFStringGetString(command);
-                printf("Sent %s command to device, this could take up to 5 seconds.\n", commandString);
+                NSString *command = request[@"Request"];
+                NSLog(@"Sent %@ command to device, this could take up to 5 seconds.\n", command);
                 CFDictionaryRef response;
                 result = SDMMD_ServiceReceiveMessage(socket, PtrCast(&response, CFPropertyListRef *));
                 if (SDM_MD_CallSuccessful(result))
                 {
                     PrintCFDictionary(response);
                 }
-                Safe(free, commandString);
             }
         }
     }
@@ -46,7 +45,7 @@ void SendDeviceCommand(char *udid, CFDictionaryRef request)
 void SendSleepToDevice(char *udid)
 {
     NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Sleep");
-    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
+    SendDeviceCommand(udid, request);
 }
 
 void SendRebootToDevice(char *udid)
@@ -54,7 +53,7 @@ void SendRebootToDevice(char *udid)
     NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Restart");
     request[@"DisplayPass"] = @(YES);
     request[@"WaitForDisconnect"] = @(NO);
-    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
+    SendDeviceCommand(udid, request);
 }
 
 void SendShutdownToDevice(char *udid)
@@ -62,7 +61,7 @@ void SendShutdownToDevice(char *udid)
     NSMutableDictionary *request = SDMMD__CreateRequestDict(@"Shutdown");
     request[@"DisplayPass"] = @(YES);
     request[@"WaitForDisconnect"] = @(NO);
-    SendDeviceCommand(udid, (__bridge CFDictionaryRef)(request));
+    SendDeviceCommand(udid, request);
 }
 
 #endif
