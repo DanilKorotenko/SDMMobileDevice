@@ -62,7 +62,6 @@
 
 #include <netdb.h>
 
-SDMMD_lockdown_conn *SDMMD_lockdown_connection_create(uint32_t socket);
 sdmmd_return_t SDMMD_lockdown_connection_destory(SDMMD_lockdown_conn *lockdownCon);
 
 @interface SDMMD_AMDevice ()
@@ -156,17 +155,6 @@ uint64_t peer_certificate_data_index(void)
         data_index = SDMMD_lockssl_init();
     }
     return data_index;
-}
-
-SDMMD_lockdown_conn *SDMMD_lockdown_connection_create(uint32_t socket)
-{
-    SDMMD_lockdown_conn *lockdown = [[SDMMD_lockdown_conn alloc] init];
-    if (socket != 0)
-    {
-        lockdown.connection = socket;
-        lockdown.length = 0;
-    }
-    return lockdown;
 }
 
 X509 *SDMMD__decode_certificate(CFDataRef cert)
@@ -457,6 +445,36 @@ sdmmd_return_t SDMMD_lockconn_receive_message(SDMMD_AMDevice* device, CFMutableD
         }
 
         result = SDMMD_ServiceReceiveMessage(conn, (CFPropertyListRef *)dict);
+    }
+    else
+    {
+        result = SDMMD_AMDeviceIsValid(device);
+        if (result == kAMDSuccess)
+        {
+            result = kAMDReadError;
+        }
+    }
+    return result;
+}
+
+sdmmd_return_t SDMMD_lockconn_receive_message_(SDMMD_AMDevice* device, NSDictionary **dict)
+{
+    sdmmd_return_t result = kAMDSuccess;
+    if (device.lockdown_conn)
+    {
+        bool useSSL = (device.lockdown_conn.ssl ? true : false);
+        SocketConnection conn;
+        if (useSSL)
+        {
+            conn = (SocketConnection){true, {.ssl = device.lockdown_conn.ssl}};
+        }
+        else
+        {
+            conn = (SocketConnection){false,
+                {.conn = (uint32_t)device.lockdown_conn.connection}};
+        }
+
+        result = SDMMD_ServiceReceiveMessage_(conn, dict);
     }
     else
     {
@@ -834,10 +852,10 @@ sdmmd_return_t SDMMD_send_validate_pair(SDMMD_AMDevice* device, CFStringRef host
     return result;
 }
 
-sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, CFStringRef *name)
+sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, NSString **name)
 {
     sdmmd_return_t result = kAMDSuccess;
-    CFMutableDictionaryRef response = NULL;
+    NSDictionary *response = NULL;
 
     do
     {
@@ -868,24 +886,23 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, CFStringRef *name)
             break;
         }
 
-        result = SDMMD_lockconn_receive_message(device, &response);
+        result = SDMMD_lockconn_receive_message_(device, &response);
 
         if (!SDM_MD_CallSuccessful(result))
         {
             break;
         }
 
-        if (response && CFDictionaryGetCount(response))
+        if (response && response.count)
         {
-            CFTypeRef val = CFDictionaryGetValue(response, CFSTR("Error"));
-            if (val == NULL)
+            id val = response[@"Error"];
+            if (val == nil)
             {
-                val = CFDictionaryGetValue(response, CFSTR("Type"));
+                val = response[@"Type"];
                 if (val)
                 {
-                    if (CFGetTypeID(val) == CFStringGetTypeID())
+                    if ([val isKindOfClass:[NSString class]])
                     {
-                        CFRetain(val);
                         *name = val;
                     }
                 }
@@ -895,8 +912,8 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, CFStringRef *name)
                 }
             }
         }
-        CFSafeRelease(response);
-    } while (false);
+    }
+    while (false);
 
     return result;
 }
@@ -1483,33 +1500,29 @@ sdmmd_return_t SDMMD_AMDeviceConnect(SDMMD_AMDevice* device)
                     result = kAMDNotConnectedError;
                     if (socket != -1)
                     {
-                        device.lockdown_conn = SDMMD_lockdown_connection_create(socket);
+                        device.lockdown_conn = [[SDMMD_lockdown_conn alloc] initWithSocket:socket];
+
                         result = kAMDNoResourcesError;
-                        if (device.lockdown_conn.connection)
+
+                        NSString *daemon = nil;
+                        status = SDMMD_copy_daemon_name(device, &daemon);
+                        if (daemon && status == 0)
                         {
-                            CFStringRef daemon = NULL;
-                            status = SDMMD_copy_daemon_name(device, &daemon);
-                            if (daemon && status == 0)
+                            //result = kAMDInvalidResponseError;
+                            if (![daemon isEqualToString:@AMSVC_LOCKDOWN])
                             {
-                                //result = kAMDInvalidResponseError;
-                                if (CFStringCompare(daemon, CFSTR(AMSVC_LOCKDOWN), 0) != kCFCompareEqualTo)
-                                {
-                                    char *dname = SDMCFStringGetString(daemon);
-                                    printf("%s: This is not the droid you're looking for (is actually %s). move along,  move along.\n", __FUNCTION__, dname);
-                                    Safe(free, dname);
-                                    SDMMD_AMDeviceDisconnect(device);
-                                    result = kAMDWrongDroidError;
-                                }
-                                else
-                                {
-                                    result = kAMDSuccess;
-                                }
-                                CFSafeRelease(daemon);
+                                NSLog(@"This is not the droid you're looking for (is actually %@). move along,  move along.", daemon);
+                                SDMMD_AMDeviceDisconnect(device);
+                                result = kAMDWrongDroidError;
                             }
                             else
                             {
-                                result = kAMDNoResourcesError;
+                                result = kAMDSuccess;
                             }
+                        }
+                        else
+                        {
+                            result = kAMDNoResourcesError;
                         }
                     }
                 }

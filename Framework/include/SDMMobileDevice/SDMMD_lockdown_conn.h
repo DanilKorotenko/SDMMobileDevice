@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SDMMD_lockdown_conn : NSObject
 
+- (instancetype)initWithSocket:(uint32_t)socket;
+
 @property (readwrite) uint64_t  connection;
 @property (readwrite) SSL       *ssl;
 @property (readwrite) uint64_t  *pointer;
