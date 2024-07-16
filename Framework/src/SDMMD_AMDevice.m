@@ -54,6 +54,7 @@
 #include "SDMMD_SSL_Functions.h"
 #include "SDMMD_Error.h"
 #import "SDMMD_lockdown_conn.h"
+#import "DeviceMessage.h"
 
 #include <IOKit/IOKitLib.h>
 #include <IOKit/usb/IOUSBLib.h>
@@ -877,9 +878,9 @@ sdmmd_return_t SDMMD_copy_daemon_name(SDMMD_AMDevice* device, NSString **name)
             break;
         }
 
-        NSMutableDictionary *queryDict = SDMMD__CreateMessageDict(@"QueryType");
+        DeviceMessage *queryDict = [[DeviceMessage alloc] initMessageWithRequest:@"QueryType"];
 
-        result = SDMMD_lockconn_send_message(device, queryDict);
+        result = SDMMD_lockconn_send_message(device, queryDict.dictionary);
 
         if (!SDM_MD_CallSuccessful(result))
         {

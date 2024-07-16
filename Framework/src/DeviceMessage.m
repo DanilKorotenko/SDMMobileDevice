@@ -70,6 +70,26 @@
     mutableDictionary[@"WaitForDisconnect"] = @(waitForDisconnect);
 }
 
+- (NSString *)service
+{
+    return mutableDictionary[@"Service"];
+}
+
+- (void)setService:(NSString *)service
+{
+    mutableDictionary[@"Service"] = service;
+}
+
+- (NSData *)escrowBag
+{
+    return mutableDictionary[@"EscrowBag"];
+}
+
+- (void)setEscrowBag:(NSData *)escrowBag
+{
+    mutableDictionary[@"EscrowBag"] = escrowBag;
+}
+
 #pragma mark -
 
 - (NSDictionary *)dictionary

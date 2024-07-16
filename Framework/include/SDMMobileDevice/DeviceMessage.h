@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(readwrite) BOOL displayPass;
 @property(readwrite) BOOL waitForDisconnect;
+@property(readwrite) NSString *service;
+@property(readwrite) NSData *escrowBag;
 
 @property(readonly) NSDictionary *dictionary;
 
